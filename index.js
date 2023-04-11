@@ -71,7 +71,7 @@ const NumberColumn = ({
 
 // Main component
 const AnimatedCounter = ({
-  value = '0',
+  value = 0,
   fontSize = '18px',
   color = 'black',
   incrementColor = '#32cd32',
