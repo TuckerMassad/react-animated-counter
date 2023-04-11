@@ -4,9 +4,7 @@
   display: flex;
   flex-direction: row-reverse;
   overflow: hidden;
-  font-size: 56px;
   position: relative;
-  color: black;
 }
 
 .number-placeholder {
@@ -38,21 +36,21 @@
 @keyframes pulseGreen {
   0%,
   100% {
-    color: black;
+    color: inherit;
   }
 
   50% {
-    color: #32cd32;
+    color: var(--increment-color);;
   }
 }
 
 @keyframes pulseRed {
   0%,
   100% {
-    color: black;
+    color: inherit;
   }
 
   50% {
-    color: #fe6862;
+    color: var(--decrement-color);
   }
 }
