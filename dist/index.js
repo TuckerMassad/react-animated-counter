@@ -75,7 +75,7 @@ var AnimatedCounter = function AnimatedCounter(_ref2) {
   if (value < previousNumber) delta = 'decrease';
   return /*#__PURE__*/_react["default"].createElement(_framerMotion.motion.div, {
     layout: true,
-    className: "icker-view"
+    className: "ticker-view"
   }, numArray.map(function (number, index) {
     return number === "." ? /*#__PURE__*/_react["default"].createElement(DecimalColumn, {
       key: index
