@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import React, { useEffect, useRef, useState } from "react";
-import { usePrevious } from "../hooks";
+import { usePrevious } from "./hooks";
 import './styles.css';
 
 const formatForDisplay = (number = 0) => {
