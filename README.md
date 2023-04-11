@@ -13,7 +13,9 @@ React Animated Counter's sole dependency is  [framer-motion](https://www.npmjs.c
 
 ## Usage
 
-All your files and folders are presented as a tree in the file explorer. You can switch from one to another by clicking a file in the tree.
+**Props:**
+
+_Note:_  All props are optional and have default values.
 
 |     Name       |Type                           |Description   | Default                      |
 |----------------|-------------------------------|-------------|----------------|
