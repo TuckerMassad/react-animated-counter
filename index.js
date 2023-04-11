@@ -7,15 +7,25 @@ const formatForDisplay = (number = 0) => {
   return parseFloat(Math.max(number, 0)).toFixed(2).split("").reverse();
 }
 
-const DecimalColumn = () => {
+const DecimalColumn = ({ 
+  fontSize,
+  color,
+}) => {
   return (
     <div>
-      <span>.</span>
+      <span style={{ fontSize: fontSize, color: color }}>.</span>
     </div>
   );
 }
 
-const NumberColumn = ({ digit, delta }) => {
+const NumberColumn = ({ 
+  digit,
+  delta,
+  fontSize,
+  color,
+  incrementColor,
+  decrementColor,
+}) => {
   const [position, setPosition] = useState(0);
   const [animationClass, setAnimationClass] = useState(null);
   const previousDigit = usePrevious(digit);
@@ -33,7 +43,16 @@ const NumberColumn = ({ digit, delta }) => {
   useEffect(() => setColumnToNumber(digit), [digit]);
 
   return (
-    <div className="ticker-column-container" ref={columnContainer}>
+    <div
+      className="ticker-column-container"
+      ref={columnContainer}
+      style={{ 
+        fontSize: fontSize,
+        color: color,
+        '--increment-color': incrementColor,
+        '--decrement-color': decrementColor
+      }}
+    >
       <motion.div
         animate={{ y: position }}
         className={`ticker-column ${animationClass}`}
@@ -50,7 +69,14 @@ const NumberColumn = ({ digit, delta }) => {
   );
 }
 
-const AnimatedCounter = ({ value }) => {
+// Main component
+const AnimatedCounter = ({
+  value = '0',
+  fontSize = '18px',
+  color = 'black',
+  incrementColor = '#32cd32',
+  decrementColor = '#fe6862',
+}) => {
   const numArray = formatForDisplay(value);
   const previousNumber = usePrevious(value);
 
@@ -62,9 +88,20 @@ const AnimatedCounter = ({ value }) => {
     <motion.div layout className='ticker-view'>
       {numArray.map((number, index) =>
         number === "." ? (
-          <DecimalColumn key={index} />
+          <DecimalColumn
+            key={index}
+            fontSize={fontSize}
+            color={color}
+          />
         ) : (
-          <NumberColumn key={index} digit={number} delta={delta} />
+          <NumberColumn
+            key={index}
+            digit={number}
+            delta={delta}
+            fontSize={fontSize}
+            incrementColor={incrementColor}
+            decrementColor={decrementColor}
+          />
         )
       )}
     </motion.div>
