@@ -17,10 +17,10 @@ React Animated Counter's sole dependency is  [framer-motion](https://www.npmjs.c
 
 _Note:_  All props are optional and have default values.
 
-|     Name       |Type                           |Description   | Default                      |
-|----------------|-------------------------------|-------------|----------------|
-| value           |integer            |The state integer value | `0`
-|fontSize         |string             |Applied css `font-size`             | `18px`
-|color          | string | Applied css `color` | `black`
-|incrementColor | string | Animation color when `value` increases | `#32cd32`
-|decrementColor | string | Animation color when `value` decreases | `#fe6862`
+|     Name       |     Type      |             Description                |     Default    |
+|----------------|---------------|----------------------------------------|----------------|
+|    value       | integer       | The state integer value                | `0`            |
+|    fontSize    | string        | Applied css `font-size`                | `18px`         |
+|    color       | string        | Applied css `color`                    | `black`        |
+| incrementColor | string        | Animation color when `value` increases | `#32cd32`      |
+| decrementColor | string        | Animation color when `value` decreases | `#fe6862`      |
