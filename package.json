@@ -1,10 +1,10 @@
 {
   "name": "react-animated-counter",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "React Animated Counter Component",
   "main": "dist/index.js",
   "scripts": {
-    "build": "rm -rf dist && NODE_ENV=production babel index.js --out-dir dist --copy-files"
+    "build": "rm -rf dist && NODE_ENV=production babel ./index.js --out-dir dist --copy-files"
   },
   "repository": {
     "type": "git",
@@ -38,5 +38,15 @@
     "@babel/core": "^7.21.4",
     "@babel/preset-env": "^7.21.4",
     "@babel/preset-react": "^7.18.6"
+  },
+  "babel": {
+    "presets": [
+      "@babel/react",
+      "@babel/env"
+    ],
+    "plugins": [
+      "@babel/proposal-class-properties",
+      "@babel/plugin-transform-runtime"
+    ]
   }
 }
