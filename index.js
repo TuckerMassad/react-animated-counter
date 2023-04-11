@@ -71,4 +71,4 @@ const AnimatedCounter = ({ value }) => {
   );
 }
 
-module.exports = AnimatedCounter
+export { AnimatedCounter };
