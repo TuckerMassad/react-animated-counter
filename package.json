@@ -10,16 +10,7 @@
     "type": "git",
     "url": "git+https://github.com/TuckerMassad/react-animated-counter.git"
   },
-  "keywords": [
-    "react",
-    "counter",
-    "animated",
-    "count",
-    "animation",
-    "money",
-    "up",
-    "down"
-  ],
+  "keywords": ["react", "animated", "counter", "number", "animation",  "robinhood", "style", "up", "down", "money", "counting", "increment", "decrement", "tick", "ticker"],
   "author": "tuckermassad",
   "license": "ISC",
   "bugs": {
