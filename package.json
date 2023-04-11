@@ -1,0 +1,33 @@
+{
+  "name": "react-animated-counter",
+  "version": "1.0.0",
+  "description": "React Animated Counter Component",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TuckerMassad/react-animated-counter.git"
+  },
+  "keywords": [
+    "react",
+    "counter",
+    "animated",
+    "count",
+    "animation",
+    "money",
+    "up",
+    "down"
+  ],
+  "author": "tuckermassad",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TuckerMassad/react-animated-counter/issues"
+  },
+  "homepage": "https://github.com/TuckerMassad/react-animated-counter#readme",
+  "dependencies": {
+    "framer-motion": "^10.11.4",
+    "react": "^18.2.0"
+  }
+}
