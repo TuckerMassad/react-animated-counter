@@ -1,10 +1,10 @@
 {
   "name": "react-animated-counter",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "React Animated Counter Component",
   "main": "dist/index.js",
   "scripts": {
-    "build": "rm -rf dist && NODE_ENV=production babel ./index.js --out-dir dist --copy-files"
+    "build": "rm -rf dist && NODE_ENV=production babel ./src --out-dir dist --copy-files"
   },
   "repository": {
     "type": "git",
