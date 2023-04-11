@@ -59,7 +59,7 @@ const AnimatedCounter = ({ value }) => {
   if (value < previousNumber) delta = 'decrease';
 
   return (
-    <motion.div layout className='icker-view'>
+    <motion.div layout className='ticker-view'>
       {numArray.map((number, index) =>
         number === "." ? (
           <DecimalColumn key={index} />
