@@ -1,6 +1,6 @@
 {
   "name": "react-animated-counter",
-  "version": "1.1.3",
+  "version": "1.1.4",
   "description": "React Animated Counter Component",
   "main": "dist/index.js",
   "scripts": {
@@ -10,7 +10,23 @@
     "type": "git",
     "url": "git+https://github.com/TuckerMassad/react-animated-counter.git"
   },
-  "keywords": ["react", "animated", "counter", "number", "animation",  "robinhood", "style", "up", "down", "money", "counting", "increment", "decrement", "tick", "ticker"],
+  "keywords": [
+    "react",
+    "animated",
+    "counter",
+    "number",
+    "animation",
+    "robinhood",
+    "style",
+    "up",
+    "down",
+    "money",
+    "counting",
+    "increment",
+    "decrement",
+    "tick",
+    "ticker"
+  ],
   "author": "tuckermassad",
   "license": "ISC",
   "bugs": {
