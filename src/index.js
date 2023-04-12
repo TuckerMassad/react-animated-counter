@@ -3,6 +3,17 @@ import React, { useEffect, useRef, useState } from "react";
 import { usePrevious } from "./hooks";
 import './styles.css';
 
+const calculateDigitWidth = (digit) => {
+  switch (digit) {
+    case '1':
+      return '80%'
+    case '7':
+      return '87.5%'
+    default:
+      return '100%'
+  }
+}
+
 const formatForDisplay = (number, includeDecimals) => {
   return parseFloat(Math.max(number, 0)).toFixed(includeDecimals ? 2 : 0).split('').reverse();
 }
@@ -66,7 +77,14 @@ const NumberColumn = ({
       >
         {[9, 8, 7, 6, 5, 4, 3, 2, 1, 0].map((num) => (
           <div key={num} className="ticker-digit">
-            <span style={{ fontSize: fontSize, lineHeight: fontSize, color: color }}>{num}</span>
+            <span style={{ 
+              fontSize: fontSize,
+              lineHeight: fontSize,
+              color: color,
+              width: calculateDigitWidth(num),
+            }}>
+              {num}
+            </span>
           </div>
         ))}
       </motion.div>
