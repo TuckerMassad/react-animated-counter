@@ -46,3 +46,6 @@ const App = () => {
   );
 }
 ```
+
+Output:
+![react-animated-counter output](https://imgur.com/a/LL86smA)
