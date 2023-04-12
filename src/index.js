@@ -55,7 +55,7 @@ const NumberColumn = ({
       }}
     >
       <motion.div
-        animate={{ y: position }}
+        animate={{ x: 0, y: position }}
         className={`ticker-column ${animationClass}`}
         onAnimationComplete={() => setAnimationClass("")}
       >

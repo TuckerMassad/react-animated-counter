@@ -64,6 +64,7 @@ var NumberColumn = function NumberColumn(_ref2) {
     }
   }, /*#__PURE__*/_react["default"].createElement(_framerMotion.motion.div, {
     animate: {
+      x: 0,
       y: position
     },
     className: "ticker-column ".concat(animationClass),
