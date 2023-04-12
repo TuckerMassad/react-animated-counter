@@ -33,16 +33,16 @@ import { AnimatedCounter } from  'react-animated-counter';
 
 const App = () => {
 
-	// When counterValue increases, increment animation triggers.
-	// When counterValue decreases, decrement animation triggers.
-	const [counterValue, setCounterValue] = useState(100);
+  // When counterValue increases, increment animation triggers.
+  // When counterValue decreases, decrement animation triggers.
+  const [counterValue, setCounterValue] = useState(100);
 
-	return (
-		<AnimatedCounter
-		  value={counterValue}
-		  color="white'
-		  fontSize="40px"
-		/>
-	);
+  return (
+    <AnimatedCounter
+      value={counterValue}
+      color="white'
+      fontSize="40px"
+    />
+  );
 }
 ```
