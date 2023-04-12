@@ -48,4 +48,4 @@ const App = () => {
 ```
 
 Output:
-![react-animated-counter output](https://imgur.com/a/LL86smA)
+<img src="https://i.ibb.co/VMnjVDc/Screen-Shot-2023-04-11-at-9-30-23-PM.png" alt="React Animated Counter Demo Output" border="0" />
