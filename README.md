@@ -2,7 +2,7 @@
 
 A React component for beautifully animated incrementation & decrementation of a state integer value. Inspired by Robinhood's portfolio balance animation. 
 
-![react-animated-counter demo](https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOTA5NGU0YWE4NDdmZWM0YjA4NWZhMWM1NDY3YjZiMGIyZDkxOGQyNyZjdD1n/ckPfOfffBeVxt44E6l/giphy.gif)
+![react-animated-counter demo](https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExZmFhMjhlMWMxMmQ5NTJjYzIxMDM1YmRlOGQxNThmY2IwN2ViNGQ2MiZjdD1n/sp2UPcCj875Q52CQSq/giphy.gif)
 
 # Installation
 
