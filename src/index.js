@@ -35,7 +35,7 @@ const NumberColumn = ({
     setPosition(columnContainer.current.clientHeight * parseInt(number, 10));
   };
 
-  useEffect(() => setAnimationClass(previousDigit !== digit ? delta : ""), [
+  useEffect(() => setAnimationClass(previousDigit !== digit ? delta : ''), [
     digit,
     delta
   ]);
