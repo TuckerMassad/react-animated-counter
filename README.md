@@ -35,7 +35,7 @@ const App = () => {
 
   // When counterValue increases, increment animation triggers.
   // When counterValue decreases, decrement animation triggers.
-  const [counterValue, setCounterValue] = useState(100);
+  const [counterValue, setCounterValue] = useState(500);
 
   return (
     <AnimatedCounter
