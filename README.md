@@ -28,7 +28,7 @@ _Note:_  All props are optional and have default values.
 
 ## Basic Usage
 ```
-import React, { useState } from  "react";
+import React, { useState } from  'react';
 import { AnimatedCounter } from  'react-animated-counter';
 
 const App = () => {
