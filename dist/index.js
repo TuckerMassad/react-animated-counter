@@ -57,6 +57,9 @@ var NumberColumn = function NumberColumn(_ref2) {
     className: "ticker-column-container",
     ref: columnContainer,
     style: {
+      fontSize: fontSize,
+      lineHeight: fontSize,
+      color: color,
       height: 'auto',
       '--increment-color': incrementColor,
       '--decrement-color': decrementColor
