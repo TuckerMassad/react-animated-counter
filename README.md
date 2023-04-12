@@ -16,14 +16,14 @@ React Animated Counter's sole dependency is  [framer-motion](https://www.npmjs.c
 
 **Props:**
 
-|     Name       |     Type      |             Description                |     Default    |
-|----------------|---------------|----------------------------------------|----------------|
-|    value       | integer       | The state integer value                | `0`            |
-|    fontSize    | string        | Applied css `font-size`                | `18px`         |
-|    color       | string        | Applied css `color`                    | `black`        |
-| incrementColor | string        | Animation color when `value` increases | `#32cd32`      |
-| decrementColor | string        | Animation color when `value` decreases | `#fe6862`      |
-| includeDecimals| boolean       | Adds or removes decimal points rounded to the nearest hundredth | `true` |
+|     Name       |     Type      |             Description                                                                     |     Default    |
+|----------------|---------------|---------------------------------------------------------------------------------------------|----------------|
+|   `value`       | `integer`    | The state integer value                                                                     | `0`            |
+|   `fontSize`    | `string`     | Applied css `font-size`                                                                     | `18px`         |
+|   `color`       | `string`     | Applied css `color`                                                                         | `black`        |
+| `incrementColor`| `string`     | Animation color when `value` increases                                                      | `#32cd32`      |
+| `decrementColor`| `string`     | Animation color when `value` decreases                                                      | `#fe6862`      |
+|`includeDecimals`| `boolean`    | Includes or removes decimal point values in provided `value` (rounds to nearest hundredth)  | `true`         |
 
 **Demo:**
 ```

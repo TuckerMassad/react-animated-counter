@@ -4,11 +4,7 @@ import { usePrevious } from "./hooks";
 import './styles.css';
 
 const formatForDisplay = (number, includeDecimals) => {
-  if (includeDecimals) {
-    return parseFloat(Math.max(number, 0)).toFixed(2).split('').reverse();
-  } else {
-    return `${number}`.split('').reverse();
-  }
+  return parseFloat(Math.max(number, 0)).toFixed(includeDecimals ? 2 : 0).split('').reverse();
 }
 
 const DecimalColumn = ({ 
