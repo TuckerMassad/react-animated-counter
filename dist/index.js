@@ -17,7 +17,7 @@ var formatForDisplay = function formatForDisplay(number, includeDecimals) {
   if (includeDecimals) {
     return parseFloat(Math.max(number, 0)).toFixed(2).split('').reverse();
   } else {
-    return parseInt(number).split('').reverse();
+    return "".concat(number).split('').reverse();
   }
 };
 var DecimalColumn = function DecimalColumn(_ref) {
