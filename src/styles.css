@@ -24,6 +24,7 @@
 .ticker-digit {
   width: auto;
   height: 10%;
+  border: 1px solid red;
 }
 
 .ticker-column.increase {
