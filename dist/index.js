@@ -13,9 +13,12 @@ var _hooks = require("./hooks");
 require("./styles.css");
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-var formatForDisplay = function formatForDisplay() {
-  var number = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
-  return parseFloat(Math.max(number, 0)).toFixed(2).split("").reverse();
+var formatForDisplay = function formatForDisplay(number, includeDecimals) {
+  if (includeDecimals) {
+    return parseFloat(Math.max(number, 0)).toFixed(2).split('').reverse();
+  } else {
+    return parseInt(number).split('').reverse();
+  }
 };
 var DecimalColumn = function DecimalColumn(_ref) {
   var fontSize = _ref.fontSize,
@@ -97,8 +100,10 @@ var AnimatedCounter = function AnimatedCounter(_ref3) {
     _ref3$incrementColor = _ref3.incrementColor,
     incrementColor = _ref3$incrementColor === void 0 ? '#32cd32' : _ref3$incrementColor,
     _ref3$decrementColor = _ref3.decrementColor,
-    decrementColor = _ref3$decrementColor === void 0 ? '#fe6862' : _ref3$decrementColor;
-  var numArray = formatForDisplay(value);
+    decrementColor = _ref3$decrementColor === void 0 ? '#fe6862' : _ref3$decrementColor,
+    _ref3$includeDecimals = _ref3.includeDecimals,
+    includeDecimals = _ref3$includeDecimals === void 0 ? true : _ref3$includeDecimals;
+  var numArray = formatForDisplay(value, includeDecimals);
   var previousNumber = (0, _hooks.usePrevious)(value);
   var delta = null;
   if (value > previousNumber) delta = 'increase';
@@ -117,7 +122,8 @@ var AnimatedCounter = function AnimatedCounter(_ref3) {
       delta: delta,
       fontSize: fontSize,
       incrementColor: incrementColor,
-      decrementColor: decrementColor
+      decrementColor: decrementColor,
+      includeDecimals: includeDecimals
     });
   }));
 };
