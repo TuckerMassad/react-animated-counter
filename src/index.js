@@ -13,7 +13,11 @@ const DecimalColumn = ({
 }) => {
   return (
     <div>
-      <span style={{ fontSize: fontSize, color: color }}>.</span>
+      <span style={{
+        fontSize: fontSize,
+        lineHeight: fontSize,
+        color: color
+      }}>.</span>
     </div>
   );
 }
@@ -47,8 +51,6 @@ const NumberColumn = ({
       className="ticker-column-container"
       ref={columnContainer}
       style={{ 
-        fontSize: fontSize,
-        color: color,
         height: 'auto',
         '--increment-color': incrementColor,
         '--decrement-color': decrementColor
@@ -61,7 +63,7 @@ const NumberColumn = ({
       >
         {[9, 8, 7, 6, 5, 4, 3, 2, 1, 0].map((num) => (
           <div key={num} className="ticker-digit">
-            <span style={{ fontSize: fontSize, color: color }}>{num}</span>
+            <span style={{ fontSize: fontSize, lineHeight: fontSize, color: color }}>{num}</span>
           </div>
         ))}
       </motion.div>
