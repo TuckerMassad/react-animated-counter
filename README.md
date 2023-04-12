@@ -16,8 +16,6 @@ React Animated Counter's sole dependency is  [framer-motion](https://www.npmjs.c
 
 **Props:**
 
-_Note:_  All props are optional and have default values.
-
 |     Name       |     Type      |             Description                |     Default    |
 |----------------|---------------|----------------------------------------|----------------|
 |    value       | integer       | The state integer value                | `0`            |
