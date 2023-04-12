@@ -51,6 +51,9 @@ const NumberColumn = ({
       className="ticker-column-container"
       ref={columnContainer}
       style={{ 
+        fontSize: fontSize,
+        lineHeight: fontSize,
+        color: color,
         height: 'auto',
         '--increment-color': incrementColor,
         '--decrement-color': decrementColor
