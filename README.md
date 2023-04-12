@@ -26,7 +26,7 @@ _Note:_  All props are optional and have default values.
 | incrementColor | string        | Animation color when `value` increases | `#32cd32`      |
 | decrementColor | string        | Animation color when `value` decreases | `#fe6862`      |
 
-## Basic Usage
+**Demo:**
 ```
 import React, { useState } from  'react';
 import { AnimatedCounter } from  'react-animated-counter';
