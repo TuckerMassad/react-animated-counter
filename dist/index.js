@@ -22,6 +22,7 @@ var DecimalColumn = function DecimalColumn(_ref) {
   return /*#__PURE__*/_react["default"].createElement("div", null, /*#__PURE__*/_react["default"].createElement("span", {
     style: {
       fontSize: fontSize,
+      lineHeight: fontSize,
       color: color
     }
   }, "."));
@@ -56,8 +57,6 @@ var NumberColumn = function NumberColumn(_ref2) {
     className: "ticker-column-container",
     ref: columnContainer,
     style: {
-      fontSize: fontSize,
-      color: color,
       height: 'auto',
       '--increment-color': incrementColor,
       '--decrement-color': decrementColor
@@ -78,6 +77,7 @@ var NumberColumn = function NumberColumn(_ref2) {
     }, /*#__PURE__*/_react["default"].createElement("span", {
       style: {
         fontSize: fontSize,
+        lineHeight: fontSize,
         color: color
       }
     }, num));
