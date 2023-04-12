@@ -40,8 +40,8 @@ const App = () => {
   return (
     <AnimatedCounter
       value={counterValue}
-      color="white'
-      fontSize="40px"
+      color='white'
+      fontSize='40px'
     />
   );
 }
