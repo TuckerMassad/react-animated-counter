@@ -23,6 +23,7 @@ React Animated Counter's sole dependency is  [framer-motion](https://www.npmjs.c
 |    color       | string        | Applied css `color`                    | `black`        |
 | incrementColor | string        | Animation color when `value` increases | `#32cd32`      |
 | decrementColor | string        | Animation color when `value` decreases | `#fe6862`      |
+| includeDecimals| boolean       | Adds or removes decimal points rounded to the nearest hundredth | `true` |
 
 **Demo:**
 ```
@@ -45,6 +46,6 @@ const App = () => {
 }
 ```
 
-#### Output
+### Output
 
 <img src="https://i.ibb.co/VMnjVDc/Screen-Shot-2023-04-11-at-9-30-23-PM.png" alt="React Animated Counter Demo Output" border="0" />

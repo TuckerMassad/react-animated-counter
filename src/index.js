@@ -3,8 +3,12 @@ import React, { useEffect, useRef, useState } from "react";
 import { usePrevious } from "./hooks";
 import './styles.css';
 
-const formatForDisplay = (number = 0) => {
-  return parseFloat(Math.max(number, 0)).toFixed(2).split("").reverse();
+const formatForDisplay = (number, includeDecimals) => {
+  if (includeDecimals) {
+    return parseFloat(Math.max(number, 0)).toFixed(2).split('').reverse();
+  } else {
+    return parseInt(number).split('').reverse();
+  }
 }
 
 const DecimalColumn = ({ 
@@ -77,8 +81,9 @@ const AnimatedCounter = ({
   color = 'black',
   incrementColor = '#32cd32',
   decrementColor = '#fe6862',
+  includeDecimals = true,
 }) => {
-  const numArray = formatForDisplay(value);
+  const numArray = formatForDisplay(value, includeDecimals);
   const previousNumber = usePrevious(value);
 
   let delta = null;
@@ -102,6 +107,7 @@ const AnimatedCounter = ({
             fontSize={fontSize}
             incrementColor={incrementColor}
             decrementColor={decrementColor}
+            includeDecimals={includeDecimals}
           />
         )
       )}
