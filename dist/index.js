@@ -59,6 +59,7 @@ var NumberColumn = function NumberColumn(_ref2) {
     style: {
       fontSize: fontSize,
       color: color,
+      height: 'auto',
       '--increment-color': incrementColor,
       '--decrement-color': decrementColor
     }
@@ -74,7 +75,12 @@ var NumberColumn = function NumberColumn(_ref2) {
     return /*#__PURE__*/_react["default"].createElement("div", {
       key: num,
       className: "ticker-digit"
-    }, /*#__PURE__*/_react["default"].createElement("span", null, num));
+    }, /*#__PURE__*/_react["default"].createElement("span", {
+      style: {
+        fontSize: fontSize,
+        color: color
+      }
+    }, num));
   })), /*#__PURE__*/_react["default"].createElement("span", {
     className: "number-placeholder"
   }, "0"));

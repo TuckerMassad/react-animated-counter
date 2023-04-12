@@ -1,5 +1,5 @@
 .ticker-view {
-  height: 100%;
+  height: auto;
   margin: auto;
   display: flex;
   flex-direction: row-reverse;
