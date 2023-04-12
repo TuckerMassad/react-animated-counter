@@ -17,12 +17,23 @@ var formatForDisplay = function formatForDisplay() {
   var number = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
   return parseFloat(Math.max(number, 0)).toFixed(2).split("").reverse();
 };
-var DecimalColumn = function DecimalColumn() {
-  return /*#__PURE__*/_react["default"].createElement("div", null, /*#__PURE__*/_react["default"].createElement("span", null, "."));
+var DecimalColumn = function DecimalColumn(_ref) {
+  var fontSize = _ref.fontSize,
+    color = _ref.color;
+  return /*#__PURE__*/_react["default"].createElement("div", null, /*#__PURE__*/_react["default"].createElement("span", {
+    style: {
+      fontSize: fontSize,
+      color: color
+    }
+  }, "."));
 };
-var NumberColumn = function NumberColumn(_ref) {
-  var digit = _ref.digit,
-    delta = _ref.delta;
+var NumberColumn = function NumberColumn(_ref2) {
+  var digit = _ref2.digit,
+    delta = _ref2.delta,
+    fontSize = _ref2.fontSize,
+    color = _ref2.color,
+    incrementColor = _ref2.incrementColor,
+    decrementColor = _ref2.decrementColor;
   var _useState = (0, _react.useState)(0),
     _useState2 = (0, _slicedToArray2["default"])(_useState, 2),
     position = _useState2[0],
@@ -44,7 +55,13 @@ var NumberColumn = function NumberColumn(_ref) {
   }, [digit]);
   return /*#__PURE__*/_react["default"].createElement("div", {
     className: "ticker-column-container",
-    ref: columnContainer
+    ref: columnContainer,
+    style: {
+      fontSize: fontSize,
+      color: color,
+      '--increment-color': incrementColor,
+      '--decrement-color': decrementColor
+    }
   }, /*#__PURE__*/_react["default"].createElement(_framerMotion.motion.div, {
     animate: {
       y: position
@@ -62,8 +79,19 @@ var NumberColumn = function NumberColumn(_ref) {
     className: "number-placeholder"
   }, "0"));
 };
-var AnimatedCounter = function AnimatedCounter(_ref2) {
-  var value = _ref2.value;
+
+// Main component
+var AnimatedCounter = function AnimatedCounter(_ref3) {
+  var _ref3$value = _ref3.value,
+    value = _ref3$value === void 0 ? 0 : _ref3$value,
+    _ref3$fontSize = _ref3.fontSize,
+    fontSize = _ref3$fontSize === void 0 ? '18px' : _ref3$fontSize,
+    _ref3$color = _ref3.color,
+    color = _ref3$color === void 0 ? 'black' : _ref3$color,
+    _ref3$incrementColor = _ref3.incrementColor,
+    incrementColor = _ref3$incrementColor === void 0 ? '#32cd32' : _ref3$incrementColor,
+    _ref3$decrementColor = _ref3.decrementColor,
+    decrementColor = _ref3$decrementColor === void 0 ? '#fe6862' : _ref3$decrementColor;
   var numArray = formatForDisplay(value);
   var previousNumber = (0, _hooks.usePrevious)(value);
   var delta = null;
@@ -74,11 +102,16 @@ var AnimatedCounter = function AnimatedCounter(_ref2) {
     className: "ticker-view"
   }, numArray.map(function (number, index) {
     return number === "." ? /*#__PURE__*/_react["default"].createElement(DecimalColumn, {
-      key: index
+      key: index,
+      fontSize: fontSize,
+      color: color
     }) : /*#__PURE__*/_react["default"].createElement(NumberColumn, {
       key: index,
       digit: number,
-      delta: delta
+      delta: delta,
+      fontSize: fontSize,
+      incrementColor: incrementColor,
+      decrementColor: decrementColor
     });
   }));
 };
