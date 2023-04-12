@@ -48,7 +48,7 @@ var NumberColumn = function NumberColumn(_ref2) {
     setPosition(columnContainer.current.clientHeight * parseInt(number, 10));
   };
   (0, _react.useEffect)(function () {
-    return setAnimationClass(previousDigit !== digit ? delta : "");
+    return setAnimationClass(previousDigit !== digit ? delta : '');
   }, [digit, delta]);
   (0, _react.useEffect)(function () {
     return setColumnToNumber(digit);
