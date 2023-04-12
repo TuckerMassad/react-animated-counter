@@ -25,3 +25,24 @@ _Note:_  All props are optional and have default values.
 |    color       | string        | Applied css `color`                    | `black`        |
 | incrementColor | string        | Animation color when `value` increases | `#32cd32`      |
 | decrementColor | string        | Animation color when `value` decreases | `#fe6862`      |
+
+## Basic Usage
+```
+import React, { useState } from  "react";
+import { AnimatedCounter } from  'react-animated-counter';
+
+const App = () => {
+
+	// When counterValue increases, increment animation triggers.
+	// When counterValue decreases, decrement animation triggers.
+	const [counterValue, setCounterValue] = useState(100);
+
+	return (
+		<AnimatedCounter
+		  value={counterValue}
+		  color="white'
+		  fontSize="40px"
+		/>
+	);
+}
+```
