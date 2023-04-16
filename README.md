@@ -25,7 +25,7 @@ React Animated Counter's sole dependency is  [framer-motion](https://www.npmjs.c
 | `decrementColor`| `string`     | Animation color when `value` decreases                                                      | `#fe6862`      |
 |`includeDecimals`| `boolean`    | Includes or removes decimal point values in provided `value` (rounds to nearest hundredth)  | `true`         |
 
-**Demo:**
+**Basic Demo:**
 ```
 import React, { useState } from  'react';
 import { AnimatedCounter } from  'react-animated-counter';
@@ -49,3 +49,11 @@ const App = () => {
 **Output:**
 
 <img src="https://i.ibb.co/VMnjVDc/Screen-Shot-2023-04-11-at-9-30-23-PM.png" alt="React Animated Counter Demo Output" border="0" />
+
+**With `recharts` Demo:**
+
+Codesandbox Link: https://codesandbox.io/s/suspicious-morning-rx60sm?file=/src/App.js:0-1767 
+
+**Output:**
+
+![react-animated-counter recharts demo](https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExMWI0ZDVhZTA5ZGRhMmE2ZDhiN2I1NjM1NjgwMmViY2MzMjhmNGRmNyZjdD1n/jlXS4wmfB0BnJSMDdx/giphy.gif)
