@@ -5,6 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.usePrevious = void 0;
 var _react = require("react");
+// Used to "remember" previous value of each individual digit
 var usePrevious = function usePrevious(value) {
   var ref = (0, _react.useRef)();
   (0, _react.useEffect)(function () {
