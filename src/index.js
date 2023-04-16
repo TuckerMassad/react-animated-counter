@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { usePrevious } from "./hooks";
 import './styles.css';
 
+// Adjusts width of individual narrow digits 
 const calculateDigitWidth = (digit) => {
   switch (digit) {
     case '1':
@@ -14,10 +15,12 @@ const calculateDigitWidth = (digit) => {
   }
 }
 
+// Creates array of digits to vertically scroll through
 const formatForDisplay = (number, includeDecimals) => {
   return parseFloat(Math.max(number, 0)).toFixed(includeDecimals ? 2 : 0).split('').reverse();
 }
 
+// Render decimals
 const DecimalColumn = ({ 
   fontSize,
   color,
@@ -33,6 +36,7 @@ const DecimalColumn = ({
   );
 }
 
+// Render numbers
 const NumberColumn = ({ 
   digit,
   delta,
