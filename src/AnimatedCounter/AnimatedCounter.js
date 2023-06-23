@@ -48,7 +48,7 @@ const NumberColumn = ({
   const [position, setPosition] = useState(0);
   const [animationClass, setAnimationClass] = useState(null);
   const previousDigit = usePrevious(digit);
-  const columnContainer = useRef();
+  const columnContainer = useRef(null);
 
   const setColumnToNumber = (number) => {
     setPosition(columnContainer.current.clientHeight * parseInt(number, 10));
