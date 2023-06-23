@@ -1,6 +1,6 @@
 # React Animated Counter
 
-React component for beautifully animated incrementation & decrementation of a state integer value. Inspired by Robinhood's portfolio balance animation. 
+A light-weight React component for beautifully animated incrementation & decrementation of a state integer value. Inspired by Robinhood's portfolio balance animation. 
 
 ![react-animated-counter demo](https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExZTBmNDRiNmEzNThmOWVlODg4NzVhZDA2ZjY0OTJiZmZlMDg2ZTZkOSZjdD1n/NrKPwl0quI0OtavaBR/giphy.gif)
 
