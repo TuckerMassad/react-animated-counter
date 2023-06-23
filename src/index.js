@@ -1,4 +1,5 @@
-import { AnimatedCounter } from './AnimatedCounter';
+import React from "react";
+import { AnimatedCounter } from "./AnimatedCounter";
 
 const Main = ({
   value = 0,
@@ -8,14 +9,16 @@ const Main = ({
   decrementColor = '#fe6862',
   includeDecimals = true,
 }) => (
-  <AnimatedCounter
-    value={value}
-    fontSize={fontSize}
-    color={color}
-    incrementColor={incrementColor}
-    decrementColor={decrementColor}
-    includeDecimals={includeDecimals}
-  />
-)
+  <>
+    <AnimatedCounter
+      value={value}
+      fontSize={fontSize}
+      color={color}
+      incrementColor={incrementColor}
+      decrementColor={decrementColor}
+      includeDecimals={includeDecimals}
+    />
+  </>
+);
 
 export { Main as AnimatedCounter };
