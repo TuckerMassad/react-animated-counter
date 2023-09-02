@@ -27,24 +27,30 @@ import React, { useState } from  'react';
 import { AnimatedCounter } from  'react-animated-counter';
 
 const App = () => {
-
-  // When counterValue increases, increment animation triggers.
-  // When counterValue decreases, decrement animation triggers.
+  // Integer state
   const [counterValue, setCounterValue] = useState(500);
 
+  // Handle random increment/decrement
+  const handleCounterUpdate = (increment) => {
+    const delta = (Math.floor(Math.random() * 100) + 1) * 0.99;
+    setCounterValue(increment ? counterValue + delta : counterValue - delta);
+  };
+
   return (
-    <AnimatedCounter
-      value={counterValue}
-      color='white'
-      fontSize='40px'
-    />
+    <div>
+      <AnimatedCounter value={counterValue} color="white" fontSize="40px" />
+      <div>
+        <button onClick={() => handleCounterUpdate(false)}>Decrement</button>
+        <button onClick={() => handleCounterUpdate(true)}>Increment</button>
+      </div>
+    </div>
   );
-}
+};
 ```
 
 **Output:**
 
-<img src="https://i.ibb.co/pKk5VjH/Screen-Shot-2023-04-16-at-7-00-31-PM.png" alt="React Animated Counter Demo Output" border="0" />
+![react-animated-counter demo](https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExMzhwbnF0NDU1ZmhsMHRnZnFwdzVycXU5b2MzYnpxZ3ZtZzFhNG0xNyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/N3Xsj09Gp9GbrKF86E/giphy.gif)
 
 **With `recharts` Demo:**
 
