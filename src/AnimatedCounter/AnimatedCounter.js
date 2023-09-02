@@ -1,5 +1,5 @@
+import React, { memo, useEffect, useCallback, useRef, useState } from "react";
 import { motion } from "framer-motion";
-import React, { useEffect, useRef, useState } from "react";
 import { usePrevious } from "./hooks";
 import './animatedCounterStyles.css';
 
@@ -21,23 +21,10 @@ const formatForDisplay = (number, includeDecimals) => {
 }
 
 // Render decimals
-const DecimalColumn = ({ 
-  fontSize,
-  color,
-}) => {
-  return (
-    <div>
-      <span style={{
-        fontSize: fontSize,
-        lineHeight: fontSize,
-        color: color
-      }}>.</span>
-    </div>
-  );
-}
+const DecimalColumn = ({ fontSize, color }) => (<span style={{ fontSize: fontSize, lineHeight: fontSize, color: color}}>.</span>);
 
-// Render numbers
-const NumberColumn = ({ 
+// Render an individual number
+const NumberColumn = memo(({ 
   digit,
   delta,
   fontSize,
@@ -45,21 +32,22 @@ const NumberColumn = ({
   incrementColor,
   decrementColor,
 }) => {
+
   const [position, setPosition] = useState(0);
   const [animationClass, setAnimationClass] = useState(null);
   const previousDigit = usePrevious(digit);
   const columnContainer = useRef(null);
 
-  const setColumnToNumber = (number) => {
+  const setColumnToNumber = useCallback((number) => {
     setPosition(columnContainer.current.clientHeight * parseInt(number, 10));
-  };
+  }, []);
 
   useEffect(() => setAnimationClass(previousDigit !== digit ? delta : ''), [
     digit,
     delta
   ]);
 
-  useEffect(() => setColumnToNumber(digit), [digit]);
+  useEffect(() => setColumnToNumber(digit), [digit, setColumnToNumber]);
 
   return (
     <div
@@ -95,7 +83,7 @@ const NumberColumn = ({
       <span className="number-placeholder">0</span>
     </div>
   );
-}
+}, (prevProps, nextProps) => prevProps.digit === nextProps.digit && prevProps.delta === nextProps.delta);
 
 // Main component
 const AnimatedCounter = ({
