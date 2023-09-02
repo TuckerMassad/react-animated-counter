@@ -22,6 +22,9 @@ A lightweight React component for beautifully animated incrementation & decremen
 |`includeDecimals`| `boolean`    | Includes or removes decimal point values in provided `value` (rounds to nearest hundredth)  | `true`         |
 
 **Basic Demo:**
+
+Codesandbox Link: https://codesandbox.io/s/xenodochial-cerf-gjl9ck?file=/src/App.js
+
 ```
 import React, { useState } from  'react';
 import { AnimatedCounter } from  'react-animated-counter';
