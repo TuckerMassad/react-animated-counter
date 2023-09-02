@@ -8,10 +8,6 @@ A lightweight React component for beautifully animated incrementation & decremen
 
 `npm install react-animated-counter`
 
-## Required dependencies
-
-React Animated Counter's sole dependency is  [framer-motion](https://www.npmjs.com/package/framer-motion), a lightweight animation library.
-
 ## Usage
 
 **Props:**
