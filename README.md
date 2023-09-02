@@ -52,8 +52,8 @@ const App = () => {
 
 **With `recharts` Demo:**
 
-Codesandbox Link: https://codesandbox.io/s/suspicious-morning-rx60sm?file=/src/App.js:0-1767 
+Codesandbox Link: https://codesandbox.io/s/suspicious-morning-rx60sm?file=/src/App.js
 
 **Output:**
 
-![react-animated-counter recharts demo](https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExMWI0ZDVhZTA5ZGRhMmE2ZDhiN2I1NjM1NjgwMmViY2MzMjhmNGRmNyZjdD1n/jlXS4wmfB0BnJSMDdx/giphy.gif)
+![react-animated-counter recharts demo](https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExMXFoaHkzOG5oMG05aTF6dHo0NHRmOGxmdjQ0Zm1xdGdvNWprNDcyOSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IJP2ng53lyeF5QXi5T/giphy.gif)
