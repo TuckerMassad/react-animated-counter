@@ -1,1 +1,1 @@
-export { default } from './AnimatedCounter.tsx'
+export default './AnimatedCounter'

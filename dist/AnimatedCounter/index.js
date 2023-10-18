@@ -1,13 +1,7 @@
 "use strict";
 
-var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-Object.defineProperty(exports, "default", {
-  enumerable: true,
-  get: function get() {
-    return _AnimatedCounter.default;
-  }
-});
-var _AnimatedCounter = _interopRequireDefault(require("./AnimatedCounter.tsx"));
+exports.default = void 0;
+var _default = exports.default = './AnimatedCounter';
