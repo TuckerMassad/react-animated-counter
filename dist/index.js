@@ -7,7 +7,7 @@ Object.defineProperty(exports, "__esModule", {
 Object.defineProperty(exports, "AnimatedCounter", {
   enumerable: true,
   get: function get() {
-    return _AnimatedCounter["default"];
+    return _AnimatedCounter.default;
   }
 });
 var _AnimatedCounter = _interopRequireDefault(require("./AnimatedCounter"));
