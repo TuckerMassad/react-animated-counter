@@ -1,15 +1,16 @@
 import React from "react";
+import { AnimatedCounterProps } from "./types";
 import { AnimatedCounter } from "./AnimatedCounter";
 
 const Main = ({
-  value = 0,
-  fontSize = '18px',
-  color = 'black',
-  incrementColor = '#32cd32',
-  decrementColor = '#fe6862',
-  includeDecimals = true,
-}) => (
-  <>
+  value,
+  fontSize,
+  color,
+  incrementColor,
+  decrementColor,
+  includeDecimals,
+}: AnimatedCounterProps) => (
+  <React.Fragment>
     <AnimatedCounter
       value={value}
       fontSize={fontSize}
@@ -18,7 +19,7 @@ const Main = ({
       decrementColor={decrementColor}
       includeDecimals={includeDecimals}
     />
-  </>
+  </React.Fragment>
 );
 
 export { Main as AnimatedCounter };
