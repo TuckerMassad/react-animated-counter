@@ -1,6 +1,6 @@
 {
   "name": "react-animated-counter",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description": "React Animated Counter Component",
   "main": "./dist/AnimatedCounter/index.js",
   "module": "./dist/AnimatedCounter/index.js",
