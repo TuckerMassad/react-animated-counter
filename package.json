@@ -38,10 +38,15 @@
   "homepage": "https://github.com/TuckerMassad/react-animated-counter#readme",
   "dependencies": {
     "@babel/polyfill": "^7.12.1",
+    "@types/jest": "^29.5.5",
+    "@types/node": "^20.8.6",
+    "@types/react": "^18.2.28",
+    "@types/react-dom": "^18.2.13",
     "framer-motion": "^10.11.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-scripts": "5.0.1"
+    "react-scripts": "5.0.1",
+    "typescript": "^4.9.5"
   },
   "devDependencies": {
     "@babel/cli": "^7.21.0",
