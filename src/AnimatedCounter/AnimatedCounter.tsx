@@ -11,7 +11,7 @@ const DecimalColumn = ({ fontSize, color }: DecimalColumnProps) => (
 );
 
 // Individual number element component
-const NumberColumn = memo(({ 
+const NumberColumn = memo(({
   digit,
   delta,
   fontSize,
@@ -32,10 +32,9 @@ const NumberColumn = memo(({
     }
   }, []);
 
-  useEffect(() => setAnimationClass(previousDigit !== currentDigit ? delta : ''), [
-    digit,
-    delta
-  ]);
+  useEffect(() => {
+    setAnimationClass(previousDigit !== currentDigit ? delta : '')
+  }, [digit, delta]);
 
   useEffect(() => setColumnToNumber(digit), [digit, setColumnToNumber]);
 
@@ -62,7 +61,6 @@ const NumberColumn = memo(({
             <span style={{ 
               fontSize: fontSize,
               lineHeight: fontSize,
-              color: color,
               width: calculateDigitWidth(num),
             }}>
               {num}
