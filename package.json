@@ -1,12 +1,15 @@
 {
   "name": "react-animated-counter",
-  "version": "1.4.2",
+  "version": "1.4.3",
   "description": "React Animated Counter Component",
   "main": "./dist/cjs/index.js",
   "module": "./dist/esm/index.js",
   "types": "./dist/esm/index.d.ts",
   "scripts": {
-    "build": "tsc"
+    "build": "yarn build:esm && yarn build:cjs",
+    "build:esm": "tsc",
+    "build:cjs": "tsc --module commonjs --outDir dist/cjs",
+    "prepare": "npm run build"
   },
   "repository": {
     "type": "git",
@@ -43,6 +46,9 @@
     "url": "https://github.com/TuckerMassad/react-animated-counter/issues"
   },
   "homepage": "https://github.com/TuckerMassad/react-animated-counter#readme",
+  "peerDependencies": {
+    "react": ">=16"
+  },
   "devDependencies": {
     "@types/react": "^18.0.12",
     "framer-motion": "^10.11.4",
