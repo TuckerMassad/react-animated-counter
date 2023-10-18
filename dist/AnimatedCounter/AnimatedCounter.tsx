@@ -102,13 +102,13 @@ const AnimatedCounter = ({
       {numArray.map((number: string, index: number) =>
         number === "." ? (
           <DecimalColumn
-            key={`decimal-column-${index}`}
+            key={index}
             fontSize={fontSize}
             color={color}
           />
         ) : (
           <NumberColumn
-            key={`number-column-${number}`}
+            key={index}
             digit={number}
             delta={delta}
             color={color}
