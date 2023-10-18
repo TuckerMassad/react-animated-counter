@@ -1,8 +1,8 @@
 import React from "react";
 import { AnimatedCounterProps } from "./types";
-import { AnimatedCounter } from "./AnimatedCounter";
+import { AnimatedCounter as AnimatedCounterWrapper } from "./AnimatedCounter";
 
-const Main = ({
+const AnimatedCounter = ({
   value,
   fontSize,
   color,
@@ -11,7 +11,7 @@ const Main = ({
   includeDecimals,
 }: AnimatedCounterProps) => (
   <React.Fragment>
-    <AnimatedCounter
+    <AnimatedCounterWrapper
       value={value}
       fontSize={fontSize}
       color={color}
@@ -22,4 +22,4 @@ const Main = ({
   </React.Fragment>
 );
 
-export { Main as AnimatedCounter };
+export default AnimatedCounter;
