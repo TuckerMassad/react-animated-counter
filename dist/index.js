@@ -10,4 +10,4 @@ Object.defineProperty(exports, "AnimatedCounter", {
     return _AnimatedCounter.default;
   }
 });
-var _AnimatedCounter = _interopRequireDefault(require("./AnimatedCounter"));
+var _AnimatedCounter = _interopRequireDefault(require("./AnimatedCounter/AnimatedCounter"));
