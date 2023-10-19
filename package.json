@@ -1,6 +1,6 @@
 {
   "name": "react-animated-counter",
-  "version": "1.5.6",
+  "version": "1.5.7",
   "description": "React Animated Counter Component",
   "main": "./dist/cjs/index.js",
   "module": "./dist/esm/index.js",
@@ -44,8 +44,7 @@
     "react": ">=16"
   },
   "dependencies": {
-    "framer-motion": "^10.11.4",
-    "node-sass": "^4.14.1"
+    "framer-motion": "^10.11.4"
   },
   "devDependencies": {
     "@types/react": "^18.0.12",
