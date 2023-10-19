@@ -1,1 +1,1 @@
-export default './AnimatedCounter'
+export { default as AnimatedCounter } from './AnimatedCounter'
