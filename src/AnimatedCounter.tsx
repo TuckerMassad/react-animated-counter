@@ -2,8 +2,31 @@ import React, { memo, useEffect, useCallback, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { formatForDisplay, calculateDigitWidth } from "./util";
 import { usePrevious } from "./hooks";
-import { AnimatedCounterProps, DecimalColumnProps, NumberColumnProps } from "./types";
 import './animatedCounterStyles.css';
+
+export interface AnimatedCounterProps {
+  value?: number;
+  fontSize?: string;
+  color?: string;
+  incrementColor?: string;
+  decrementColor?: string;
+  includeDecimals?: boolean;
+}
+
+export interface NumberColumnProps {
+  digit: string;
+  delta: string | null;
+  fontSize: string;
+  color: string;
+  incrementColor: string;
+  decrementColor: string;
+  includeDecimals: boolean;
+}
+
+export interface DecimalColumnProps {
+  fontSize: string;
+  color: string;
+}
 
 // Decimal element component
 const DecimalColumn = ({ fontSize, color }: DecimalColumnProps) => (
@@ -46,6 +69,7 @@ const NumberColumn = memo(({
         fontSize: fontSize,
         lineHeight: fontSize,
         height: 'auto',
+        color: color,
         '--increment-color': incrementColor,
         '--decrement-color': decrementColor
       } as React.CSSProperties}

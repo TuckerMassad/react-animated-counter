@@ -1,3 +1,5 @@
+import React from "react";
+import './animatedCounterStyles.css';
 export interface AnimatedCounterProps {
     value?: number;
     fontSize?: string;
@@ -19,3 +21,5 @@ export interface DecimalColumnProps {
     fontSize: string;
     color: string;
 }
+declare const AnimatedCounter: ({ value, fontSize, color, incrementColor, decrementColor, includeDecimals, }: AnimatedCounterProps) => React.JSX.Element;
+export default AnimatedCounter;

@@ -1,5 +1,5 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
+exports.__esModule = true;
 exports.usePrevious = void 0;
 var react_1 = require("react");
 // Used to "remember" previous value of each individual digit
@@ -11,3 +11,4 @@ var usePrevious = function (value) {
     return ref.current;
 };
 exports.usePrevious = usePrevious;
+//# sourceMappingURL=index.js.map

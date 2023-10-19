@@ -1,29 +1,7 @@
 "use strict";
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-var react_1 = __importStar(require("react"));
+exports.__esModule = true;
+var tslib_1 = require("tslib");
+var react_1 = tslib_1.__importStar(require("react"));
 var framer_motion_1 = require("framer-motion");
 var util_1 = require("./util");
 var hooks_1 = require("./hooks");
@@ -31,7 +9,7 @@ require("./animatedCounterStyles.css");
 // Decimal element component
 var DecimalColumn = function (_a) {
     var fontSize = _a.fontSize, color = _a.color;
-    return (react_1.default.createElement("span", { style: { fontSize: fontSize, lineHeight: fontSize, color: color } }, "."));
+    return (react_1["default"].createElement("span", { style: { fontSize: fontSize, lineHeight: fontSize, color: color } }, "."));
 };
 // Individual number element component
 var NumberColumn = (0, react_1.memo)(function (_a) {
@@ -51,21 +29,21 @@ var NumberColumn = (0, react_1.memo)(function (_a) {
         setAnimationClass(previousDigit !== currentDigit ? delta : '');
     }, [digit, delta]);
     (0, react_1.useEffect)(function () { return setColumnToNumber(digit); }, [digit, setColumnToNumber]);
-    return (react_1.default.createElement("div", { className: 'ticker-column-container', ref: columnContainer, style: {
+    return (react_1["default"].createElement("div", { className: 'ticker-column-container', ref: columnContainer, style: {
             fontSize: fontSize,
             lineHeight: fontSize,
-            color: color,
             height: 'auto',
+            color: color,
             '--increment-color': incrementColor,
             '--decrement-color': decrementColor
         } },
-        react_1.default.createElement(framer_motion_1.motion.div, { animate: { x: 0, y: position }, className: "ticker-column ".concat(animationClass), onAnimationComplete: function () { return setAnimationClass(""); } }, [9, 8, 7, 6, 5, 4, 3, 2, 1, 0].map(function (num) { return (react_1.default.createElement("div", { key: num, className: 'ticker-digit' },
-            react_1.default.createElement("span", { style: {
+        react_1["default"].createElement(framer_motion_1.motion.div, { animate: { x: 0, y: position }, className: "ticker-column ".concat(animationClass), onAnimationComplete: function () { return setAnimationClass(""); } }, [9, 8, 7, 6, 5, 4, 3, 2, 1, 0].map(function (num) { return (react_1["default"].createElement("div", { key: num, className: 'ticker-digit' },
+            react_1["default"].createElement("span", { style: {
                     fontSize: fontSize,
                     lineHeight: fontSize,
-                    width: (0, util_1.calculateDigitWidth)(num),
+                    width: (0, util_1.calculateDigitWidth)(num)
                 } }, num))); })),
-        react_1.default.createElement("span", { className: 'number-placeholder' }, "0")));
+        react_1["default"].createElement("span", { className: 'number-placeholder' }, "0")));
 }, function (prevProps, nextProps) { return prevProps.digit === nextProps.digit && prevProps.delta === nextProps.delta; });
 // Main component
 var AnimatedCounter = function (_a) {
@@ -81,8 +59,9 @@ var AnimatedCounter = function (_a) {
             delta = 'decrease';
         }
     }
-    return (react_1.default.createElement(framer_motion_1.motion.div, { layout: true, className: 'ticker-view' }, numArray.map(function (number, index) {
-        return number === "." ? (react_1.default.createElement(DecimalColumn, { key: index, fontSize: fontSize, color: color })) : (react_1.default.createElement(NumberColumn, { key: index, digit: number, delta: delta, color: color, fontSize: fontSize, incrementColor: incrementColor, decrementColor: decrementColor, includeDecimals: includeDecimals }));
+    return (react_1["default"].createElement(framer_motion_1.motion.div, { layout: true, className: 'ticker-view' }, numArray.map(function (number, index) {
+        return number === "." ? (react_1["default"].createElement(DecimalColumn, { key: index, fontSize: fontSize, color: color })) : (react_1["default"].createElement(NumberColumn, { key: index, digit: number, delta: delta, color: color, fontSize: fontSize, incrementColor: incrementColor, decrementColor: decrementColor, includeDecimals: includeDecimals }));
     })));
 };
-exports.default = AnimatedCounter;
+exports["default"] = AnimatedCounter;
+//# sourceMappingURL=AnimatedCounter.js.map
