@@ -28,16 +28,18 @@ var NumberColumn = (0, react_1.memo)(function (_a) {
     (0, react_1.useEffect)(function () {
         setAnimationClass(previousDigit !== currentDigit ? delta : '');
     }, [digit, delta]);
-    (0, react_1.useEffect)(function () { return setColumnToNumber(digit); }, [digit, setColumnToNumber]);
+    (0, react_1.useEffect)(function () {
+        setColumnToNumber(digit);
+    }, [digit, setColumnToNumber]);
     return (react_1["default"].createElement("div", { className: 'ticker-column-container', ref: columnContainer, style: {
             fontSize: fontSize,
             lineHeight: fontSize,
             height: 'auto',
             color: color,
-            '--increment-color': incrementColor,
-            '--decrement-color': decrementColor
+            '--increment-color': "".concat(incrementColor),
+            '--decrement-color': "".concat(decrementColor)
         } },
-        react_1["default"].createElement(framer_motion_1.motion.div, { animate: { x: 0, y: position }, className: "ticker-column ".concat(animationClass), onAnimationComplete: function () { return setAnimationClass(""); } }, [9, 8, 7, 6, 5, 4, 3, 2, 1, 0].map(function (num) { return (react_1["default"].createElement("div", { key: num, className: 'ticker-digit' },
+        react_1["default"].createElement(framer_motion_1.motion.div, { animate: { x: 0, y: position }, className: "ticker-column ".concat(animationClass), onAnimationComplete: function () { return setAnimationClass(""); } }, [9, 8, 7, 6, 5, 4, 3, 2, 1, 0].map(function (num) { return (react_1["default"].createElement("div", { className: 'ticker-digit', key: num },
             react_1["default"].createElement("span", { style: {
                     fontSize: fontSize,
                     lineHeight: fontSize,
