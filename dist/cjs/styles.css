@@ -36,10 +36,10 @@
 
 @keyframes pulseIncrement {
   0%, 100% { color: inherit; }
-  50% { color: var(--increment-color) }
+  50% { color: var(--increment-color); }
 }
 
 @keyframes pulseDecrement {
   0%, 100% { color: inherit; }
-  50% { color: var(--decrement-color) }
+  50% { color: var(--decrement-color); }
 }
