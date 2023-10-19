@@ -1,5 +1,5 @@
 import React from "react";
-import './animatedCounterStyles.css';
+import './styles.css';
 export interface AnimatedCounterProps {
     value?: number;
     fontSize?: string;

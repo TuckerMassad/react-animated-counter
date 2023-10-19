@@ -5,7 +5,7 @@ var react_1 = tslib_1.__importStar(require("react"));
 var framer_motion_1 = require("framer-motion");
 var util_1 = require("./util");
 var hooks_1 = require("./hooks");
-require("./animatedCounterStyles.css");
+require("./styles.css");
 // Decimal element component
 var DecimalColumn = function (_a) {
     var fontSize = _a.fontSize, color = _a.color;

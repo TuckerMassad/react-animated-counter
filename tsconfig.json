@@ -1,5 +1,8 @@
 {
-  "include": ["src"],
+  "include": [
+    "src",
+    "src/*.css"
+  ],
   "exclude": [
     "dist",
     "node_modules"

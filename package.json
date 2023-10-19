@@ -43,6 +43,9 @@
   "peerDependencies": {
     "react": ">=16"
   },
+  "dependencies": {
+    "framer-motion": "^10.11.4"
+  },
   "devDependencies": {
     "@types/react": "^18.0.12",
     "framer-motion": "^10.11.4",

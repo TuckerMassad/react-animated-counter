@@ -1,2 +1,2 @@
-import MyCounter from './AnimatedCounter';
-export { MyCounter };
+import AnimatedCounter from './AnimatedCounter';
+export { AnimatedCounter };
