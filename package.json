@@ -1,25 +1,18 @@
 {
   "name": "react-animated-counter",
-  "version": "1.4.4",
+  "version": "1.4.5",
   "description": "React Animated Counter Component",
-  "main": "./dist/cjs/AnimatedCounter/AnimatedCounter.js",
-  "module": "./dist/esm/AnimatedCounter/AnimatedCounter.js",
-  "types": "./dist/esm/types/index.d.ts",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "./dist/types/index.d.ts",
   "scripts": {
-    "build": "yarn build:esm && yarn build:cjs",
-    "build:esm": "tsc",
-    "build:cjs": "tsc --module commonjs --outDir dist/cjs",
-    "prepare": "npm run build"
+    "build": "rm -rf dist && NODE_ENV=production babel ./src --out-dir dist --copy-files"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/TuckerMassad/react-animated-counter.git"
   },
-  "files": [
-    "dist",
-    "LICENSE",
-    "README.md"
-  ],
+  
   "keywords": [
     "react",
     "animated",
@@ -46,19 +39,27 @@
     "url": "https://github.com/TuckerMassad/react-animated-counter/issues"
   },
   "homepage": "https://github.com/TuckerMassad/react-animated-counter#readme",
-  "peerDependencies": {
-    "react": ">=16"
+  "dependencies": {
+    "@babel/polyfill": "^7.12.1",
+    "framer-motion": "^10.11.4",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-scripts": "5.0.1"
   },
   "devDependencies": {
-    "@types/react": "^18.0.12",
-    "framer-motion": "^10.11.4",
-    "react": "^18.1.0",
-    "react-dom": "^18.1.0",
-    "typescript": "^4.7.3"
+    "@babel/cli": "^7.21.0",
+    "@babel/core": "^7.21.4",
+    "@babel/preset-env": "^7.21.4",
+    "@babel/preset-react": "^7.18.6"
   },
-  "browserslist":[
-    ">0.2%",
-    "not dead",
-    "not op_mini all"
-  ]
+  "babel": {
+    "presets": [
+      "@babel/react",
+      "@babel/env"
+    ],
+    "plugins": [
+      "@babel/proposal-class-properties",
+      "@babel/plugin-transform-runtime"
+    ]
+  }
 }
