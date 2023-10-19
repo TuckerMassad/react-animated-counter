@@ -2,7 +2,7 @@ import React, { memo, useEffect, useCallback, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { formatForDisplay, calculateDigitWidth } from "./util";
 import { usePrevious } from "./hooks";
-import { AnimatedCounterProps, DecimalColumnProps, NumberColumnProps } from "../types";
+import { AnimatedCounterProps, DecimalColumnProps, NumberColumnProps } from "./types";
 import './animatedCounterStyles.css';
 
 // Decimal element component
