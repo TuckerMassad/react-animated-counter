@@ -56,10 +56,12 @@ const NumberColumn = memo(({
   }, []);
 
   useEffect(() => {
-    setAnimationClass(previousDigit !== currentDigit ? delta : '')
+    setAnimationClass(previousDigit !== currentDigit ? delta : '');
   }, [digit, delta]);
 
-  useEffect(() => setColumnToNumber(digit), [digit, setColumnToNumber]);
+  useEffect(() => {
+    setColumnToNumber(digit);
+  }, [digit, setColumnToNumber]);
 
   return (
     <div
@@ -70,8 +72,8 @@ const NumberColumn = memo(({
         lineHeight: fontSize,
         height: 'auto',
         color: color,
-        '--increment-color': incrementColor,
-        '--decrement-color': decrementColor
+        '--increment-color': `${incrementColor}`,
+        '--decrement-color': `${decrementColor}`,
       } as React.CSSProperties}
     >
       <motion.div
@@ -80,7 +82,7 @@ const NumberColumn = memo(({
         onAnimationComplete={() => setAnimationClass("")}
       >
         {[9, 8, 7, 6, 5, 4, 3, 2, 1, 0].map((num) => (
-          <div key={num} className='ticker-digit'>
+          <div className='ticker-digit' key={num}>
             <span style={{ 
               fontSize: fontSize,
               lineHeight: fontSize,
