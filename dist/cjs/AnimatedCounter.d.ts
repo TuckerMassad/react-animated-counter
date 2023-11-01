@@ -7,6 +7,7 @@ export interface AnimatedCounterProps {
     incrementColor?: string;
     decrementColor?: string;
     includeDecimals?: boolean;
+    decimalPrecision?: number;
 }
 export interface NumberColumnProps {
     digit: string;
@@ -15,11 +16,10 @@ export interface NumberColumnProps {
     color: string;
     incrementColor: string;
     decrementColor: string;
-    includeDecimals: boolean;
 }
 export interface DecimalColumnProps {
     fontSize: string;
     color: string;
 }
-declare const AnimatedCounter: ({ value, fontSize, color, incrementColor, decrementColor, includeDecimals, }: AnimatedCounterProps) => React.JSX.Element;
+declare const AnimatedCounter: ({ value, fontSize, color, incrementColor, decrementColor, includeDecimals, decimalPrecision, }: AnimatedCounterProps) => React.JSX.Element;
 export default AnimatedCounter;

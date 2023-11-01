@@ -14,8 +14,9 @@ var calculateDigitWidth = function (digit) {
 };
 exports.calculateDigitWidth = calculateDigitWidth;
 // Creates array of digits to vertically scroll through
-var formatForDisplay = function (number, includeDecimals) {
-    return parseFloat("".concat(Math.max(number, 0))).toFixed(includeDecimals ? 2 : 0).split('').reverse();
+var formatForDisplay = function (number, includeDecimals, decimalPrecision) {
+    var decimalCount = includeDecimals ? decimalPrecision : 0;
+    return parseFloat("".concat(Math.max(number, 0))).toFixed(decimalCount).split('').reverse();
 };
 exports.formatForDisplay = formatForDisplay;
 //# sourceMappingURL=index.js.map

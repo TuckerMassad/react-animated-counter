@@ -49,8 +49,8 @@ var NumberColumn = (0, react_1.memo)(function (_a) {
 }, function (prevProps, nextProps) { return prevProps.digit === nextProps.digit && prevProps.delta === nextProps.delta; });
 // Main component
 var AnimatedCounter = function (_a) {
-    var _b = _a.value, value = _b === void 0 ? 0 : _b, _c = _a.fontSize, fontSize = _c === void 0 ? '18px' : _c, _d = _a.color, color = _d === void 0 ? 'black' : _d, _e = _a.incrementColor, incrementColor = _e === void 0 ? '#32cd32' : _e, _f = _a.decrementColor, decrementColor = _f === void 0 ? '#fe6862' : _f, _g = _a.includeDecimals, includeDecimals = _g === void 0 ? true : _g;
-    var numArray = (0, util_1.formatForDisplay)(value, includeDecimals);
+    var _b = _a.value, value = _b === void 0 ? 0 : _b, _c = _a.fontSize, fontSize = _c === void 0 ? '18px' : _c, _d = _a.color, color = _d === void 0 ? 'black' : _d, _e = _a.incrementColor, incrementColor = _e === void 0 ? '#32cd32' : _e, _f = _a.decrementColor, decrementColor = _f === void 0 ? '#fe6862' : _f, _g = _a.includeDecimals, includeDecimals = _g === void 0 ? true : _g, _h = _a.decimalPrecision, decimalPrecision = _h === void 0 ? 2 : _h;
+    var numArray = (0, util_1.formatForDisplay)(value, includeDecimals, decimalPrecision);
     var previousNumber = (0, hooks_1.usePrevious)(value);
     var delta = null;
     if (previousNumber !== null) {
@@ -62,7 +62,7 @@ var AnimatedCounter = function (_a) {
         }
     }
     return (react_1["default"].createElement(framer_motion_1.motion.div, { layout: true, className: 'ticker-view' }, numArray.map(function (number, index) {
-        return number === "." ? (react_1["default"].createElement(DecimalColumn, { key: index, fontSize: fontSize, color: color })) : (react_1["default"].createElement(NumberColumn, { key: index, digit: number, delta: delta, color: color, fontSize: fontSize, incrementColor: incrementColor, decrementColor: decrementColor, includeDecimals: includeDecimals }));
+        return number === "." ? (react_1["default"].createElement(DecimalColumn, { key: index, fontSize: fontSize, color: color })) : (react_1["default"].createElement(NumberColumn, { key: index, digit: number, delta: delta, color: color, fontSize: fontSize, incrementColor: incrementColor, decrementColor: decrementColor }));
     })));
 };
 exports["default"] = AnimatedCounter;
