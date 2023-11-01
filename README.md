@@ -12,8 +12,8 @@ A lightweight React component for beautifully animated incrementation & decremen
 
 **Props:**
 
-|     Name       |     Type      |             Description                                                                                 |     Default    |
-|----------------|---------------|---------------------------------------------------------------------------------------------------------|----------------|
+|     Name         |     Type     |             Description                                                                                |     Default    |
+|------------------|--------------|--------------------------------------------------------------------------------------------------------|----------------|
 |   `value`        | `integer`    | The state integer value                                                                                | `0`            |
 |   `fontSize`     | `string`     | Applied css `font-size`                                                                                | `18px`         |
 |   `color`        | `string`     | Applied css `color`                                                                                    | `black`        |
