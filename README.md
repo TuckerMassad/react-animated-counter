@@ -12,14 +12,15 @@ A lightweight React component for beautifully animated incrementation & decremen
 
 **Props:**
 
-|     Name       |     Type      |             Description                                                                     |     Default    |
-|----------------|---------------|---------------------------------------------------------------------------------------------|----------------|
-|   `value`       | `integer`    | The state integer value                                                                     | `0`            |
-|   `fontSize`    | `string`     | Applied css `font-size`                                                                     | `18px`         |
-|   `color`       | `string`     | Applied css `color`                                                                         | `black`        |
-| `incrementColor`| `string`     | Animation color when `value` increases                                                      | `#32cd32`      |
-| `decrementColor`| `string`     | Animation color when `value` decreases                                                      | `#fe6862`      |
-|`includeDecimals`| `boolean`    | Includes or removes decimal point values in provided `value` (rounds to nearest hundredth)  | `true`         |
+|     Name       |     Type      |             Description                                                                                 |     Default    |
+|----------------|---------------|---------------------------------------------------------------------------------------------------------|----------------|
+|   `value`        | `integer`    | The state integer value                                                                                | `0`            |
+|   `fontSize`     | `string`     | Applied css `font-size`                                                                                | `18px`         |
+|   `color`        | `string`     | Applied css `color`                                                                                    | `black`        |
+| `incrementColor` | `string`     | Animation color when `value` increases                                                                 | `#32cd32`      |
+| `decrementColor` | `string`     | Animation color when `value` decreases                                                                 | `#fe6862`      |
+|`includeDecimals` | `boolean`    | Includes or removes decimal point values in provided `value` (rounds to nearest hundredth by default)  | `true`         |
+|`decimalPrecision`| `boolean`    | The nth decimal place of precision (ex. `5` will calculate number to the nearest hundred thousandth)   | `2`            |
 
 **Basic Demo:**
 
