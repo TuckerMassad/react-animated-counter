@@ -12,4 +12,3 @@ var calculateDigitWidth = function (digit) {
     }
 };
 exports["default"] = calculateDigitWidth;
-//# sourceMappingURL=calculateDigitWidth.js.map

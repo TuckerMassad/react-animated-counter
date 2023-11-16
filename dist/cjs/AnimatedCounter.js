@@ -66,4 +66,3 @@ var AnimatedCounter = function (_a) {
     })));
 };
 exports["default"] = AnimatedCounter;
-//# sourceMappingURL=AnimatedCounter.js.map
