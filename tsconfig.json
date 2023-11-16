@@ -1,7 +1,7 @@
 {
   "include": [
     "src",
-    "src/components/*.css"
+    "src/*.css"
   ],
   "exclude": [
     "dist",
