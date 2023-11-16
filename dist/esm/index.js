@@ -1,3 +1,2 @@
-import AnimatedCounter from './components/AnimatedCounter';
-export { AnimatedCounter };
+export * from './components/AnimatedCounter';
 //# sourceMappingURL=index.js.map
