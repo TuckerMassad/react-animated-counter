@@ -1,2 +1,2 @@
-import AnimatedCounter from './AnimatedCounter';
+import AnimatedCounter from './components/AnimatedCounter';
 export { AnimatedCounter };
