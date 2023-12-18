@@ -2,6 +2,7 @@ import React, { memo, useEffect, useCallback, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { formatForDisplay, calculateDigitWidth } from "./util";
 import { usePrevious } from "./hooks";
+import debounce from 'lodash/debounce';
 import './styles.css';
 // Decimal element component
 var DecimalColumn = function (_a) {
@@ -16,6 +17,9 @@ var NumberColumn = memo(function (_a) {
     var currentDigit = +digit;
     var previousDigit = usePrevious(+currentDigit);
     var columnContainer = useRef(null);
+    var handleAnimationComplete = useCallback(debounce(function () {
+        setAnimationClass("");
+    }, 200), []);
     var setColumnToNumber = useCallback(function (number) {
         var _a, _b;
         if ((_a = columnContainer === null || columnContainer === void 0 ? void 0 : columnContainer.current) === null || _a === void 0 ? void 0 : _a.clientHeight) {
@@ -36,7 +40,7 @@ var NumberColumn = memo(function (_a) {
             '--increment-color': "".concat(incrementColor),
             '--decrement-color': "".concat(decrementColor)
         } },
-        React.createElement(motion.div, { animate: { x: 0, y: position }, className: "ticker-column ".concat(animationClass), onAnimationComplete: function () { return setAnimationClass(""); } }, [9, 8, 7, 6, 5, 4, 3, 2, 1, 0].map(function (num) { return (React.createElement("div", { className: 'ticker-digit', key: num },
+        React.createElement(motion.div, { animate: { x: 0, y: position }, className: "ticker-column ".concat(animationClass), onAnimationComplete: handleAnimationComplete }, [9, 8, 7, 6, 5, 4, 3, 2, 1, 0].map(function (num) { return (React.createElement("div", { className: 'ticker-digit', key: num },
             React.createElement("span", { style: {
                     fontSize: fontSize,
                     lineHeight: fontSize,
@@ -63,3 +67,4 @@ var AnimatedCounter = function (_a) {
     })));
 };
 export default AnimatedCounter;
+//# sourceMappingURL=AnimatedCounter.js.map

@@ -5,6 +5,7 @@ var react_1 = tslib_1.__importStar(require("react"));
 var framer_motion_1 = require("framer-motion");
 var util_1 = require("./util");
 var hooks_1 = require("./hooks");
+var debounce_1 = tslib_1.__importDefault(require("lodash/debounce"));
 require("./styles.css");
 // Decimal element component
 var DecimalColumn = function (_a) {
@@ -19,6 +20,9 @@ var NumberColumn = (0, react_1.memo)(function (_a) {
     var currentDigit = +digit;
     var previousDigit = (0, hooks_1.usePrevious)(+currentDigit);
     var columnContainer = (0, react_1.useRef)(null);
+    var handleAnimationComplete = (0, react_1.useCallback)((0, debounce_1["default"])(function () {
+        setAnimationClass("");
+    }, 200), []);
     var setColumnToNumber = (0, react_1.useCallback)(function (number) {
         var _a, _b;
         if ((_a = columnContainer === null || columnContainer === void 0 ? void 0 : columnContainer.current) === null || _a === void 0 ? void 0 : _a.clientHeight) {
@@ -39,7 +43,7 @@ var NumberColumn = (0, react_1.memo)(function (_a) {
             '--increment-color': "".concat(incrementColor),
             '--decrement-color': "".concat(decrementColor)
         } },
-        react_1["default"].createElement(framer_motion_1.motion.div, { animate: { x: 0, y: position }, className: "ticker-column ".concat(animationClass), onAnimationComplete: function () { return setAnimationClass(""); } }, [9, 8, 7, 6, 5, 4, 3, 2, 1, 0].map(function (num) { return (react_1["default"].createElement("div", { className: 'ticker-digit', key: num },
+        react_1["default"].createElement(framer_motion_1.motion.div, { animate: { x: 0, y: position }, className: "ticker-column ".concat(animationClass), onAnimationComplete: handleAnimationComplete }, [9, 8, 7, 6, 5, 4, 3, 2, 1, 0].map(function (num) { return (react_1["default"].createElement("div", { className: 'ticker-digit', key: num },
             react_1["default"].createElement("span", { style: {
                     fontSize: fontSize,
                     lineHeight: fontSize,
@@ -66,3 +70,4 @@ var AnimatedCounter = function (_a) {
     })));
 };
 exports["default"] = AnimatedCounter;
+//# sourceMappingURL=AnimatedCounter.js.map

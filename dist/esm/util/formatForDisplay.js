@@ -4,3 +4,4 @@ var formatForDisplay = function (number, includeDecimals, decimalPrecision) {
     return parseFloat("".concat(Math.max(number, 0))).toFixed(decimalCount).split('').reverse();
 };
 export default formatForDisplay;
+//# sourceMappingURL=formatForDisplay.js.map

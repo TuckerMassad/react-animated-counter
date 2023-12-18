@@ -16,3 +16,4 @@ var formatForDisplay_1 = require("./formatForDisplay");
 __createBinding(exports, formatForDisplay_1, "default", "formatForDisplay");
 var calculateDigitWidth_1 = require("./calculateDigitWidth");
 __createBinding(exports, calculateDigitWidth_1, "default", "calculateDigitWidth");
+//# sourceMappingURL=index.js.map

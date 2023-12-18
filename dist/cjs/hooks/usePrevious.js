@@ -10,3 +10,4 @@ var usePrevious = function (value) {
     return ref.current;
 };
 exports["default"] = usePrevious;
+//# sourceMappingURL=usePrevious.js.map
