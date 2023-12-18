@@ -2,6 +2,7 @@ import React, { memo, useEffect, useCallback, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { formatForDisplay, calculateDigitWidth } from "./util";
 import { usePrevious } from "./hooks";
+import debounce from 'lodash/debounce';
 import './styles.css';
 
 export interface AnimatedCounterProps {
@@ -49,6 +50,13 @@ const NumberColumn = memo(({
   const previousDigit = usePrevious(+currentDigit);
   const columnContainer = useRef<HTMLDivElement>(null);
 
+  const handleAnimationComplete = useCallback(
+    debounce(() => {
+      setAnimationClass("");
+    }, 200),
+    []
+  );
+
   const setColumnToNumber = useCallback((number: string) => {
     if (columnContainer?.current?.clientHeight) {
       setPosition(columnContainer?.current?.clientHeight * parseInt(number, 10));
@@ -79,7 +87,7 @@ const NumberColumn = memo(({
       <motion.div
         animate={{ x: 0, y: position }}
         className={`ticker-column ${animationClass}`}
-        onAnimationComplete={() => setAnimationClass("")}
+        onAnimationComplete={handleAnimationComplete}
       >
         {[9, 8, 7, 6, 5, 4, 3, 2, 1, 0].map((num) => (
           <div className='ticker-digit' key={num}>
