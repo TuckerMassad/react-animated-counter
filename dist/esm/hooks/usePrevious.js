@@ -8,4 +8,3 @@ var usePrevious = function (value) {
     return ref.current;
 };
 export default usePrevious;
-//# sourceMappingURL=usePrevious.js.map
