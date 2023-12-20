@@ -24,7 +24,7 @@ A lightweight React component for beautifully animated incrementation & decremen
 
 **Basic Demo:**
 
-Codesandbox Link: https://codesandbox.io/p/sandbox/clever-water-v5nwwx?file=%2Fsrc%2FApp.js%3A10%2C18
+Codesandbox Link: https://codesandbox.io/p/sandbox/clever-water-v5nwwx
 
 ```
 import React, { useState } from  'react';
