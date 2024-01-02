@@ -11,8 +11,6 @@ var __createBinding = (this && this.__createBinding) || (Object.create ? (functi
     o[k2] = m[k];
 }));
 exports.__esModule = true;
-exports.calculateDigitWidth = exports.formatForDisplay = void 0;
+exports.formatForDisplay = void 0;
 var formatForDisplay_1 = require("./formatForDisplay");
 __createBinding(exports, formatForDisplay_1, "default", "formatForDisplay");
-var calculateDigitWidth_1 = require("./calculateDigitWidth");
-__createBinding(exports, calculateDigitWidth_1, "default", "calculateDigitWidth");

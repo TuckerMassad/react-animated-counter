@@ -3,9 +3,12 @@ const formatForDisplay = (
   number: number,
   includeDecimals: boolean,
   decimalPrecision: number,
+  includeCommas: boolean,
 ): string[] => {
   const decimalCount = includeDecimals ? decimalPrecision : 0;
-  return parseFloat(`${Math.max(number, 0)}`).toFixed(decimalCount).split('').reverse();
+  const parsedNumber = parseFloat(`${Math.max(number, 0)}`).toFixed(decimalCount);
+  const numberToFormat = includeCommas ? parseFloat(parsedNumber).toLocaleString(undefined, { minimumFractionDigits: includeDecimals ? decimalPrecision : 0 }) : parsedNumber;
+  return numberToFormat.split('').reverse();
 }
 
 export default formatForDisplay;

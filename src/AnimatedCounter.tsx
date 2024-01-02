@@ -1,6 +1,6 @@
 import React, { memo, useEffect, useCallback, useRef, useState } from "react";
 import { motion } from "framer-motion";
-import { formatForDisplay, calculateDigitWidth } from "./util";
+import { formatForDisplay } from "./util";
 import { usePrevious } from "./hooks";
 import debounce from 'lodash/debounce';
 import './styles.css';
@@ -13,6 +13,7 @@ export interface AnimatedCounterProps {
   decrementColor?: string;
   includeDecimals?: boolean;
   decimalPrecision?: number;
+  includeCommas?: boolean;
 }
 
 export interface NumberColumnProps {
@@ -27,11 +28,20 @@ export interface NumberColumnProps {
 export interface DecimalColumnProps {
   fontSize: string;
   color: string;
+  isComma: boolean;
 }
 
 // Decimal element component
-const DecimalColumn = ({ fontSize, color }: DecimalColumnProps) => (
-  <span style={{ fontSize: fontSize, lineHeight: fontSize, color: color}}>.</span>
+const DecimalColumn = ({ fontSize, color, isComma }: DecimalColumnProps) => (
+  <span
+    style={{
+      fontSize: fontSize,
+      lineHeight: fontSize,
+      color: color,
+      marginLeft: `calc(${fontSize}*(-0.125))`
+    }}>
+      {isComma ? ',' : '.'}
+    </span>
 );
 
 // Individual number element component
@@ -94,7 +104,6 @@ const NumberColumn = memo(({
             <span style={{ 
               fontSize: fontSize,
               lineHeight: fontSize,
-              width: calculateDigitWidth(num),
             }}>
               {num}
             </span>
@@ -115,9 +124,9 @@ const AnimatedCounter = ({
   decrementColor = '#fe6862',
   includeDecimals = true,
   decimalPrecision = 2,
+  includeCommas = false,
 }: AnimatedCounterProps) => {
-
-  const numArray = formatForDisplay(value, includeDecimals, decimalPrecision);
+  const numArray = formatForDisplay(value, includeDecimals, decimalPrecision, includeCommas);
   const previousNumber = usePrevious(value);
   let delta: string | null = null;
 
@@ -132,11 +141,12 @@ const AnimatedCounter = ({
   return (
     <motion.div layout className='ticker-view'>
       {numArray.map((number: string, index: number) =>
-        number === "." ? (
+        number === "." || number === "," ? (
           <DecimalColumn
             key={index}
             fontSize={fontSize}
             color={color}
+            isComma={number === ","}
           />
         ) : (
           <NumberColumn

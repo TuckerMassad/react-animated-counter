@@ -19,6 +19,7 @@
   position: absolute;
   height: 1000%;
   bottom: 0;
+  font-variant-numeric: tabular-nums;
 }
 
 .ticker-digit {
