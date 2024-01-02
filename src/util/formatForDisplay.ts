@@ -3,11 +3,11 @@ const formatForDisplay = (
   number: number,
   includeDecimals: boolean,
   decimalPrecision: number,
-  includeCommas: boolean,
+  formatLocale: boolean,
 ): string[] => {
   const decimalCount = includeDecimals ? decimalPrecision : 0;
   const parsedNumber = parseFloat(`${Math.max(number, 0)}`).toFixed(decimalCount);
-  const numberToFormat = includeCommas ? parseFloat(parsedNumber).toLocaleString(undefined, { minimumFractionDigits: includeDecimals ? decimalPrecision : 0 }) : parsedNumber;
+  const numberToFormat = formatLocale ? parseFloat(parsedNumber).toLocaleString(undefined, { minimumFractionDigits: includeDecimals ? decimalPrecision : 0 }) : parsedNumber;
   return numberToFormat.split('').reverse();
 }
 
