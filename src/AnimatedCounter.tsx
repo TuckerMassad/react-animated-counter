@@ -13,7 +13,7 @@ export interface AnimatedCounterProps {
   decrementColor?: string;
   includeDecimals?: boolean;
   decimalPrecision?: number;
-  formatLocale?: boolean;
+  includeCommas?: boolean;
 }
 
 export interface NumberColumnProps {
@@ -123,9 +123,9 @@ const AnimatedCounter = ({
   decrementColor = '#fe6862',
   includeDecimals = true,
   decimalPrecision = 2,
-  formatLocale = false,
+  includeCommas = false,
 }: AnimatedCounterProps) => {
-  const numArray = formatForDisplay(value, includeDecimals, decimalPrecision, formatLocale);
+  const numArray = formatForDisplay(value, includeDecimals, decimalPrecision, includeCommas);
   const previousNumber = usePrevious(value);
   let delta: string | null = null;
 

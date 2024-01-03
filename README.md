@@ -21,7 +21,7 @@ A lightweight React component for beautifully animated incrementation & decremen
 | `decrementColor` | `string`     | Animation color when `value` decreases                                                                                      | `#fe6862`      |
 |`includeDecimals` | `boolean`    | Includes or removes decimal point values in provided `value` (rounds to nearest hundredth by default)                       | `true`         |
 |`decimalPrecision`| `boolean`    | The nth decimal place of precision (ex. `5` will calculate number to the nearest hundred thousandth)                        | `2`            |
-|`formatLocale`    | `boolean`    | Applies `Number.toLocaleString()` to the parsed integer to format a language-senitive number (ex. adds commas for `en-US`)  | `false`        |
+|`includeCommas`   | `boolean`    | Adds comma separators to every third digit to the left of the decimal point used in numbers with four or more digits        | `false`        |
 
 **Basic Demo:**
 
