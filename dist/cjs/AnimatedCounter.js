@@ -39,6 +39,15 @@ var NumberColumn = (0, react_1.memo)(function (_a) {
     (0, react_1.useEffect)(function () {
         setColumnToNumber(digit);
     }, [digit, setColumnToNumber]);
+    // If digit is negative symbol, simply return an unanimated character
+    if (digit === '-') {
+        return (react_1["default"].createElement("span", { style: {
+                color: color,
+                fontSize: fontSize,
+                lineHeight: fontSize,
+                marginRight: "calc(".concat(fontSize, " / 5)")
+            } }, digit));
+    }
     return (react_1["default"].createElement("div", { className: 'ticker-column-container', ref: columnContainer, style: {
             fontSize: fontSize,
             lineHeight: fontSize,
@@ -57,8 +66,9 @@ var NumberColumn = (0, react_1.memo)(function (_a) {
 // Main component
 var AnimatedCounter = function (_a) {
     var _b = _a.value, value = _b === void 0 ? 0 : _b, _c = _a.fontSize, fontSize = _c === void 0 ? '18px' : _c, _d = _a.color, color = _d === void 0 ? 'black' : _d, _e = _a.incrementColor, incrementColor = _e === void 0 ? '#32cd32' : _e, _f = _a.decrementColor, decrementColor = _f === void 0 ? '#fe6862' : _f, _g = _a.includeDecimals, includeDecimals = _g === void 0 ? true : _g, _h = _a.decimalPrecision, decimalPrecision = _h === void 0 ? 2 : _h, _j = _a.includeCommas, includeCommas = _j === void 0 ? false : _j;
-    var numArray = (0, util_1.formatForDisplay)(value, includeDecimals, decimalPrecision, includeCommas);
+    var numArray = (0, util_1.formatForDisplay)(Math.abs(value), includeDecimals, decimalPrecision, includeCommas);
     var previousNumber = (0, hooks_1.usePrevious)(value);
+    var isNegative = value < 0;
     var delta = null;
     if (previousNumber !== null) {
         if (value > previousNumber) {
@@ -68,8 +78,11 @@ var AnimatedCounter = function (_a) {
             delta = 'decrease';
         }
     }
-    return (react_1["default"].createElement(framer_motion_1.motion.div, { layout: true, className: 'ticker-view' }, numArray.map(function (number, index) {
-        return number === "." || number === "," ? (react_1["default"].createElement(DecimalColumn, { key: index, fontSize: fontSize, color: color, isComma: number === "," })) : (react_1["default"].createElement(NumberColumn, { key: index, digit: number, delta: delta, color: color, fontSize: fontSize, incrementColor: incrementColor, decrementColor: decrementColor }));
-    })));
+    return (react_1["default"].createElement(framer_motion_1.motion.div, { layout: true, className: 'ticker-view' },
+        numArray.map(function (number, index) {
+            return number === "." || number === "," ? (react_1["default"].createElement(DecimalColumn, { key: index, fontSize: fontSize, color: color, isComma: number === "," })) : (react_1["default"].createElement(NumberColumn, { key: index, digit: number, delta: delta, color: color, fontSize: fontSize, incrementColor: incrementColor, decrementColor: decrementColor }));
+        }),
+        isNegative &&
+            react_1["default"].createElement(NumberColumn, { key: 'negative-feedback', digit: '-', delta: delta, color: color, fontSize: fontSize, incrementColor: incrementColor, decrementColor: decrementColor })));
 };
 exports["default"] = AnimatedCounter;

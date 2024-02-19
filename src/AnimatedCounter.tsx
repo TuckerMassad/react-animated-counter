@@ -80,6 +80,22 @@ const NumberColumn = memo(({
     setColumnToNumber(digit);
   }, [digit, setColumnToNumber]);
 
+  // If digit is negative symbol, simply return an unanimated character
+  if (digit === '-') {
+    return (
+      <span
+        style={{ 
+          color: color,
+          fontSize: fontSize,
+          lineHeight: fontSize,
+          marginRight: `calc(${fontSize} / 5)`,
+        }}
+      >
+        {digit}
+      </span>
+    )
+  }
+
   return (
     <div
       className='ticker-column-container'
@@ -125,8 +141,11 @@ const AnimatedCounter = ({
   decimalPrecision = 2,
   includeCommas = false,
 }: AnimatedCounterProps) => {
-  const numArray = formatForDisplay(value, includeDecimals, decimalPrecision, includeCommas);
+
+  const numArray = formatForDisplay(Math.abs(value), includeDecimals, decimalPrecision, includeCommas);
   const previousNumber = usePrevious(value);
+  const isNegative = value < 0;
+
   let delta: string | null = null;
 
   if (previousNumber !== null) {
@@ -139,6 +158,7 @@ const AnimatedCounter = ({
 
   return (
     <motion.div layout className='ticker-view'>
+      {/* Format integer to NumberColumn components */}
       {numArray.map((number: string, index: number) =>
         number === "." || number === "," ? (
           <DecimalColumn
@@ -159,6 +179,18 @@ const AnimatedCounter = ({
           />
         )
       )}
+      {/* If number is negative, render '-' feedback */}
+      {isNegative &&
+        <NumberColumn
+          key={'negative-feedback'}
+          digit={'-'}
+          delta={delta}
+          color={color}
+          fontSize={fontSize}
+          incrementColor={incrementColor}
+          decrementColor={decrementColor}
+        />
+      }
     </motion.div>
   );
 }
