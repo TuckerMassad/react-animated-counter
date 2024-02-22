@@ -13,7 +13,8 @@ var DecimalColumn = function (_a) {
     return (react_1["default"].createElement("span", { style: {
             fontSize: fontSize,
             lineHeight: fontSize,
-            color: color
+            color: color,
+            marginLeft: "calc(-".concat(fontSize, " / 10)")
         } }, isComma ? ',' : '.'));
 };
 // Individual number element component
