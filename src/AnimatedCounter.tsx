@@ -38,6 +38,7 @@ const DecimalColumn = ({ fontSize, color, isComma }: DecimalColumnProps) => (
       fontSize: fontSize,
       lineHeight: fontSize,
       color: color,
+      marginLeft: `calc(-${fontSize} / 10)`,
     }}>
       {isComma ? ',' : '.'}
     </span>

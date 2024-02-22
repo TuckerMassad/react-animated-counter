@@ -19,7 +19,7 @@
   position: absolute;
   height: 1000%;
   bottom: 0;
-  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
 }
 
 .ticker-digit {
