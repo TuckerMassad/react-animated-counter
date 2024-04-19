@@ -8,35 +8,47 @@ import './styles.css';
 export interface AnimatedCounterProps {
   value?: number;
   fontSize?: string;
+  fontWeight?:string;
+  padding?: string;
   color?: string;
   incrementColor?: string;
   decrementColor?: string;
   includeDecimals?: boolean;
   decimalPrecision?: number;
   includeCommas?: boolean;
+  className?:string;
 }
 
 export interface NumberColumnProps {
   digit: string;
   delta: string | null;
   fontSize: string;
+  fontWeight?:string;
+  padding?: string;
   color: string;
   incrementColor: string;
   decrementColor: string;
+  className?:string;
 }
 
 export interface DecimalColumnProps {
   fontSize: string;
   color: string;
+  fontWeight?:string;
+  padding?: string;
   isComma: boolean;
+  className?:string;
 }
 
 // Decimal element component
-const DecimalColumn = ({ fontSize, color, isComma }: DecimalColumnProps) => (
+const DecimalColumn = ({ fontSize, color, className, fontWeight, padding, isComma }: DecimalColumnProps) => (
   <span
+    className={className}
     style={{
       fontSize: fontSize,
       lineHeight: fontSize,
+      fontWeight:fontWeight,
+      padding: padding,
       color: color,
       marginLeft: `calc(-${fontSize} / 10)`,
     }}>
@@ -49,6 +61,9 @@ const NumberColumn = memo(({
   digit,
   delta,
   fontSize,
+  className,
+  fontWeight,
+  padding, 
   color,
   incrementColor,
   decrementColor,
@@ -85,9 +100,12 @@ const NumberColumn = memo(({
   if (digit === '-') {
     return (
       <span
+        className={className}
         style={{ 
           color: color,
           fontSize: fontSize,
+          fontWeight:fontWeight,
+          padding: padding,
           lineHeight: fontSize,
           marginRight: `calc(${fontSize} / 5)`,
         }}
@@ -99,11 +117,13 @@ const NumberColumn = memo(({
 
   return (
     <div
-      className='ticker-column-container'
+      className={` ${className} ticker-column-container`}
       ref={columnContainer}
       style={{ 
         fontSize: fontSize,
         lineHeight: fontSize,
+        fontWeight:fontWeight,
+        padding: padding,
         height: 'auto',
         color: color,
         '--increment-color': `${incrementColor}`,
@@ -117,8 +137,10 @@ const NumberColumn = memo(({
       >
         {[9, 8, 7, 6, 5, 4, 3, 2, 1, 0].map((num) => (
           <div className='ticker-digit' key={num}>
-            <span style={{ 
+            <span className={className} style={{ 
               fontSize: fontSize,
+              fontWeight:fontWeight,
+              padding: padding,
               lineHeight: fontSize,
             }}>
               {num}
@@ -126,7 +148,7 @@ const NumberColumn = memo(({
           </div>
         ))}
       </motion.div>
-      <span className='number-placeholder'>0</span>
+      <span className={`${className} number-placeholder`}>0</span>
     </div>
   );
 }, (prevProps, nextProps) => prevProps.digit === nextProps.digit && prevProps.delta === nextProps.delta);
@@ -135,6 +157,9 @@ const NumberColumn = memo(({
 const AnimatedCounter = ({
   value = 0,
   fontSize = '18px',
+  className,
+  fontWeight,
+  padding, 
   color = 'black',
   incrementColor = '#32cd32',
   decrementColor = '#fe6862',
@@ -165,7 +190,10 @@ const AnimatedCounter = ({
           <DecimalColumn
             key={index}
             fontSize={fontSize}
+            fontWeight={fontWeight}
+            padding={padding}
             color={color}
+            className={className}
             isComma={number === ","}
           />
         ) : (
@@ -174,6 +202,9 @@ const AnimatedCounter = ({
             digit={number}
             delta={delta}
             color={color}
+            className={className}
+            fontWeight={fontWeight}
+            padding={padding}
             fontSize={fontSize}
             incrementColor={incrementColor}
             decrementColor={decrementColor}
@@ -187,6 +218,9 @@ const AnimatedCounter = ({
           digit={'-'}
           delta={delta}
           color={color}
+          className={className}
+          fontWeight={fontWeight}
+          padding={padding}
           fontSize={fontSize}
           incrementColor={incrementColor}
           decrementColor={decrementColor}
