@@ -34,6 +34,8 @@ export interface NumberColumnProps {
 export interface DecimalColumnProps {
   fontSize: string;
   color: string;
+  fontWeight?:string;
+  padding?: string;
   isComma: boolean;
   className?:string;
 }
