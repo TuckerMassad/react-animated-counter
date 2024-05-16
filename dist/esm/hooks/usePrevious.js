@@ -1,5 +1,5 @@
 import { useRef, useEffect } from 'react';
-// Used to "remember" previous value of each individual digit
+// Hook used to track previous value of primary number state in AnimatedCounter & individual digits in NumberColumn
 var usePrevious = function (value) {
     var ref = useRef(null);
     useEffect(function () {

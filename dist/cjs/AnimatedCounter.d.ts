@@ -1,4 +1,4 @@
-import React from "react";
+import React, { CSSProperties } from "react";
 import './styles.css';
 export interface AnimatedCounterProps {
     value?: number;
@@ -9,6 +9,8 @@ export interface AnimatedCounterProps {
     includeDecimals?: boolean;
     decimalPrecision?: number;
     includeCommas?: boolean;
+    containerStyles?: CSSProperties;
+    digitStyles?: CSSProperties;
 }
 export interface NumberColumnProps {
     digit: string;
@@ -17,11 +19,13 @@ export interface NumberColumnProps {
     color: string;
     incrementColor: string;
     decrementColor: string;
+    digitStyles: CSSProperties;
 }
 export interface DecimalColumnProps {
     fontSize: string;
     color: string;
     isComma: boolean;
+    digitStyles: CSSProperties;
 }
-declare const AnimatedCounter: ({ value, fontSize, color, incrementColor, decrementColor, includeDecimals, decimalPrecision, includeCommas, }: AnimatedCounterProps) => React.JSX.Element;
+declare const AnimatedCounter: ({ value, fontSize, color, incrementColor, decrementColor, includeDecimals, decimalPrecision, includeCommas, containerStyles, digitStyles, }: AnimatedCounterProps) => React.JSX.Element;
 export default AnimatedCounter;
