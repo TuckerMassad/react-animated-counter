@@ -45,8 +45,8 @@ const DecimalColumn = ({ fontSize, color, isComma, digitStyles }: DecimalColumnP
       marginLeft: `calc(-${fontSize} / 10)`,
       ...digitStyles,
     }}>
-      {isComma ? ',' : '.'}
-    </span>
+    {isComma ? ',' : '.'}
+  </span>
 );
 
 // Individual number element component
@@ -91,7 +91,7 @@ const NumberColumn = memo(({
   if (digit === '-') {
     return (
       <span
-        style={{ 
+        style={{
           color: color,
           fontSize: fontSize,
           lineHeight: fontSize,
@@ -108,7 +108,7 @@ const NumberColumn = memo(({
     <div
       className='ticker-column-container'
       ref={columnContainer}
-      style={{ 
+      style={{
         fontSize: fontSize,
         lineHeight: fontSize,
         height: 'auto',
@@ -120,12 +120,13 @@ const NumberColumn = memo(({
     >
       <motion.div
         animate={{ x: 0, y: position }}
+        transition={{ duration: 0.3 }} // Adjust animation duration as needed
         className={`ticker-column ${animationClass}`}
         onAnimationComplete={handleAnimationComplete}
       >
         {[9, 8, 7, 6, 5, 4, 3, 2, 1, 0].map((num) => (
           <div className='ticker-digit' key={num}>
-            <span style={{ 
+            <span style={{
               fontSize: fontSize,
               lineHeight: fontSize,
               ...digitStyles,
@@ -151,7 +152,7 @@ const AnimatedCounter = ({
   decimalPrecision = 2,
   includeCommas = false,
   containerStyles = {},
-  digitStyles = {}, 
+  digitStyles = {},
 }: AnimatedCounterProps) => {
 
   const numArray = formatForDisplay(Math.abs(value), includeDecimals, decimalPrecision, includeCommas);
@@ -173,6 +174,7 @@ const AnimatedCounter = ({
       layout
       className='ticker-view'
       style={{ ...containerStyles }}
+      transition={{ layout: { duration: 0 } }} // Prevent layout animations
     >
       {/* Format integer to NumberColumn components */}
       {numArray.map((number: string, index: number) =>
