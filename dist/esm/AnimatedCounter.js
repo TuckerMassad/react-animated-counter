@@ -38,7 +38,7 @@ var NumberColumn = memo(function (_a) {
         return (React.createElement("span", { style: __assign({ color: color, fontSize: fontSize, lineHeight: fontSize, marginRight: "calc(".concat(fontSize, " / 5)") }, digitStyles) }, digit));
     }
     return (React.createElement("div", { className: 'ticker-column-container', ref: columnContainer, style: __assign({ fontSize: fontSize, lineHeight: fontSize, height: 'auto', color: color }, digitStyles) },
-        React.createElement(motion.div, { animate: { x: 0, y: position }, className: "ticker-column ".concat(animationClass), onAnimationComplete: handleAnimationComplete }, [9, 8, 7, 6, 5, 4, 3, 2, 1, 0].map(function (num) { return (React.createElement("div", { className: 'ticker-digit', key: num },
+        React.createElement(motion.div, { animate: { x: 0, y: position }, transition: { duration: 0.7 }, className: "ticker-column ".concat(animationClass), onAnimationComplete: handleAnimationComplete }, [9, 8, 7, 6, 5, 4, 3, 2, 1, 0].map(function (num) { return (React.createElement("div", { className: 'ticker-digit', key: num },
             React.createElement("span", { style: __assign({ fontSize: fontSize, lineHeight: fontSize }, digitStyles) }, num))); })),
         React.createElement("span", { className: 'number-placeholder' }, "0")));
 }, function (prevProps, nextProps) { return prevProps.digit === nextProps.digit && prevProps.delta === nextProps.delta; });
@@ -57,7 +57,7 @@ var AnimatedCounter = function (_a) {
             delta = 'decrease';
         }
     }
-    return (React.createElement(motion.div, { layout: true, className: 'ticker-view', style: __assign({}, containerStyles) },
+    return (React.createElement(motion.div, { layout: true, className: 'ticker-view', transition: { duration: 0.7 }, style: __assign({}, containerStyles) },
         React.createElement("span", { style: __assign({ color: color, fontSize: fontSize, lineHeight: fontSize, marginRight: "calc(".concat(fontSize, " / 5)") }, digitStyles) }, "%"),
         numArray.map(function (number, index) {
             return number === "." || number === "," ? (React.createElement(DecimalColumn, { key: index, fontSize: fontSize, color: color, isComma: number === ",", digitStyles: digitStyles })) : (React.createElement(NumberColumn, { key: index, digit: number, delta: delta, color: color, fontSize: fontSize, digitStyles: digitStyles }));

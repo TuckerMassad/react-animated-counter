@@ -109,6 +109,7 @@ const NumberColumn = memo(({
     >
       <motion.div
         animate={{ x: 0, y: position }}
+        transition={{ duration: 0.7 }}
         className={`ticker-column ${animationClass}`}
         onAnimationComplete={handleAnimationComplete}
       >
@@ -156,6 +157,7 @@ const AnimatedCounter = ({
     <motion.div
       layout
       className='ticker-view'
+      transition={{ duration: 0.7 }}
       style={{ ...containerStyles }}
     >
       <span

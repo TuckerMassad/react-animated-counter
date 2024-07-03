@@ -40,7 +40,7 @@ var NumberColumn = (0, react_1.memo)(function (_a) {
         return (react_1.default.createElement("span", { style: tslib_1.__assign({ color: color, fontSize: fontSize, lineHeight: fontSize, marginRight: "calc(".concat(fontSize, " / 5)") }, digitStyles) }, digit));
     }
     return (react_1.default.createElement("div", { className: 'ticker-column-container', ref: columnContainer, style: tslib_1.__assign({ fontSize: fontSize, lineHeight: fontSize, height: 'auto', color: color }, digitStyles) },
-        react_1.default.createElement(framer_motion_1.motion.div, { animate: { x: 0, y: position }, className: "ticker-column ".concat(animationClass), onAnimationComplete: handleAnimationComplete }, [9, 8, 7, 6, 5, 4, 3, 2, 1, 0].map(function (num) { return (react_1.default.createElement("div", { className: 'ticker-digit', key: num },
+        react_1.default.createElement(framer_motion_1.motion.div, { animate: { x: 0, y: position }, transition: { duration: 0.7 }, className: "ticker-column ".concat(animationClass), onAnimationComplete: handleAnimationComplete }, [9, 8, 7, 6, 5, 4, 3, 2, 1, 0].map(function (num) { return (react_1.default.createElement("div", { className: 'ticker-digit', key: num },
             react_1.default.createElement("span", { style: tslib_1.__assign({ fontSize: fontSize, lineHeight: fontSize }, digitStyles) }, num))); })),
         react_1.default.createElement("span", { className: 'number-placeholder' }, "0")));
 }, function (prevProps, nextProps) { return prevProps.digit === nextProps.digit && prevProps.delta === nextProps.delta; });
@@ -59,7 +59,7 @@ var AnimatedCounter = function (_a) {
             delta = 'decrease';
         }
     }
-    return (react_1.default.createElement(framer_motion_1.motion.div, { layout: true, className: 'ticker-view', style: tslib_1.__assign({}, containerStyles) },
+    return (react_1.default.createElement(framer_motion_1.motion.div, { layout: true, className: 'ticker-view', transition: { duration: 0.7 }, style: tslib_1.__assign({}, containerStyles) },
         react_1.default.createElement("span", { style: tslib_1.__assign({ color: color, fontSize: fontSize, lineHeight: fontSize, marginRight: "calc(".concat(fontSize, " / 5)") }, digitStyles) }, "%"),
         numArray.map(function (number, index) {
             return number === "." || number === "," ? (react_1.default.createElement(DecimalColumn, { key: index, fontSize: fontSize, color: color, isComma: number === ",", digitStyles: digitStyles })) : (react_1.default.createElement(NumberColumn, { key: index, digit: number, delta: delta, color: color, fontSize: fontSize, digitStyles: digitStyles }));
