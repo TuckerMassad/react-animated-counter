@@ -14,7 +14,7 @@ var DecimalColumn = function (_a) {
 };
 // Individual number element component
 var NumberColumn = (0, react_1.memo)(function (_a) {
-    var digit = _a.digit, delta = _a.delta, fontSize = _a.fontSize, color = _a.color, digitStyles = _a.digitStyles;
+    var digit = _a.digit, delta = _a.delta, fontSize = _a.fontSize, color = _a.color, duration = _a.duration, digitStyles = _a.digitStyles;
     var _b = (0, react_1.useState)(0), position = _b[0], setPosition = _b[1];
     var _c = (0, react_1.useState)(null), animationClass = _c[0], setAnimationClass = _c[1];
     var currentDigit = +digit;
@@ -40,13 +40,13 @@ var NumberColumn = (0, react_1.memo)(function (_a) {
         return (react_1.default.createElement("span", { style: tslib_1.__assign({ color: color, fontSize: fontSize, lineHeight: fontSize, marginRight: "calc(".concat(fontSize, " / 5)") }, digitStyles) }, digit));
     }
     return (react_1.default.createElement("div", { className: 'ticker-column-container', ref: columnContainer, style: tslib_1.__assign({ fontSize: fontSize, lineHeight: fontSize, height: 'auto', color: color }, digitStyles) },
-        react_1.default.createElement(framer_motion_1.motion.div, { animate: { x: 0, y: position }, transition: { duration: 0.7 }, className: "ticker-column ".concat(animationClass), onAnimationComplete: handleAnimationComplete }, [9, 8, 7, 6, 5, 4, 3, 2, 1, 0].map(function (num) { return (react_1.default.createElement("div", { className: 'ticker-digit', key: num },
+        react_1.default.createElement(framer_motion_1.motion.div, { animate: { x: 0, y: position }, transition: { duration: duration }, className: "ticker-column ".concat(animationClass), onAnimationComplete: handleAnimationComplete }, [9, 8, 7, 6, 5, 4, 3, 2, 1, 0].map(function (num) { return (react_1.default.createElement("div", { className: 'ticker-digit', key: num },
             react_1.default.createElement("span", { style: tslib_1.__assign({ fontSize: fontSize, lineHeight: fontSize }, digitStyles) }, num))); })),
         react_1.default.createElement("span", { className: 'number-placeholder' }, "0")));
 }, function (prevProps, nextProps) { return prevProps.digit === nextProps.digit && prevProps.delta === nextProps.delta; });
 // Main component
 var AnimatedCounter = function (_a) {
-    var _b = _a.value, value = _b === void 0 ? 0 : _b, _c = _a.fontSize, fontSize = _c === void 0 ? '18px' : _c, _d = _a.color, color = _d === void 0 ? 'black' : _d, _e = _a.containerStyles, containerStyles = _e === void 0 ? {} : _e, _f = _a.digitStyles, digitStyles = _f === void 0 ? {} : _f;
+    var _b = _a.value, value = _b === void 0 ? 0 : _b, _c = _a.fontSize, fontSize = _c === void 0 ? '18px' : _c, _d = _a.color, color = _d === void 0 ? 'black' : _d, _e = _a.duration, duration = _e === void 0 ? 0.7 : _e, _f = _a.containerStyles, containerStyles = _f === void 0 ? {} : _f, _g = _a.digitStyles, digitStyles = _g === void 0 ? {} : _g;
     var numArray = (0, util_1.formatForDisplay)(Math.abs(value));
     var previousNumber = (0, hooks_1.usePrevious)(value);
     var isNegative = value < 0;
@@ -59,13 +59,13 @@ var AnimatedCounter = function (_a) {
             delta = 'decrease';
         }
     }
-    return (react_1.default.createElement(framer_motion_1.motion.div, { layout: true, className: 'ticker-view', transition: { duration: 0.7 }, style: tslib_1.__assign({}, containerStyles) },
+    return (react_1.default.createElement(framer_motion_1.motion.div, { layout: true, className: 'ticker-view', transition: { duration: duration }, style: tslib_1.__assign({}, containerStyles) },
         react_1.default.createElement("span", { style: tslib_1.__assign({ color: color, fontSize: fontSize, lineHeight: fontSize, marginRight: "calc(".concat(fontSize, " / 5)") }, digitStyles) }, "%"),
         numArray.map(function (number, index) {
-            return number === "." || number === "," ? (react_1.default.createElement(DecimalColumn, { key: index, fontSize: fontSize, color: color, isComma: number === ",", digitStyles: digitStyles })) : (react_1.default.createElement(NumberColumn, { key: index, digit: number, delta: delta, color: color, fontSize: fontSize, digitStyles: digitStyles }));
+            return number === "." || number === "," ? (react_1.default.createElement(DecimalColumn, { key: index, fontSize: fontSize, color: color, isComma: number === ",", digitStyles: digitStyles })) : (react_1.default.createElement(NumberColumn, { key: index, digit: number, delta: delta, color: color, fontSize: fontSize, duration: duration, digitStyles: digitStyles }));
         }),
         isNegative &&
-            react_1.default.createElement(NumberColumn, { key: 'negative-feedback', digit: '-', delta: delta, color: color, fontSize: fontSize, digitStyles: digitStyles })));
+            react_1.default.createElement(NumberColumn, { key: 'negative-feedback', digit: '-', delta: delta, color: color, fontSize: fontSize, duration: duration, digitStyles: digitStyles })));
 };
 exports.default = AnimatedCounter;
 //# sourceMappingURL=AnimatedCounter.js.map

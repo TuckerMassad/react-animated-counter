@@ -1,14 +1,6 @@
 # React Animated Counter
 
-A lightweight React component for beautifully animated incrementation & decrementation of a state integer value. Inspired by Robinhood's portfolio balance animation. 
-
-![react-animated-counter demo](https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExb2N4ZG5mcXE1ZWdsZzQ4bnlxdXlvcGcwamQzcWhmNGNvaGNoem14aiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/6qomEsKHcyf6R1YmBs/source.gif)
-
-Built to support the chart hover tooltip on https://financhle.com - If you'd like to this component live in-action on a 5 year stock chart feel free to take a peek.
-
-## Installation
-
-`npm install react-animated-counter`
+Fork of a lightweight React component for beautifully animated precent value.
 
 ## Usage
 
@@ -19,12 +11,11 @@ Built to support the chart hover tooltip on https://financhle.com - If you'd lik
 |   `value`        | `integer`       | The state integer value                                                                                                     | `0`            |
 |   `fontSize`     | `string`        | Applied css `font-size`                                                                                                     | `18px`         |
 |   `color`        | `string`        | Applied css `color`                                                                                                         | `black`        |
+|   `duration`     | `number`        | Animation duration in seconds                                                                                               | `0.7`          |
 |`containerStyles` | `CSSProperties` | Styles to apply to the parent element of the main component. Used in same fashion as react `styles`                         | `{}`           |
 |`digitStyles`     | `CSSProperties` | Styles to apply to individual digit elements. Used in same fashion as react `styles`                                        | `{}`           |
 
 **Basic Demo:**
-
-Codesandbox Link: https://codesandbox.io/p/sandbox/clever-water-v5nwwx
 
 ```
 import React, { useState } from  'react';
@@ -42,7 +33,7 @@ const App = () => {
 
   return (
     <div>
-      <AnimatedCounter value={counterValue} color="white" fontSize="40px" />
+      <AnimatedCounter value={counterValue} color="white" fontSize="40px" duration={0.8} />
       <div>
         <button onClick={() => handleCounterUpdate(false)}>Decrement</button>
         <button onClick={() => handleCounterUpdate(true)}>Increment</button>
@@ -51,15 +42,3 @@ const App = () => {
   );
 };
 ```
-
-**Output:**
-
-![react-animated-counter demo](https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExMzhwbnF0NDU1ZmhsMHRnZnFwdzVycXU5b2MzYnpxZ3ZtZzFhNG0xNyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/N3Xsj09Gp9GbrKF86E/giphy.gif)
-
-**With `recharts` Demo:**
-
-Codesandbox Link: https://codesandbox.io/s/suspicious-morning-rx60sm?file=/src/App.js
-
-**Output:**
-
-![react-animated-counter recharts demo](https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExMXFoaHkzOG5oMG05aTF6dHo0NHRmOGxmdjQ0Zm1xdGdvNWprNDcyOSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IJP2ng53lyeF5QXi5T/giphy.gif)

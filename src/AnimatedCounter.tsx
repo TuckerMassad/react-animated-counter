@@ -9,6 +9,7 @@ export interface AnimatedCounterProps {
   value?: number;
   fontSize?: string;
   color?: string;
+  duration?: number;
   containerStyles?: CSSProperties;
   digitStyles?: CSSProperties;
 }
@@ -18,6 +19,7 @@ export interface NumberColumnProps {
   delta: string | null;
   fontSize: string;
   color: string;
+  duration: number;
   digitStyles: CSSProperties;
 }
 
@@ -48,6 +50,7 @@ const NumberColumn = memo(({
   delta,
   fontSize,
   color,
+  duration,
   digitStyles,
 }: NumberColumnProps) => {
 
@@ -109,7 +112,7 @@ const NumberColumn = memo(({
     >
       <motion.div
         animate={{ x: 0, y: position }}
-        transition={{ duration: 0.7 }}
+        transition={{ duration }}
         className={`ticker-column ${animationClass}`}
         onAnimationComplete={handleAnimationComplete}
       >
@@ -135,6 +138,7 @@ const AnimatedCounter = ({
   value = 0,
   fontSize = '18px',
   color = 'black',
+  duration = 0.7,
   containerStyles = {},
   digitStyles = {}, 
 }: AnimatedCounterProps) => {
@@ -157,7 +161,7 @@ const AnimatedCounter = ({
     <motion.div
       layout
       className='ticker-view'
-      transition={{ duration: 0.7 }}
+      transition={{ duration }}
       style={{ ...containerStyles }}
     >
       <span
@@ -188,6 +192,7 @@ const AnimatedCounter = ({
             delta={delta}
             color={color}
             fontSize={fontSize}
+            duration={duration}
             digitStyles={digitStyles}
           />
         )
@@ -200,6 +205,7 @@ const AnimatedCounter = ({
           delta={delta}
           color={color}
           fontSize={fontSize}
+          duration={duration}
           digitStyles={digitStyles}
         />
       }
