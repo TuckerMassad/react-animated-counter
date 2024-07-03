@@ -19,11 +19,6 @@ Built to support the chart hover tooltip on https://financhle.com - If you'd lik
 |   `value`        | `integer`       | The state integer value                                                                                                     | `0`            |
 |   `fontSize`     | `string`        | Applied css `font-size`                                                                                                     | `18px`         |
 |   `color`        | `string`        | Applied css `color`                                                                                                         | `black`        |
-| `incrementColor` | `string`        | Animation color when `value` increases                                                                                      | `#32cd32`      |
-| `decrementColor` | `string`        | Animation color when `value` decreases                                                                                      | `#fe6862`      |
-|`includeDecimals` | `boolean`       | Includes or removes decimal point values in provided `value` (rounds to nearest hundredth by default)                       | `true`         |
-|`decimalPrecision`| `boolean`       | The nth decimal place of precision (ex. `5` will calculate number to the nearest hundred thousandth)                        | `2`            |
-|`includeCommas`   | `boolean`       | Adds comma separators to every third digit to the left of the decimal point used in numbers with four or more digits        | `false`        |
 |`containerStyles` | `CSSProperties` | Styles to apply to the parent element of the main component. Used in same fashion as react `styles`                         | `{}`           |
 |`digitStyles`     | `CSSProperties` | Styles to apply to individual digit elements. Used in same fashion as react `styles`                                        | `{}`           |
 

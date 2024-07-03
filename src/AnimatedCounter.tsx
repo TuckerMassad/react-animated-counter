@@ -9,11 +9,6 @@ export interface AnimatedCounterProps {
   value?: number;
   fontSize?: string;
   color?: string;
-  incrementColor?: string;
-  decrementColor?: string;
-  includeDecimals?: boolean;
-  decimalPrecision?: number;
-  includeCommas?: boolean;
   containerStyles?: CSSProperties;
   digitStyles?: CSSProperties;
 }
@@ -23,8 +18,6 @@ export interface NumberColumnProps {
   delta: string | null;
   fontSize: string;
   color: string;
-  incrementColor: string;
-  decrementColor: string;
   digitStyles: CSSProperties;
 }
 
@@ -45,8 +38,8 @@ const DecimalColumn = ({ fontSize, color, isComma, digitStyles }: DecimalColumnP
       marginLeft: `calc(-${fontSize} / 10)`,
       ...digitStyles,
     }}>
-      {isComma ? ',' : '.'}
-    </span>
+    {isComma ? ',' : '.'}
+  </span>
 );
 
 // Individual number element component
@@ -55,8 +48,6 @@ const NumberColumn = memo(({
   delta,
   fontSize,
   color,
-  incrementColor,
-  decrementColor,
   digitStyles,
 }: NumberColumnProps) => {
 
@@ -69,7 +60,7 @@ const NumberColumn = memo(({
   const handleAnimationComplete = useCallback(
     debounce(() => {
       setAnimationClass("");
-    }, 200),
+    }, 700),
     []
   );
 
@@ -113,8 +104,6 @@ const NumberColumn = memo(({
         lineHeight: fontSize,
         height: 'auto',
         color: color,
-        '--increment-color': `${incrementColor}`,
-        '--decrement-color': `${decrementColor}`,
         ...digitStyles,
       } as React.CSSProperties}
     >
@@ -135,7 +124,7 @@ const NumberColumn = memo(({
           </div>
         ))}
       </motion.div>
-      <span className='number-placeholder'>0</span>
+      <span className='number-placeholder'>0</span>      
     </div>
   );
 }, (prevProps, nextProps) => prevProps.digit === nextProps.digit && prevProps.delta === nextProps.delta);
@@ -145,16 +134,11 @@ const AnimatedCounter = ({
   value = 0,
   fontSize = '18px',
   color = 'black',
-  incrementColor = '#32cd32',
-  decrementColor = '#fe6862',
-  includeDecimals = true,
-  decimalPrecision = 2,
-  includeCommas = false,
   containerStyles = {},
   digitStyles = {}, 
 }: AnimatedCounterProps) => {
 
-  const numArray = formatForDisplay(Math.abs(value), includeDecimals, decimalPrecision, includeCommas);
+  const numArray = formatForDisplay(Math.abs(value));
   const previousNumber = usePrevious(value);
   const isNegative = value < 0;
 
@@ -174,6 +158,17 @@ const AnimatedCounter = ({
       className='ticker-view'
       style={{ ...containerStyles }}
     >
+      <span
+        style={{ 
+          color: color,
+          fontSize: fontSize,
+          lineHeight: fontSize,
+          marginRight: `calc(${fontSize} / 5)`,
+          ...digitStyles
+        }}
+      >
+        %
+      </span>
       {/* Format integer to NumberColumn components */}
       {numArray.map((number: string, index: number) =>
         number === "." || number === "," ? (
@@ -191,8 +186,6 @@ const AnimatedCounter = ({
             delta={delta}
             color={color}
             fontSize={fontSize}
-            incrementColor={incrementColor}
-            decrementColor={decrementColor}
             digitStyles={digitStyles}
           />
         )
@@ -205,8 +198,6 @@ const AnimatedCounter = ({
           delta={delta}
           color={color}
           fontSize={fontSize}
-          incrementColor={incrementColor}
-          decrementColor={decrementColor}
           digitStyles={digitStyles}
         />
       }

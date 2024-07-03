@@ -1,5 +1,5 @@
 "use strict";
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", { value: true });
 var react_1 = require("react");
 // Hook used to track previous value of primary number state in AnimatedCounter & individual digits in NumberColumn
 var usePrevious = function (value) {
@@ -9,4 +9,5 @@ var usePrevious = function (value) {
     }, [value]);
     return ref.current;
 };
-exports["default"] = usePrevious;
+exports.default = usePrevious;
+//# sourceMappingURL=usePrevious.js.map
