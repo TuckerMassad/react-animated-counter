@@ -1,6 +1,6 @@
 {
   "name": "react-animated-percent",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "React Animated Percent Component",
   "main": "./dist/cjs/index.js",
   "module": "./dist/esm/index.js",
