@@ -1,4 +1,4 @@
-# React Animated Counter
+# React Animated Percent
 
 Fork of a lightweight React component for beautifully animated precent value.
 
@@ -19,24 +19,24 @@ Fork of a lightweight React component for beautifully animated precent value.
 
 ```
 import React, { useState } from  'react';
-import { AnimatedCounter } from  'react-animated-counter';
+import { AnimatedPercent } from  'react-animated-percent';
 
 const App = () => {
   // Integer state
-  const [counterValue, setCounterValue] = useState(500);
+  const [value, setValue] = useState(500);
 
   // Handle random increment/decrement
-  const handleCounterUpdate = (increment) => {
+  const handleUpdate = (increment) => {
     const delta = (Math.floor(Math.random() * 100) + 1) * 0.99;
-    setCounterValue(increment ? counterValue + delta : counterValue - delta);
+    setValue(increment ? value + delta : value - delta);
   };
 
   return (
     <div>
-      <AnimatedCounter value={counterValue} color="white" fontSize="40px" duration={0.8} />
+      <AnimatedPercent value={value} color="white" fontSize="40px" duration={0.8} />
       <div>
-        <button onClick={() => handleCounterUpdate(false)}>Decrement</button>
-        <button onClick={() => handleCounterUpdate(true)}>Increment</button>
+        <button onClick={() => handleUpdate(false)}>Decrement</button>
+        <button onClick={() => handleUpdate(true)}>Increment</button>
       </div>
     </div>
   );

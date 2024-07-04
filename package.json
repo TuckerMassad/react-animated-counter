@@ -1,7 +1,7 @@
 {
-  "name": "react-animated-counter",
-  "version": "1.7.9",
-  "description": "React Animated Counter Component",
+  "name": "react-animated-percent",
+  "version": "1.0.3",
+  "description": "React Animated Percent Component",
   "main": "./dist/cjs/index.js",
   "module": "./dist/esm/index.js",
   "types": "./dist/esm/index.d.ts",
@@ -12,12 +12,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/TuckerMassad/react-animated-counter.git"
+    "url": "git+https://github.com/simpleclosure/react-animated-percent"
   },
   "keywords": [
     "react",
     "animated",
-    "counter",
+    "percent",
     "components",
     "ui",
     "number-animation",
@@ -37,15 +37,17 @@
   "author": "tuckermassad",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/TuckerMassad/react-animated-counter/issues"
+    "url": "https://github.com/simpleclosure/react-animated-percent/issues"
   },
-  "homepage": "https://github.com/TuckerMassad/react-animated-counter#readme",
+  "homepage": "https://github.com/simpleclosure/react-animated-percent#readme",
   "peerDependencies": {
     "react": ">=16"
   },
   "dependencies": {
     "framer-motion": "^10.11.4",
-    "lodash": "^4.17.21"
+    "lodash": "^4.17.21",
+    "typescript": "^5.5.3",
+    "yarn": "^1.22.22"
   },
   "devDependencies": {
     "@types/lodash": "^4.14.202",

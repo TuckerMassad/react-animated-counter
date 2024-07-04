@@ -1,3 +1,3 @@
-import AnimatedCounter from './AnimatedCounter';
-export { AnimatedCounter };
+import AnimatedPercent from './AnimatedPercent';
+export { AnimatedPercent };
 //# sourceMappingURL=index.js.map

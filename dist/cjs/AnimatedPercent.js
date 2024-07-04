@@ -45,7 +45,7 @@ var NumberColumn = (0, react_1.memo)(function (_a) {
         react_1.default.createElement("span", { className: 'number-placeholder' }, "0")));
 }, function (prevProps, nextProps) { return prevProps.digit === nextProps.digit && prevProps.delta === nextProps.delta; });
 // Main component
-var AnimatedCounter = function (_a) {
+var AnimatedPercent = function (_a) {
     var _b = _a.value, value = _b === void 0 ? 0 : _b, _c = _a.fontSize, fontSize = _c === void 0 ? '18px' : _c, _d = _a.color, color = _d === void 0 ? 'black' : _d, _e = _a.duration, duration = _e === void 0 ? 0.7 : _e, _f = _a.containerStyles, containerStyles = _f === void 0 ? {} : _f, _g = _a.digitStyles, digitStyles = _g === void 0 ? {} : _g;
     var numArray = (0, util_1.formatForDisplay)(Math.abs(value));
     var previousNumber = (0, hooks_1.usePrevious)(value);
@@ -67,5 +67,5 @@ var AnimatedCounter = function (_a) {
         isNegative &&
             react_1.default.createElement(NumberColumn, { key: 'negative-feedback', digit: '-', delta: delta, color: color, fontSize: fontSize, duration: duration, digitStyles: digitStyles })));
 };
-exports.default = AnimatedCounter;
-//# sourceMappingURL=AnimatedCounter.js.map
+exports.default = AnimatedPercent;
+//# sourceMappingURL=AnimatedPercent.js.map

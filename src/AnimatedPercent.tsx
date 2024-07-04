@@ -5,7 +5,7 @@ import { usePrevious } from "./hooks";
 import debounce from 'lodash/debounce';
 import './styles.css';
 
-export interface AnimatedCounterProps {
+export interface AnimatedPercentProps {
   value?: number;
   fontSize?: string;
   color?: string;
@@ -134,14 +134,14 @@ const NumberColumn = memo(({
 }, (prevProps, nextProps) => prevProps.digit === nextProps.digit && prevProps.delta === nextProps.delta);
 
 // Main component
-const AnimatedCounter = ({
+const AnimatedPercent = ({
   value = 0,
   fontSize = '18px',
   color = 'black',
   duration = 0.7,
   containerStyles = {},
   digitStyles = {}, 
-}: AnimatedCounterProps) => {
+}: AnimatedPercentProps) => {
 
   const numArray = formatForDisplay(Math.abs(value));
   const previousNumber = usePrevious(value);
@@ -213,4 +213,4 @@ const AnimatedCounter = ({
   );
 }
 
-export default AnimatedCounter;
+export default AnimatedPercent;

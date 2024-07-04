@@ -1,1 +1,0 @@
-{"version":3,"file":"calculateDigitWidth.js","sourceRoot":"","sources":["../../../src/util/calculateDigitWidth.ts"],"names":[],"mappings":"AAAA,6CAA6C;AAC7C,IAAM,mBAAmB,GAAG,UAAC,KAAa;IACxC,QAAQ,UAAG,KAAK,CAAE,EAAE;QAClB,KAAK,GAAG;YACN,OAAO,KAAK,CAAA;QACd,KAAK,GAAG;YACN,OAAO,KAAK,CAAA;QACd;YACE,OAAO,MAAM,CAAA;KAChB;AACH,CAAC,CAAA;AAED,eAAe,mBAAmB,CAAC"}

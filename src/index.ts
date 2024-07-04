@@ -1,3 +1,3 @@
-import AnimatedCounter from './AnimatedCounter';
+import AnimatedPercent from './AnimatedPercent';
 
-export { AnimatedCounter };
+export { AnimatedPercent };

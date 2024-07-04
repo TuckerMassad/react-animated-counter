@@ -1,6 +1,6 @@
 import React, { CSSProperties } from "react";
 import './styles.css';
-export interface AnimatedCounterProps {
+export interface AnimatedPercentProps {
     value?: number;
     fontSize?: string;
     color?: string;
@@ -22,5 +22,5 @@ export interface DecimalColumnProps {
     isComma: boolean;
     digitStyles: CSSProperties;
 }
-declare const AnimatedCounter: ({ value, fontSize, color, duration, containerStyles, digitStyles, }: AnimatedCounterProps) => React.JSX.Element;
-export default AnimatedCounter;
+declare const AnimatedPercent: ({ value, fontSize, color, duration, containerStyles, digitStyles, }: AnimatedPercentProps) => React.JSX.Element;
+export default AnimatedPercent;
