@@ -59,7 +59,7 @@ var AnimatedPercent = function (_a) {
             delta = 'decrease';
         }
     }
-    return (react_1.default.createElement(framer_motion_1.motion.div, { layout: true, className: 'ticker-view', transition: { duration: duration }, style: tslib_1.__assign({}, containerStyles) },
+    return (react_1.default.createElement("div", { className: 'ticker-view', style: tslib_1.__assign({}, containerStyles) },
         react_1.default.createElement("span", { style: tslib_1.__assign({ color: color, fontSize: fontSize, lineHeight: fontSize, marginRight: "calc(".concat(fontSize, " / 5)") }, digitStyles) }, "%"),
         numArray.map(function (number, index) {
             return number === "." || number === "," ? (react_1.default.createElement(DecimalColumn, { key: index, fontSize: fontSize, color: color, isComma: number === ",", digitStyles: digitStyles })) : (react_1.default.createElement(NumberColumn, { key: index, digit: number, delta: delta, color: color, fontSize: fontSize, duration: duration, digitStyles: digitStyles }));

@@ -158,10 +158,8 @@ const AnimatedPercent = ({
   }
 
   return (
-    <motion.div
-      layout
+    <div
       className='ticker-view'
-      transition={{ duration }}
       style={{ ...containerStyles }}
     >
       <span
@@ -209,7 +207,7 @@ const AnimatedPercent = ({
           digitStyles={digitStyles}
         />
       }
-    </motion.div>
+    </div>
   );
 }
 
