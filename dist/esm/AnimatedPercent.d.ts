@@ -1,12 +1,15 @@
 import React, { CSSProperties } from "react";
-import './styles.css';
+import "./styles.css";
 export interface AnimatedPercentProps {
-    value?: number;
-    fontSize?: string;
     color?: string;
-    duration?: number;
     containerStyles?: CSSProperties;
+    decimalPrecision?: number;
     digitStyles?: CSSProperties;
+    duration?: number;
+    fontSize?: string;
+    includeCommas?: boolean;
+    includeDecimals?: boolean;
+    value?: number;
 }
 export interface NumberColumnProps {
     digit: string;
@@ -22,5 +25,5 @@ export interface DecimalColumnProps {
     isComma: boolean;
     digitStyles: CSSProperties;
 }
-declare const AnimatedPercent: ({ value, fontSize, color, duration, containerStyles, digitStyles, }: AnimatedPercentProps) => React.JSX.Element;
+declare const AnimatedPercent: ({ color, containerStyles, decimalPrecision, digitStyles, duration, fontSize, includeCommas, includeDecimals, value, }: AnimatedPercentProps) => React.JSX.Element;
 export default AnimatedPercent;
