@@ -8,7 +8,9 @@ Built to support the chart hover tooltip on https://financhle.com - If you'd lik
 
 ## Installation
 
-`npm install react-animated-counter`
+```bash
+npm install react-animated-counter
+```
 
 ## Usage
 
@@ -31,9 +33,9 @@ Built to support the chart hover tooltip on https://financhle.com - If you'd lik
 
 Codesandbox Link: https://codesandbox.io/p/sandbox/clever-water-v5nwwx
 
-```
-import React, { useState } from  'react';
-import { AnimatedCounter } from  'react-animated-counter';
+```tsx
+import React, { useState } from 'react';
+import { AnimatedCounter } from 'react-animated-counter';
 
 const App = () => {
   // Integer state
