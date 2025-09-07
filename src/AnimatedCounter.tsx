@@ -59,12 +59,11 @@ const NumberColumn = memo(({
   incrementColor,
   decrementColor,
   digitStyles,
-  animateInitialValue = true,
 }: NumberColumnProps & { animateInitialValue?: boolean }) => {
-
-  const [position, setPosition] = useState<number>(0);
+  const fontSizeValue = parseFloat(fontSize.replace('px', ''));
+  const digitValue = parseInt(digit, 10);
+  const [position, setPosition] = useState<number>(fontSizeValue * digitValue);
   const [animationClass, setAnimationClass] = useState<string | null>(null);
-  const [isInitialized, setIsInitialized] = useState<boolean>(false);
   const currentDigit = +digit;
   const previousDigit = usePrevious(+currentDigit);
   const columnContainer = useRef<HTMLDivElement>(null);
@@ -84,23 +83,14 @@ const NumberColumn = memo(({
   }, []);
 
   useLayoutEffect(() => {
-    if (!isInitialized && columnContainer?.current?.clientHeight) {
-      setColumnToNumber(digit, animateInitialValue);
-      setIsInitialized(true);
-    }
-  }, [digit, setColumnToNumber, isInitialized, animateInitialValue]);
-
-  useEffect(() => {
-    if (isInitialized) {
-      setAnimationClass(previousDigit !== currentDigit ? delta : '');
-    }
-  }, [digit, delta, isInitialized]);
-
-  useEffect(() => {
-    if (isInitialized) {
+    if (columnContainer?.current?.clientHeight) {
       setColumnToNumber(digit);
     }
-  }, [digit, setColumnToNumber, isInitialized]);
+  }, [digit, setColumnToNumber]);
+
+  useEffect(() => {
+    setAnimationClass(previousDigit !== currentDigit ? delta : '');
+  }, [digit, delta]);
 
   // If digit is negative symbol, simply return an unanimated character
   if (digit === '-') {
@@ -134,10 +124,10 @@ const NumberColumn = memo(({
       } as React.CSSProperties}
     >
       <motion.div
+        initial={{ x: 0, y: position }}
         animate={{ x: 0, y: position }}
         className={`ticker-column ${animationClass}`}
         onAnimationComplete={handleAnimationComplete}
-        initial={animateInitialValue ? { x: 0, y: 0 } : { x: 0, y: position }}
       >
         {[9, 8, 7, 6, 5, 4, 3, 2, 1, 0].map((num) => (
           <div className='ticker-digit' key={num}>
@@ -168,7 +158,6 @@ const AnimatedCounter = ({
   includeCommas = false,
   containerStyles = {},
   digitStyles = {}, 
-  animateInitialValue = false,
 }: AnimatedCounterProps) => {
 
   const numArray = formatForDisplay(Math.abs(value), includeDecimals, decimalPrecision, includeCommas);
@@ -211,7 +200,6 @@ const AnimatedCounter = ({
             incrementColor={incrementColor}
             decrementColor={decrementColor}
             digitStyles={digitStyles}
-            animateInitialValue={animateInitialValue}
           />
         )
       )}
@@ -226,7 +214,6 @@ const AnimatedCounter = ({
           incrementColor={incrementColor}
           decrementColor={decrementColor}
           digitStyles={digitStyles}
-          animateInitialValue={animateInitialValue}
         />
       }
     </motion.div>
