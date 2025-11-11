@@ -28,11 +28,11 @@
 }
 
 .ticker-column.increase {
-  animation: pulseIncrement 500ms cubic-bezier(0.4, 0, 0.6, 1) 1;
+  animation: pulseIncrement var(--animation-duration) cubic-bezier(0.4, 0, 0.6, 1) 1;
 }
 
 .ticker-column.decrease {
-  animation: pulseDecrement 500ms cubic-bezier(0.4, 0, 0.6, 1) 1;
+  animation: pulseDecrement var(--animation-duration) cubic-bezier(0.4, 0, 0.6, 1) 1;
 }
 
 @keyframes pulseIncrement {

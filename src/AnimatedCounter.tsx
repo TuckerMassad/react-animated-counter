@@ -11,6 +11,7 @@ export interface AnimatedCounterProps {
   color?: string;
   incrementColor?: string;
   decrementColor?: string;
+  animationDuration?: string;
   includeDecimals?: boolean;
   decimalPrecision?: number;
   includeCommas?: boolean;
@@ -26,6 +27,7 @@ export interface NumberColumnProps {
   color: string;
   incrementColor: string;
   decrementColor: string;
+  animationDuration: string;
   digitStyles: CSSProperties;
 }
 
@@ -58,6 +60,7 @@ const NumberColumn = memo(({
   color,
   incrementColor,
   decrementColor,
+  animationDuration,
   digitStyles,
 }: NumberColumnProps & { animateInitialValue?: boolean }) => {
   const fontSizeValue = parseFloat(fontSize.replace('px', ''));
@@ -120,6 +123,7 @@ const NumberColumn = memo(({
         color: color,
         '--increment-color': `${incrementColor}`,
         '--decrement-color': `${decrementColor}`,
+        '--animation-duration': `${animationDuration}`,
         ...digitStyles,
       } as React.CSSProperties}
     >
@@ -153,6 +157,7 @@ const AnimatedCounter = ({
   color = 'black',
   incrementColor = '#32cd32',
   decrementColor = '#fe6862',
+  animationDuration = '500ms',
   includeDecimals = true,
   decimalPrecision = 2,
   includeCommas = false,
@@ -172,6 +177,16 @@ const AnimatedCounter = ({
     } else if (value < previousNumber) {
       delta = 'decrease';
     }
+  }
+
+  const numberColumnCommonProps = {
+    delta,
+    color,
+    fontSize,
+    incrementColor,
+    decrementColor,
+    animationDuration,
+    digitStyles,
   }
 
   return (
@@ -194,12 +209,7 @@ const AnimatedCounter = ({
           <NumberColumn
             key={index}
             digit={number}
-            delta={delta}
-            color={color}
-            fontSize={fontSize}
-            incrementColor={incrementColor}
-            decrementColor={decrementColor}
-            digitStyles={digitStyles}
+            {...numberColumnCommonProps}
           />
         )
       )}
@@ -208,12 +218,7 @@ const AnimatedCounter = ({
         <NumberColumn
           key={'negative-feedback'}
           digit={'-'}
-          delta={delta}
-          color={color}
-          fontSize={fontSize}
-          incrementColor={incrementColor}
-          decrementColor={decrementColor}
-          digitStyles={digitStyles}
+          {...numberColumnCommonProps}
         />
       }
     </motion.div>
