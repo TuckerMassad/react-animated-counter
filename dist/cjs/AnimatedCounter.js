@@ -1,7 +1,7 @@
 "use strict";
 exports.__esModule = true;
 var tslib_1 = require("tslib");
-require("./AnimatedCounter.styles.scss");
+require("./styles.css");
 var react_1 = tslib_1.__importStar(require("react"));
 var framer_motion_1 = require("framer-motion");
 var util_1 = require("./util");

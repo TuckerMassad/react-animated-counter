@@ -1,4 +1,4 @@
-import './AnimatedCounter.styles.scss';
+import './styles.css';
 import React, { CSSProperties } from 'react';
 export interface AnimatedCounterProps {
     value?: number;

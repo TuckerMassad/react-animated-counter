@@ -1,4 +1,4 @@
-import './AnimatedCounter.styles.scss';
+import './styles.css';
 import React, { memo, useEffect, useRef, useState, CSSProperties, useMemo } from 'react';
 import { motion } from "framer-motion";
 import { formatForDisplay } from "./util";
