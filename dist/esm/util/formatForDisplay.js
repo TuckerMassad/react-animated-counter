@@ -6,3 +6,4 @@ var formatForDisplay = function (number, includeDecimals, decimalPrecision, incl
     return numberToFormat.split('').reverse();
 };
 export default formatForDisplay;
+//# sourceMappingURL=formatForDisplay.js.map

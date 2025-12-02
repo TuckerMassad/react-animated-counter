@@ -1,5 +1,5 @@
-import React, { CSSProperties } from "react";
-import './styles.css';
+import './AnimatedCounter.styles.scss';
+import React, { CSSProperties } from 'react';
 export interface AnimatedCounterProps {
     value?: number;
     fontSize?: string;
@@ -27,5 +27,5 @@ export interface DecimalColumnProps {
     isComma: boolean;
     digitStyles: CSSProperties;
 }
-declare const AnimatedCounter: ({ value, fontSize, color, incrementColor, decrementColor, includeDecimals, decimalPrecision, includeCommas, containerStyles, digitStyles, }: AnimatedCounterProps) => React.JSX.Element;
-export default AnimatedCounter;
+declare const _default: React.MemoExoticComponent<({ value, fontSize, color, incrementColor, decrementColor, includeDecimals, decimalPrecision, includeCommas, containerStyles, digitStyles, }: AnimatedCounterProps) => React.JSX.Element>;
+export default _default;

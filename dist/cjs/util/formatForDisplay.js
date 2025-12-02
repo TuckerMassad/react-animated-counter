@@ -8,3 +8,4 @@ var formatForDisplay = function (number, includeDecimals, decimalPrecision, incl
     return numberToFormat.split('').reverse();
 };
 exports["default"] = formatForDisplay;
+//# sourceMappingURL=formatForDisplay.js.map

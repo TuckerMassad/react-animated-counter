@@ -1,9 +1,9 @@
-import React, { memo, useEffect, useCallback, useRef, useState, CSSProperties, useLayoutEffect } from "react";
+import './AnimatedCounter.styles.scss';
+import React, { memo, useEffect, useRef, useState, CSSProperties, useMemo } from 'react';
 import { motion } from "framer-motion";
 import { formatForDisplay } from "./util";
 import { usePrevious } from "./hooks";
 import debounce from 'lodash/debounce';
-import './styles.css';
 
 export interface AnimatedCounterProps {
   value?: number;
@@ -16,7 +16,6 @@ export interface AnimatedCounterProps {
   includeCommas?: boolean;
   containerStyles?: CSSProperties;
   digitStyles?: CSSProperties;
-  animateInitialValue?: boolean;
 }
 
 export interface NumberColumnProps {
@@ -36,19 +35,25 @@ export interface DecimalColumnProps {
   digitStyles: CSSProperties;
 }
 
+// Array of digits to vertically scroll through
+const DIGIT_ARRAY = [9, 8, 7, 6, 5, 4, 3, 2, 1, 0];
+
 // Decimal element component
-const DecimalColumn = ({ fontSize, color, isComma, digitStyles }: DecimalColumnProps) => (
-  <span
-    style={{
-      fontSize: fontSize,
-      lineHeight: fontSize,
-      color: color,
-      marginLeft: `calc(-${fontSize} / 10)`,
-      ...digitStyles,
-    }}>
+const DecimalColumn = memo(({ fontSize, color, isComma, digitStyles }: DecimalColumnProps) => {
+  const decimalStyle = useMemo(() => ({
+    fontSize: fontSize,
+    lineHeight: fontSize,
+    color: color,
+    marginLeft: `calc(-${fontSize} / 10)`,
+    ...digitStyles,
+  }), [fontSize, color, digitStyles]);
+
+  return (
+    <span style={decimalStyle}>
       {isComma ? ',' : '.'}
     </span>
-);
+  );
+});
 
 // Individual number element component
 const NumberColumn = memo(({
@@ -59,7 +64,8 @@ const NumberColumn = memo(({
   incrementColor,
   decrementColor,
   digitStyles,
-}: NumberColumnProps & { animateInitialValue?: boolean }) => {
+}: NumberColumnProps) => {
+
   const fontSizeValue = parseFloat(fontSize.replace('px', ''));
   const digitValue = parseInt(digit, 10);
   const [position, setPosition] = useState<number>(fontSizeValue * digitValue);
@@ -67,43 +73,62 @@ const NumberColumn = memo(({
   const currentDigit = +digit;
   const previousDigit = usePrevious(+currentDigit);
   const columnContainer = useRef<HTMLDivElement>(null);
+  const hasHydrated = useRef<boolean>(false);
 
-  const handleAnimationComplete = useCallback(
-    debounce(() => {
-      setAnimationClass("");
-    }, 200),
+  const handleAnimationComplete = useMemo(
+    () =>
+      debounce(() => {
+        setAnimationClass("");
+      }, 200),
     []
   );
 
-  const setColumnToNumber = useCallback((number: string, animate: boolean = true) => {
-    if (columnContainer?.current?.clientHeight) {
-      const newPosition = columnContainer.current.clientHeight * parseInt(number, 10);
-      setPosition(newPosition);
+  // Update the column position
+  useEffect(() => {
+    if (Number.isNaN(digitValue) || Number.isNaN(fontSizeValue)) {
+      return;
     }
-  }, []);
+    // Each 'row' is assumed to be roughly one fontSize tall
+    const newPosition = fontSizeValue * digitValue;
+    setPosition(newPosition);
+  }, [digitValue, fontSizeValue]);
 
-  useLayoutEffect(() => {
-    if (columnContainer?.current?.clientHeight) {
-      setColumnToNumber(digit);
-    }
-  }, [digit, setColumnToNumber]);
+  const containerStyle = useMemo(() => ({
+    fontSize: fontSize,
+    lineHeight: fontSize,
+    height: 'auto' as const,
+    color: color,
+    '--increment-color': `${incrementColor}`,
+    '--decrement-color': `${decrementColor}`,
+    ...digitStyles,
+  } as React.CSSProperties), [fontSize, color, incrementColor, decrementColor, digitStyles]);
+
+  const digitSpanStyle = useMemo(() => ({
+    fontSize: fontSize,
+    lineHeight: fontSize,
+    ...digitStyles,
+  }), [fontSize, digitStyles]);
+
+  const negativeStyle = useMemo(() => ({
+    color: color,
+    fontSize: fontSize,
+    lineHeight: fontSize,
+    marginRight: `calc(${fontSize} / 5)`,
+    ...digitStyles
+  }), [color, fontSize, digitStyles]);
 
   useEffect(() => {
+    if (!hasHydrated.current) {
+      hasHydrated.current = true;
+      return;
+    }
     setAnimationClass(previousDigit !== currentDigit ? delta : '');
   }, [digit, delta]);
 
   // If digit is negative symbol, simply return an unanimated character
   if (digit === '-') {
     return (
-      <span
-        style={{ 
-          color: color,
-          fontSize: fontSize,
-          lineHeight: fontSize,
-          marginRight: `calc(${fontSize} / 5)`,
-          ...digitStyles
-        }}
-      >
+      <span style={negativeStyle}>
         {digit}
       </span>
     )
@@ -113,29 +138,18 @@ const NumberColumn = memo(({
     <div
       className='ticker-column-container'
       ref={columnContainer}
-      style={{ 
-        fontSize: fontSize,
-        lineHeight: fontSize,
-        height: 'auto',
-        color: color,
-        '--increment-color': `${incrementColor}`,
-        '--decrement-color': `${decrementColor}`,
-        ...digitStyles,
-      } as React.CSSProperties}
+      style={containerStyle}
     >
       <motion.div
         initial={{ x: 0, y: position }}
         animate={{ x: 0, y: position }}
         className={`ticker-column ${animationClass}`}
         onAnimationComplete={handleAnimationComplete}
+        {...(!hasHydrated.current && { transition: { duration: 0 } })} // Skip animation on first render
       >
-        {[9, 8, 7, 6, 5, 4, 3, 2, 1, 0].map((num) => (
+        {DIGIT_ARRAY.map((num) => (
           <div className='ticker-digit' key={num}>
-            <span style={{ 
-              fontSize: fontSize,
-              lineHeight: fontSize,
-              ...digitStyles,
-            }}>
+            <span style={digitSpanStyle}>
               {num}
             </span>
           </div>
@@ -144,7 +158,17 @@ const NumberColumn = memo(({
       <span className='number-placeholder'>0</span>
     </div>
   );
-}, (prevProps, nextProps) => prevProps.digit === nextProps.digit && prevProps.delta === nextProps.delta);
+}, (prevProps, nextProps) => {
+  return (
+    prevProps.digit === nextProps.digit &&
+    prevProps.delta === nextProps.delta &&
+    prevProps.fontSize === nextProps.fontSize &&
+    prevProps.color === nextProps.color &&
+    prevProps.incrementColor === nextProps.incrementColor &&
+    prevProps.decrementColor === nextProps.decrementColor &&
+    JSON.stringify(prevProps.digitStyles) === JSON.stringify(nextProps.digitStyles)
+  );
+});
 
 // Main component
 const AnimatedCounter = ({
@@ -160,25 +184,36 @@ const AnimatedCounter = ({
   digitStyles = {}, 
 }: AnimatedCounterProps) => {
 
-  const numArray = formatForDisplay(Math.abs(value), includeDecimals, decimalPrecision, includeCommas);
+  const hasInitialRender = useRef<boolean>(true);
+
+  const numArray = useMemo(() => 
+    formatForDisplay(Math.abs(value), includeDecimals, decimalPrecision, includeCommas),
+    [value, includeDecimals, decimalPrecision, includeCommas]
+  );
+
   const previousNumber = usePrevious(value);
   const isNegative = value < 0;
 
-  let delta: string | null = null;
-
-  if (previousNumber !== null) {
-    if (value > previousNumber) {
-      delta = 'increase';
-    } else if (value < previousNumber) {
-      delta = 'decrease';
+  const delta = useMemo((): string | null => {
+    if (previousNumber !== null) {
+      if (value > previousNumber) {
+        return 'increase';
+      } else if (value < previousNumber) {
+        return 'decrease';
+      }
     }
-  }
+    return null;
+  }, [value, previousNumber]);
+
+  // Mark as hydrated after first render
+  useEffect(() => {
+    hasInitialRender.current = false;
+  }, []);
 
   return (
     <motion.div
-      layout
       className='ticker-view'
-      style={{ ...containerStyles }}
+      style={containerStyles}
     >
       {/* Format integer to NumberColumn components */}
       {numArray.map((number: string, index: number) =>
@@ -220,4 +255,4 @@ const AnimatedCounter = ({
   );
 }
 
-export default AnimatedCounter;
+export default React.memo(AnimatedCounter);
