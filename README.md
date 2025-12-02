@@ -4,7 +4,7 @@ A lightweight React component for beautifully animated incrementation & decremen
 
 ![react-animated-counter demo](https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExb2N4ZG5mcXE1ZWdsZzQ4bnlxdXlvcGcwamQzcWhmNGNvaGNoem14aiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/6qomEsKHcyf6R1YmBs/source.gif)
 
-Built to support the chart hover tooltip on https://financhle.com - If you'd like to this component live in-action on a 5 year stock chart feel free to take a peek.
+Powering today's most innovative web applications like kalshi.com, financhle.com, and others.
 
 ## Installation
 
