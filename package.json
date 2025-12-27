@@ -44,14 +44,14 @@
     "react": ">=16"
   },
   "dependencies": {
-    "framer-motion": "^10.11.4",
+    "framer-motion": "^12.23.26",
     "lodash": "^4.17.21"
   },
   "devDependencies": {
     "@types/lodash": "^4.14.202",
     "@types/react": "^18.0.12",
-    "framer-motion": "^10.11.4",
-    "react": "^18.2.0",
+    "framer-motion": "^12.23.26",
+    "react": "^19.2.3",
     "react-dom": "^18.2.0",
     "rollup-plugin-sourcemaps": "^0.6.3"
   },
