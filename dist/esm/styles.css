@@ -19,6 +19,15 @@
   position: absolute;
   height: 1000%;
   bottom: 0;
+  font-feature-settings: 'tnum';
+  will-change: transform;
+  transition: transform 0.38s cubic-bezier(0.34, 1.45, 0.48, 1);
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+}
+
+.ticker-column.ticker-column--instant {
+  transition: none;
 }
 
 .ticker-digit {
@@ -26,20 +35,6 @@
   height: 10%;
 }
 
-.ticker-column.increase {
-  animation: pulseIncrement 500ms cubic-bezier(0.4, 0, 0.6, 1) 1;
-}
-
-.ticker-column.decrease {
-  animation: pulseDecrement 500ms cubic-bezier(0.4, 0, 0.6, 1) 1;
-}
-
-@keyframes pulseIncrement {
-  0%, 100% { color: inherit; }
-  50% { color: var(--increment-color) }
-}
-
-@keyframes pulseDecrement {
-  0%, 100% { color: inherit; }
-  50% { color: var(--decrement-color) }
+.ticker-column .ticker-digit span {
+  transition: color 160ms cubic-bezier(0.4, 0, 0.6, 1);
 }

@@ -1,14 +1,20 @@
 {
   "name": "react-animated-counter",
-  "version": "1.8.6",
+  "version": "1.8.7",
   "description": "React Animated Counter Component",
   "main": "./dist/cjs/index.js",
   "module": "./dist/esm/index.js",
   "types": "./dist/esm/index.d.ts",
+  "sideEffects": [
+    "**/*.css"
+  ],
   "scripts": {
-    "build": "yarn build:esm && yarn build:cjs",
+    "clean": "rimraf dist",
     "build:esm": "tsc",
-    "build:cjs": "tsc --module commonjs --outDir dist/cjs"
+    "build:cjs": "tsc --module commonjs --outDir dist/cjs",
+    "copy:css": "cpy \"src/styles.css\" dist/esm --flat && cpy \"src/styles.css\" dist/cjs --flat",
+    "build": "yarn clean && yarn build:esm && yarn build:cjs && yarn copy:css",
+    "prepublishOnly": "yarn build"
   },
   "repository": {
     "type": "git",
@@ -50,9 +56,10 @@
   "devDependencies": {
     "@types/lodash": "^4.14.202",
     "@types/react": "^18.0.12",
+    "cpy-cli": "^5.0.0",
     "react": "^19.2.3",
     "react-dom": "^18.2.0",
-    "rollup-plugin-sourcemaps": "^0.6.3"
+    "rimraf": "^6.0.0"
   },
   "files": [
     "dist",
