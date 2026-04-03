@@ -1,4 +1,4 @@
-// Creates array of digits to vertically scroll through
+// Array of digits to vertically scroll through
 const formatForDisplay = (
   number: number,
   includeDecimals: boolean,

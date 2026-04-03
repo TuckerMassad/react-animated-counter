@@ -1,8 +1,16 @@
 import './styles.css';
-import React, { memo, useEffect, useRef, useState, CSSProperties, useMemo } from 'react';
-import { motion } from "framer-motion";
-import { formatForDisplay } from "./util";
-import { usePrevious } from "./hooks";
+import React, {
+  memo,
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+  CSSProperties,
+  useMemo,
+} from 'react';
+import { formatForDisplay } from './util';
+import { usePrevious } from './hooks';
 import debounce from 'lodash/debounce';
 
 export interface AnimatedCounterProps {
@@ -72,8 +80,8 @@ const NumberColumn = memo(({
   const [animationClass, setAnimationClass] = useState<string | null>(null);
   const currentDigit = +digit;
   const previousDigit = usePrevious(+currentDigit);
-  const columnContainer = useRef<HTMLDivElement>(null);
   const hasHydrated = useRef<boolean>(false);
+  const [skipTransition, setSkipTransition] = useState(true);
 
   const handleAnimationComplete = useMemo(
     () =>
@@ -81,6 +89,18 @@ const NumberColumn = memo(({
         setAnimationClass("");
       }, 200),
     []
+  );
+
+  useLayoutEffect(() => {
+    setSkipTransition(false);
+  }, []);
+
+  const onTransitionEnd = useCallback(
+    (e: React.TransitionEvent<HTMLDivElement>) => {
+      if (e.target !== e.currentTarget || e.propertyName !== 'transform') return;
+      handleAnimationComplete();
+    },
+    [handleAnimationComplete]
   );
 
   // Update the column position
@@ -134,18 +154,20 @@ const NumberColumn = memo(({
     )
   }
 
+  const columnClassName = [
+    'ticker-column',
+    animationClass,
+    skipTransition && 'ticker-column--instant',
+  ]
+    .filter(Boolean)
+    .join(' ');
+
   return (
-    <div
-      className='ticker-column-container'
-      ref={columnContainer}
-      style={containerStyle}
-    >
-      <motion.div
-        initial={{ x: 0, y: position }}
-        animate={{ x: 0, y: position }}
-        className={`ticker-column ${animationClass}`}
-        onAnimationComplete={handleAnimationComplete}
-        {...(!hasHydrated.current && { transition: { duration: 0 } })} // Skip animation on first render
+    <div className='ticker-column-container' style={containerStyle}>
+      <div
+        className={columnClassName}
+        style={{ transform: `translate3d(0, ${position}px, 0)` }}
+        onTransitionEnd={onTransitionEnd}
       >
         {DIGIT_ARRAY.map((num) => (
           <div className='ticker-digit' key={num}>
@@ -154,7 +176,7 @@ const NumberColumn = memo(({
             </span>
           </div>
         ))}
-      </motion.div>
+      </div>
       <span className='number-placeholder'>0</span>
     </div>
   );
@@ -184,8 +206,6 @@ const AnimatedCounter = ({
   digitStyles = {}, 
 }: AnimatedCounterProps) => {
 
-  const hasInitialRender = useRef<boolean>(true);
-
   const numArray = useMemo(() => 
     formatForDisplay(Math.abs(value), includeDecimals, decimalPrecision, includeCommas),
     [value, includeDecimals, decimalPrecision, includeCommas]
@@ -205,16 +225,8 @@ const AnimatedCounter = ({
     return null;
   }, [value, previousNumber]);
 
-  // Mark as hydrated after first render
-  useEffect(() => {
-    hasInitialRender.current = false;
-  }, []);
-
   return (
-    <motion.div
-      className='ticker-view'
-      style={containerStyles}
-    >
+    <div className='ticker-view' style={containerStyles}>
       {/* Format integer to NumberColumn components */}
       {numArray.map((number: string, index: number) =>
         number === "." || number === "," ? (
@@ -251,7 +263,7 @@ const AnimatedCounter = ({
           digitStyles={digitStyles}
         />
       }
-    </motion.div>
+    </div>
   );
 }
 

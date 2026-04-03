@@ -1,9 +1,8 @@
 import { __assign } from "tslib";
 import './styles.css';
-import React, { memo, useEffect, useRef, useState, useMemo } from 'react';
-import { motion } from "framer-motion";
-import { formatForDisplay } from "./util";
-import { usePrevious } from "./hooks";
+import React, { memo, useCallback, useEffect, useLayoutEffect, useRef, useState, useMemo, } from 'react';
+import { formatForDisplay } from './util';
+import { usePrevious } from './hooks';
 import debounce from 'lodash/debounce';
 // Array of digits to vertically scroll through
 var DIGIT_ARRAY = [9, 8, 7, 6, 5, 4, 3, 2, 1, 0];
@@ -22,13 +21,21 @@ var NumberColumn = memo(function (_a) {
     var _c = useState(null), animationClass = _c[0], setAnimationClass = _c[1];
     var currentDigit = +digit;
     var previousDigit = usePrevious(+currentDigit);
-    var columnContainer = useRef(null);
     var hasHydrated = useRef(false);
+    var _d = useState(true), skipTransition = _d[0], setSkipTransition = _d[1];
     var handleAnimationComplete = useMemo(function () {
         return debounce(function () {
             setAnimationClass("");
         }, 200);
     }, []);
+    useLayoutEffect(function () {
+        setSkipTransition(false);
+    }, []);
+    var onTransitionEnd = useCallback(function (e) {
+        if (e.target !== e.currentTarget || e.propertyName !== 'transform')
+            return;
+        handleAnimationComplete();
+    }, [handleAnimationComplete]);
     // Update the column position
     useEffect(function () {
         if (Number.isNaN(digitValue) || Number.isNaN(fontSizeValue)) {
@@ -52,8 +59,15 @@ var NumberColumn = memo(function (_a) {
     if (digit === '-') {
         return (React.createElement("span", { style: negativeStyle }, digit));
     }
-    return (React.createElement("div", { className: 'ticker-column-container', ref: columnContainer, style: containerStyle },
-        React.createElement(motion.div, __assign({ initial: { x: 0, y: position }, animate: { x: 0, y: position }, className: "ticker-column ".concat(animationClass), onAnimationComplete: handleAnimationComplete }, (!hasHydrated.current && { transition: { duration: 0 } })), DIGIT_ARRAY.map(function (num) { return (React.createElement("div", { className: 'ticker-digit', key: num },
+    var columnClassName = [
+        'ticker-column',
+        animationClass,
+        skipTransition && 'ticker-column--instant',
+    ]
+        .filter(Boolean)
+        .join(' ');
+    return (React.createElement("div", { className: 'ticker-column-container', style: containerStyle },
+        React.createElement("div", { className: columnClassName, style: { transform: "translate3d(0, ".concat(position, "px, 0)") }, onTransitionEnd: onTransitionEnd }, DIGIT_ARRAY.map(function (num) { return (React.createElement("div", { className: 'ticker-digit', key: num },
             React.createElement("span", { style: digitSpanStyle }, num))); })),
         React.createElement("span", { className: 'number-placeholder' }, "0")));
 }, function (prevProps, nextProps) {
@@ -68,7 +82,6 @@ var NumberColumn = memo(function (_a) {
 // Main component
 var AnimatedCounter = function (_a) {
     var _b = _a.value, value = _b === void 0 ? 0 : _b, _c = _a.fontSize, fontSize = _c === void 0 ? '18px' : _c, _d = _a.color, color = _d === void 0 ? 'black' : _d, _e = _a.incrementColor, incrementColor = _e === void 0 ? '#32cd32' : _e, _f = _a.decrementColor, decrementColor = _f === void 0 ? '#fe6862' : _f, _g = _a.includeDecimals, includeDecimals = _g === void 0 ? true : _g, _h = _a.decimalPrecision, decimalPrecision = _h === void 0 ? 2 : _h, _j = _a.includeCommas, includeCommas = _j === void 0 ? false : _j, _k = _a.containerStyles, containerStyles = _k === void 0 ? {} : _k, _l = _a.digitStyles, digitStyles = _l === void 0 ? {} : _l;
-    var hasInitialRender = useRef(true);
     var numArray = useMemo(function () {
         return formatForDisplay(Math.abs(value), includeDecimals, decimalPrecision, includeCommas);
     }, [value, includeDecimals, decimalPrecision, includeCommas]);
@@ -85,11 +98,7 @@ var AnimatedCounter = function (_a) {
         }
         return null;
     }, [value, previousNumber]);
-    // Mark as hydrated after first render
-    useEffect(function () {
-        hasInitialRender.current = false;
-    }, []);
-    return (React.createElement(motion.div, { className: 'ticker-view', style: containerStyles },
+    return (React.createElement("div", { className: 'ticker-view', style: containerStyles },
         numArray.map(function (number, index) {
             return number === "." || number === "," ? (React.createElement(DecimalColumn, { key: index, fontSize: fontSize, color: color, isComma: number === ",", digitStyles: digitStyles })) : (React.createElement(NumberColumn, { key: index, digit: number, delta: delta, color: color, fontSize: fontSize, incrementColor: incrementColor, decrementColor: decrementColor, digitStyles: digitStyles }));
         }),
