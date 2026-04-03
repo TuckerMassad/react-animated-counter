@@ -19,8 +19,6 @@ var NumberColumn = (0, react_1.memo)(function (_a) {
     var fontSizeValue = parseFloat(fontSize.replace('px', ''));
     var digitValue = parseInt(digit, 10);
     var _b = (0, react_1.useState)(null), animationClass = _b[0], setAnimationClass = _b[1];
-    var currentDigit = +digit;
-    var previousDigit = (0, hooks_1.usePrevious)(+currentDigit);
     var hasHydrated = (0, react_1.useRef)(false);
     var clearAnimationClass = (0, react_1.useCallback)(function () {
         setAnimationClass('');
@@ -30,8 +28,10 @@ var NumberColumn = (0, react_1.memo)(function (_a) {
             return 0;
         return fontSizeValue * digitValue;
     }, [digitValue, fontSizeValue]);
+    var columnClassName = ['ticker-column', animationClass].filter(Boolean).join(' ');
     var _c = (0, hooks_1.useSpringColumnTransform)(targetY, {
-        onSettled: clearAnimationClass
+        onSettled: clearAnimationClass,
+        layoutClassName: columnClassName
     }), columnRef = _c.ref, ssrTransformStyle = _c.ssrTransformStyle;
     var containerStyle = (0, react_1.useMemo)(function () { return (tslib_1.__assign({ fontSize: fontSize, lineHeight: fontSize, height: 'auto', color: color, '--increment-color': "".concat(incrementColor), '--decrement-color': "".concat(decrementColor) }, digitStyles)); }, [fontSize, color, incrementColor, decrementColor, digitStyles]);
     var digitSpanStyle = (0, react_1.useMemo)(function () { return (tslib_1.__assign({ fontSize: fontSize, lineHeight: fontSize }, digitStyles)); }, [fontSize, digitStyles]);
@@ -41,13 +41,12 @@ var NumberColumn = (0, react_1.memo)(function (_a) {
             hasHydrated.current = true;
             return;
         }
-        setAnimationClass(previousDigit !== currentDigit ? delta : '');
+        setAnimationClass(delta != null ? delta : '');
     }, [digit, delta]);
     // If digit is negative symbol, simply return an unanimated character
     if (digit === '-') {
         return (react_1["default"].createElement("span", { style: negativeStyle }, digit));
     }
-    var columnClassName = ['ticker-column', animationClass].filter(Boolean).join(' ');
     return (react_1["default"].createElement("div", { className: 'ticker-column-container', style: containerStyle },
         react_1["default"].createElement("div", { ref: columnRef, className: columnClassName, style: ssrTransformStyle }, DIGIT_ARRAY.map(function (num) { return (react_1["default"].createElement("div", { className: 'ticker-digit', key: num },
             react_1["default"].createElement("span", { style: digitSpanStyle }, num))); })),
@@ -80,9 +79,23 @@ var AnimatedCounter = function (_a) {
         }
         return null;
     }, [value, previousNumber]);
+    var prevNumArrayRef = (0, react_1.useRef)(undefined);
+    var prevFormattedDigits = prevNumArrayRef.current;
+    var pulseDeltaAtIndex = numArray.map(function (ch, i) {
+        if (ch === '.' || ch === ',') {
+            return null;
+        }
+        if (prevFormattedDigits == null) {
+            return delta;
+        }
+        return prevFormattedDigits[i] !== ch ? delta : null;
+    });
+    (0, react_1.useLayoutEffect)(function () {
+        prevNumArrayRef.current = numArray;
+    }, [numArray]);
     return (react_1["default"].createElement("div", { className: 'ticker-view', style: containerStyles },
         numArray.map(function (number, index) {
-            return number === "." || number === "," ? (react_1["default"].createElement(DecimalColumn, { key: index, fontSize: fontSize, color: color, isComma: number === ",", digitStyles: digitStyles })) : (react_1["default"].createElement(NumberColumn, { key: index, digit: number, delta: delta, color: color, fontSize: fontSize, incrementColor: incrementColor, decrementColor: decrementColor, digitStyles: digitStyles }));
+            return number === "." || number === "," ? (react_1["default"].createElement(DecimalColumn, { key: index, fontSize: fontSize, color: color, isComma: number === ",", digitStyles: digitStyles })) : (react_1["default"].createElement(NumberColumn, { key: index, digit: number, delta: pulseDeltaAtIndex[index], color: color, fontSize: fontSize, incrementColor: incrementColor, decrementColor: decrementColor, digitStyles: digitStyles }));
         }),
         isNegative &&
             react_1["default"].createElement(NumberColumn, { key: 'negative-feedback', digit: '-', delta: delta, color: color, fontSize: fontSize, incrementColor: incrementColor, decrementColor: decrementColor, digitStyles: digitStyles })));

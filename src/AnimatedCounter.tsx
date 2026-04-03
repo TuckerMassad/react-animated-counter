@@ -3,6 +3,7 @@ import React, {
   memo,
   useCallback,
   useEffect,
+  useLayoutEffect,
   useRef,
   useState,
   CSSProperties,
@@ -75,8 +76,6 @@ const NumberColumn = memo(({
   const fontSizeValue = parseFloat(fontSize.replace('px', ''));
   const digitValue = parseInt(digit, 10);
   const [animationClass, setAnimationClass] = useState<string | null>(null);
-  const currentDigit = +digit;
-  const previousDigit = usePrevious(+currentDigit);
   const hasHydrated = useRef<boolean>(false);
 
   const clearAnimationClass = useCallback(() => {
@@ -88,8 +87,11 @@ const NumberColumn = memo(({
     return fontSizeValue * digitValue;
   }, [digitValue, fontSizeValue]);
 
+  const columnClassName = ['ticker-column', animationClass].filter(Boolean).join(' ');
+
   const { ref: columnRef, ssrTransformStyle } = useSpringColumnTransform(targetY, {
     onSettled: clearAnimationClass,
+    layoutClassName: columnClassName,
   });
 
   const containerStyle = useMemo(() => ({
@@ -121,7 +123,7 @@ const NumberColumn = memo(({
       hasHydrated.current = true;
       return;
     }
-    setAnimationClass(previousDigit !== currentDigit ? delta : '');
+    setAnimationClass(delta != null ? delta : '');
   }, [digit, delta]);
 
   // If digit is negative symbol, simply return an unanimated character
@@ -132,8 +134,6 @@ const NumberColumn = memo(({
       </span>
     )
   }
-
-  const columnClassName = ['ticker-column', animationClass].filter(Boolean).join(' ');
 
   return (
     <div className='ticker-column-container' style={containerStyle}>
@@ -194,6 +194,22 @@ const AnimatedCounter = ({
     return null;
   }, [value, previousNumber]);
 
+  const prevNumArrayRef = useRef<string[] | undefined>(undefined);
+  const prevFormattedDigits = prevNumArrayRef.current;
+  const pulseDeltaAtIndex = numArray.map((ch, i) => {
+    if (ch === '.' || ch === ',') {
+      return null;
+    }
+    if (prevFormattedDigits == null) {
+      return delta;
+    }
+    return prevFormattedDigits[i] !== ch ? delta : null;
+  });
+
+  useLayoutEffect(() => {
+    prevNumArrayRef.current = numArray;
+  }, [numArray]);
+
   return (
     <div className='ticker-view' style={containerStyles}>
       {/* Format integer to NumberColumn components */}
@@ -210,7 +226,7 @@ const AnimatedCounter = ({
           <NumberColumn
             key={index}
             digit={number}
-            delta={delta}
+            delta={pulseDeltaAtIndex[index]}
             color={color}
             fontSize={fontSize}
             incrementColor={incrementColor}

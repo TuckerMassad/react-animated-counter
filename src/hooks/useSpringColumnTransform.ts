@@ -7,12 +7,14 @@ import {
   type RefObject,
 } from 'react';
 
-const STIFFNESS = 420;
-const DAMPING = 11;
-const MASS = 0.62;
-const REST_POS_EPS = 0.1;
-const REST_VEL_EPS = 0.1;
+const STIFFNESS = 328;
+const DAMPING = 22;
+const MASS = 0.84;
+const REST_POS_EPS = 0.08;
+const REST_VEL_EPS = 0.08;
 const MAX_DT_SEC = 1 / 30;
+const MAX_SUBSTEPS_PER_FRAME = 6;
+const VELOCITY_BLEND_ON_RETARGET = 0.5;
 
 let reducedMotionMql: MediaQueryList | null = null;
 
@@ -28,6 +30,7 @@ const getReducedMotion = (): boolean => {
 
 export type SpringColumnOptions = {
   onSettled?: () => void;
+  layoutClassName?: string;
 };
 
 export type SpringColumnTransformResult = {
@@ -35,10 +38,6 @@ export type SpringColumnTransformResult = {
   ssrTransformStyle: CSSProperties | undefined;
 };
 
-/**
- * Imperatively animates translateY via rAF (damped spring). First client layout hands off from
- * `ssrTransformStyle` so React does not strip the transform before the spring runs.
- */
 export const useSpringColumnTransform = (
   targetY: number,
   options?: SpringColumnOptions
@@ -51,6 +50,7 @@ export const useSpringColumnTransform = (
   const settleGenRef = useRef(0);
   const onSettledRef = useRef(options?.onSettled);
   onSettledRef.current = options?.onSettled;
+  const layoutClassName = options?.layoutClassName ?? '';
 
   const targetRef = useRef(targetY);
   targetRef.current = targetY;
@@ -59,11 +59,14 @@ export const useSpringColumnTransform = (
 
   const [jsOwnsTransform, setJsOwnsTransform] = useState(false);
 
-  // SSR + hydration: React supplies transform. After this layout effect, JS drives transform only.
   useLayoutEffect(() => {
-    if (jsOwnsTransform) return;
+    if (jsOwnsTransform) {
+      return;
+    }
     const el = ref.current;
-    if (!el) return;
+    if (!el) {
+      return;
+    }
     const t = Number.isFinite(targetRef.current) ? targetRef.current : 0;
     posRef.current = t;
     velRef.current = 0;
@@ -71,21 +74,25 @@ export const useSpringColumnTransform = (
     setJsOwnsTransform(true);
   }, [jsOwnsTransform]);
 
-  // After handoff, React may drop `style` on re-renders (e.g. className updates). Re-apply transform
-  // from the spring ref before every paint so we never flash or lose position.
   useLayoutEffect(() => {
-    if (!jsOwnsTransform) return;
+    if (!jsOwnsTransform) {
+      return;
+    }
     const el = ref.current;
     if (el) {
       el.style.transform = `translate3d(0, ${posRef.current}px, 0)`;
     }
-  });
+  }, [jsOwnsTransform, layoutClassName]);
 
   useEffect(() => {
-    if (!jsOwnsTransform) return;
+    if (!jsOwnsTransform) {
+      return;
+    }
 
     const el = ref.current;
-    if (!el) return;
+    if (!el) {
+      return;
+    }
 
     cancelAnimationFrame(rafRef.current);
     lastTimeRef.current = null;
@@ -102,11 +109,12 @@ export const useSpringColumnTransform = (
     if (getReducedMotion()) {
       const start = posRef.current;
       const t0 = performance.now();
-      const durationMs = 200;
+      const durationMs = 260;
 
       const tick = (now: number) => {
         const t = Math.min(1, (now - t0) / durationMs);
-        const eased = 1 - (1 - t) ** 3;
+        const eased =
+          t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
         const x = start + (safeTarget - start) * eased;
         posRef.current = x;
         el.style.transform = `translate3d(0, ${x}px, 0)`;
@@ -123,6 +131,8 @@ export const useSpringColumnTransform = (
       return () => cancelAnimationFrame(rafRef.current);
     }
 
+    velRef.current *= VELOCITY_BLEND_ON_RETARGET;
+
     const tick = (now: number) => {
       const last = lastTimeRef.current;
       let dt = last == null ? 1 / 60 : (now - last) / 1000;
@@ -132,7 +142,10 @@ export const useSpringColumnTransform = (
       let x = posRef.current;
       let v = velRef.current;
       const target = safeTarget;
-      const steps = Math.max(1, Math.ceil(dt / (1 / 120)));
+      const steps = Math.min(
+        MAX_SUBSTEPS_PER_FRAME,
+        Math.max(1, Math.ceil(dt * 90))
+      );
       const subDt = dt / steps;
 
       for (let s = 0; s < steps; s++) {
