@@ -19,34 +19,23 @@ var NumberColumn = (0, react_1.memo)(function (_a) {
     var digit = _a.digit, delta = _a.delta, fontSize = _a.fontSize, color = _a.color, incrementColor = _a.incrementColor, decrementColor = _a.decrementColor, digitStyles = _a.digitStyles;
     var fontSizeValue = parseFloat(fontSize.replace('px', ''));
     var digitValue = parseInt(digit, 10);
-    var _b = (0, react_1.useState)(fontSizeValue * digitValue), position = _b[0], setPosition = _b[1];
-    var _c = (0, react_1.useState)(null), animationClass = _c[0], setAnimationClass = _c[1];
+    var _b = (0, react_1.useState)(null), animationClass = _b[0], setAnimationClass = _b[1];
     var currentDigit = +digit;
     var previousDigit = (0, hooks_1.usePrevious)(+currentDigit);
     var hasHydrated = (0, react_1.useRef)(false);
-    var _d = (0, react_1.useState)(true), skipTransition = _d[0], setSkipTransition = _d[1];
     var handleAnimationComplete = (0, react_1.useMemo)(function () {
         return (0, debounce_1["default"])(function () {
             setAnimationClass("");
         }, 200);
     }, []);
-    (0, react_1.useLayoutEffect)(function () {
-        setSkipTransition(false);
-    }, []);
-    var onTransitionEnd = (0, react_1.useCallback)(function (e) {
-        if (e.target !== e.currentTarget || e.propertyName !== 'transform')
-            return;
-        handleAnimationComplete();
-    }, [handleAnimationComplete]);
-    // Update the column position
-    (0, react_1.useEffect)(function () {
-        if (Number.isNaN(digitValue) || Number.isNaN(fontSizeValue)) {
-            return;
-        }
-        // Each 'row' is assumed to be roughly one fontSize tall
-        var newPosition = fontSizeValue * digitValue;
-        setPosition(newPosition);
+    var targetY = (0, react_1.useMemo)(function () {
+        if (Number.isNaN(digitValue) || Number.isNaN(fontSizeValue))
+            return 0;
+        return fontSizeValue * digitValue;
     }, [digitValue, fontSizeValue]);
+    var columnRef = (0, hooks_1.useSpringColumnTransform)(targetY, {
+        onSettled: handleAnimationComplete
+    });
     var containerStyle = (0, react_1.useMemo)(function () { return (tslib_1.__assign({ fontSize: fontSize, lineHeight: fontSize, height: 'auto', color: color, '--increment-color': "".concat(incrementColor), '--decrement-color': "".concat(decrementColor) }, digitStyles)); }, [fontSize, color, incrementColor, decrementColor, digitStyles]);
     var digitSpanStyle = (0, react_1.useMemo)(function () { return (tslib_1.__assign({ fontSize: fontSize, lineHeight: fontSize }, digitStyles)); }, [fontSize, digitStyles]);
     var negativeStyle = (0, react_1.useMemo)(function () { return (tslib_1.__assign({ color: color, fontSize: fontSize, lineHeight: fontSize, marginRight: "calc(".concat(fontSize, " / 5)") }, digitStyles)); }, [color, fontSize, digitStyles]);
@@ -61,15 +50,9 @@ var NumberColumn = (0, react_1.memo)(function (_a) {
     if (digit === '-') {
         return (react_1["default"].createElement("span", { style: negativeStyle }, digit));
     }
-    var columnClassName = [
-        'ticker-column',
-        animationClass,
-        skipTransition && 'ticker-column--instant',
-    ]
-        .filter(Boolean)
-        .join(' ');
+    var columnClassName = ['ticker-column', animationClass].filter(Boolean).join(' ');
     return (react_1["default"].createElement("div", { className: 'ticker-column-container', style: containerStyle },
-        react_1["default"].createElement("div", { className: columnClassName, style: { transform: "translate3d(0, ".concat(position, "px, 0)") }, onTransitionEnd: onTransitionEnd }, DIGIT_ARRAY.map(function (num) { return (react_1["default"].createElement("div", { className: 'ticker-digit', key: num },
+        react_1["default"].createElement("div", { ref: columnRef, className: columnClassName }, DIGIT_ARRAY.map(function (num) { return (react_1["default"].createElement("div", { className: 'ticker-digit', key: num },
             react_1["default"].createElement("span", { style: digitSpanStyle }, num))); })),
         react_1["default"].createElement("span", { className: 'number-placeholder' }, "0")));
 }, function (prevProps, nextProps) {

@@ -1,8 +1,8 @@
 import { __assign } from "tslib";
 import './styles.css';
-import React, { memo, useCallback, useEffect, useLayoutEffect, useRef, useState, useMemo, } from 'react';
+import React, { memo, useEffect, useRef, useState, useMemo, } from 'react';
 import { formatForDisplay } from './util';
-import { usePrevious } from './hooks';
+import { usePrevious, useSpringColumnTransform } from './hooks';
 import debounce from 'lodash/debounce';
 // Array of digits to vertically scroll through
 var DIGIT_ARRAY = [9, 8, 7, 6, 5, 4, 3, 2, 1, 0];
@@ -17,34 +17,23 @@ var NumberColumn = memo(function (_a) {
     var digit = _a.digit, delta = _a.delta, fontSize = _a.fontSize, color = _a.color, incrementColor = _a.incrementColor, decrementColor = _a.decrementColor, digitStyles = _a.digitStyles;
     var fontSizeValue = parseFloat(fontSize.replace('px', ''));
     var digitValue = parseInt(digit, 10);
-    var _b = useState(fontSizeValue * digitValue), position = _b[0], setPosition = _b[1];
-    var _c = useState(null), animationClass = _c[0], setAnimationClass = _c[1];
+    var _b = useState(null), animationClass = _b[0], setAnimationClass = _b[1];
     var currentDigit = +digit;
     var previousDigit = usePrevious(+currentDigit);
     var hasHydrated = useRef(false);
-    var _d = useState(true), skipTransition = _d[0], setSkipTransition = _d[1];
     var handleAnimationComplete = useMemo(function () {
         return debounce(function () {
             setAnimationClass("");
         }, 200);
     }, []);
-    useLayoutEffect(function () {
-        setSkipTransition(false);
-    }, []);
-    var onTransitionEnd = useCallback(function (e) {
-        if (e.target !== e.currentTarget || e.propertyName !== 'transform')
-            return;
-        handleAnimationComplete();
-    }, [handleAnimationComplete]);
-    // Update the column position
-    useEffect(function () {
-        if (Number.isNaN(digitValue) || Number.isNaN(fontSizeValue)) {
-            return;
-        }
-        // Each 'row' is assumed to be roughly one fontSize tall
-        var newPosition = fontSizeValue * digitValue;
-        setPosition(newPosition);
+    var targetY = useMemo(function () {
+        if (Number.isNaN(digitValue) || Number.isNaN(fontSizeValue))
+            return 0;
+        return fontSizeValue * digitValue;
     }, [digitValue, fontSizeValue]);
+    var columnRef = useSpringColumnTransform(targetY, {
+        onSettled: handleAnimationComplete
+    });
     var containerStyle = useMemo(function () { return (__assign({ fontSize: fontSize, lineHeight: fontSize, height: 'auto', color: color, '--increment-color': "".concat(incrementColor), '--decrement-color': "".concat(decrementColor) }, digitStyles)); }, [fontSize, color, incrementColor, decrementColor, digitStyles]);
     var digitSpanStyle = useMemo(function () { return (__assign({ fontSize: fontSize, lineHeight: fontSize }, digitStyles)); }, [fontSize, digitStyles]);
     var negativeStyle = useMemo(function () { return (__assign({ color: color, fontSize: fontSize, lineHeight: fontSize, marginRight: "calc(".concat(fontSize, " / 5)") }, digitStyles)); }, [color, fontSize, digitStyles]);
@@ -59,15 +48,9 @@ var NumberColumn = memo(function (_a) {
     if (digit === '-') {
         return (React.createElement("span", { style: negativeStyle }, digit));
     }
-    var columnClassName = [
-        'ticker-column',
-        animationClass,
-        skipTransition && 'ticker-column--instant',
-    ]
-        .filter(Boolean)
-        .join(' ');
+    var columnClassName = ['ticker-column', animationClass].filter(Boolean).join(' ');
     return (React.createElement("div", { className: 'ticker-column-container', style: containerStyle },
-        React.createElement("div", { className: columnClassName, style: { transform: "translate3d(0, ".concat(position, "px, 0)") }, onTransitionEnd: onTransitionEnd }, DIGIT_ARRAY.map(function (num) { return (React.createElement("div", { className: 'ticker-digit', key: num },
+        React.createElement("div", { ref: columnRef, className: columnClassName }, DIGIT_ARRAY.map(function (num) { return (React.createElement("div", { className: 'ticker-digit', key: num },
             React.createElement("span", { style: digitSpanStyle }, num))); })),
         React.createElement("span", { className: 'number-placeholder' }, "0")));
 }, function (prevProps, nextProps) {

@@ -1,16 +1,14 @@
 import './styles.css';
 import React, {
   memo,
-  useCallback,
   useEffect,
-  useLayoutEffect,
   useRef,
   useState,
   CSSProperties,
   useMemo,
 } from 'react';
 import { formatForDisplay } from './util';
-import { usePrevious } from './hooks';
+import { usePrevious, useSpringColumnTransform } from './hooks';
 import debounce from 'lodash/debounce';
 
 export interface AnimatedCounterProps {
@@ -76,12 +74,10 @@ const NumberColumn = memo(({
 
   const fontSizeValue = parseFloat(fontSize.replace('px', ''));
   const digitValue = parseInt(digit, 10);
-  const [position, setPosition] = useState<number>(fontSizeValue * digitValue);
   const [animationClass, setAnimationClass] = useState<string | null>(null);
   const currentDigit = +digit;
   const previousDigit = usePrevious(+currentDigit);
   const hasHydrated = useRef<boolean>(false);
-  const [skipTransition, setSkipTransition] = useState(true);
 
   const handleAnimationComplete = useMemo(
     () =>
@@ -91,27 +87,14 @@ const NumberColumn = memo(({
     []
   );
 
-  useLayoutEffect(() => {
-    setSkipTransition(false);
-  }, []);
-
-  const onTransitionEnd = useCallback(
-    (e: React.TransitionEvent<HTMLDivElement>) => {
-      if (e.target !== e.currentTarget || e.propertyName !== 'transform') return;
-      handleAnimationComplete();
-    },
-    [handleAnimationComplete]
-  );
-
-  // Update the column position
-  useEffect(() => {
-    if (Number.isNaN(digitValue) || Number.isNaN(fontSizeValue)) {
-      return;
-    }
-    // Each 'row' is assumed to be roughly one fontSize tall
-    const newPosition = fontSizeValue * digitValue;
-    setPosition(newPosition);
+  const targetY = useMemo(() => {
+    if (Number.isNaN(digitValue) || Number.isNaN(fontSizeValue)) return 0;
+    return fontSizeValue * digitValue;
   }, [digitValue, fontSizeValue]);
+
+  const columnRef = useSpringColumnTransform(targetY, {
+    onSettled: handleAnimationComplete,
+  });
 
   const containerStyle = useMemo(() => ({
     fontSize: fontSize,
@@ -154,21 +137,11 @@ const NumberColumn = memo(({
     )
   }
 
-  const columnClassName = [
-    'ticker-column',
-    animationClass,
-    skipTransition && 'ticker-column--instant',
-  ]
-    .filter(Boolean)
-    .join(' ');
+  const columnClassName = ['ticker-column', animationClass].filter(Boolean).join(' ');
 
   return (
     <div className='ticker-column-container' style={containerStyle}>
-      <div
-        className={columnClassName}
-        style={{ transform: `translate3d(0, ${position}px, 0)` }}
-        onTransitionEnd={onTransitionEnd}
-      >
+      <div ref={columnRef} className={columnClassName}>
         {DIGIT_ARRAY.map((num) => (
           <div className='ticker-digit' key={num}>
             <span style={digitSpanStyle}>
