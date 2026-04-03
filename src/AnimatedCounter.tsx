@@ -1,15 +1,15 @@
 import './styles.css';
 import React, {
   memo,
+  useCallback,
   useEffect,
   useRef,
   useState,
   CSSProperties,
   useMemo,
 } from 'react';
-import { formatForDisplay } from './util';
+import { formatForDisplay, shallowStyleEqual } from './util';
 import { usePrevious, useSpringColumnTransform } from './hooks';
-import debounce from 'lodash/debounce';
 
 export interface AnimatedCounterProps {
   value?: number;
@@ -79,21 +79,17 @@ const NumberColumn = memo(({
   const previousDigit = usePrevious(+currentDigit);
   const hasHydrated = useRef<boolean>(false);
 
-  const handleAnimationComplete = useMemo(
-    () =>
-      debounce(() => {
-        setAnimationClass("");
-      }, 200),
-    []
-  );
+  const clearAnimationClass = useCallback(() => {
+    setAnimationClass('');
+  }, []);
 
   const targetY = useMemo(() => {
     if (Number.isNaN(digitValue) || Number.isNaN(fontSizeValue)) return 0;
     return fontSizeValue * digitValue;
   }, [digitValue, fontSizeValue]);
 
-  const columnRef = useSpringColumnTransform(targetY, {
-    onSettled: handleAnimationComplete,
+  const { ref: columnRef, ssrTransformStyle } = useSpringColumnTransform(targetY, {
+    onSettled: clearAnimationClass,
   });
 
   const containerStyle = useMemo(() => ({
@@ -141,7 +137,7 @@ const NumberColumn = memo(({
 
   return (
     <div className='ticker-column-container' style={containerStyle}>
-      <div ref={columnRef} className={columnClassName}>
+      <div ref={columnRef} className={columnClassName} style={ssrTransformStyle}>
         {DIGIT_ARRAY.map((num) => (
           <div className='ticker-digit' key={num}>
             <span style={digitSpanStyle}>
@@ -161,7 +157,7 @@ const NumberColumn = memo(({
     prevProps.color === nextProps.color &&
     prevProps.incrementColor === nextProps.incrementColor &&
     prevProps.decrementColor === nextProps.decrementColor &&
-    JSON.stringify(prevProps.digitStyles) === JSON.stringify(nextProps.digitStyles)
+    shallowStyleEqual(prevProps.digitStyles, nextProps.digitStyles)
   );
 });
 

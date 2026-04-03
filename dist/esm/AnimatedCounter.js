@@ -1,9 +1,8 @@
 import { __assign } from "tslib";
 import './styles.css';
-import React, { memo, useEffect, useRef, useState, useMemo, } from 'react';
-import { formatForDisplay } from './util';
+import React, { memo, useCallback, useEffect, useRef, useState, useMemo, } from 'react';
+import { formatForDisplay, shallowStyleEqual } from './util';
 import { usePrevious, useSpringColumnTransform } from './hooks';
-import debounce from 'lodash/debounce';
 // Array of digits to vertically scroll through
 var DIGIT_ARRAY = [9, 8, 7, 6, 5, 4, 3, 2, 1, 0];
 // Decimal element component
@@ -21,19 +20,17 @@ var NumberColumn = memo(function (_a) {
     var currentDigit = +digit;
     var previousDigit = usePrevious(+currentDigit);
     var hasHydrated = useRef(false);
-    var handleAnimationComplete = useMemo(function () {
-        return debounce(function () {
-            setAnimationClass("");
-        }, 200);
+    var clearAnimationClass = useCallback(function () {
+        setAnimationClass('');
     }, []);
     var targetY = useMemo(function () {
         if (Number.isNaN(digitValue) || Number.isNaN(fontSizeValue))
             return 0;
         return fontSizeValue * digitValue;
     }, [digitValue, fontSizeValue]);
-    var columnRef = useSpringColumnTransform(targetY, {
-        onSettled: handleAnimationComplete
-    });
+    var _c = useSpringColumnTransform(targetY, {
+        onSettled: clearAnimationClass
+    }), columnRef = _c.ref, ssrTransformStyle = _c.ssrTransformStyle;
     var containerStyle = useMemo(function () { return (__assign({ fontSize: fontSize, lineHeight: fontSize, height: 'auto', color: color, '--increment-color': "".concat(incrementColor), '--decrement-color': "".concat(decrementColor) }, digitStyles)); }, [fontSize, color, incrementColor, decrementColor, digitStyles]);
     var digitSpanStyle = useMemo(function () { return (__assign({ fontSize: fontSize, lineHeight: fontSize }, digitStyles)); }, [fontSize, digitStyles]);
     var negativeStyle = useMemo(function () { return (__assign({ color: color, fontSize: fontSize, lineHeight: fontSize, marginRight: "calc(".concat(fontSize, " / 5)") }, digitStyles)); }, [color, fontSize, digitStyles]);
@@ -50,7 +47,7 @@ var NumberColumn = memo(function (_a) {
     }
     var columnClassName = ['ticker-column', animationClass].filter(Boolean).join(' ');
     return (React.createElement("div", { className: 'ticker-column-container', style: containerStyle },
-        React.createElement("div", { ref: columnRef, className: columnClassName }, DIGIT_ARRAY.map(function (num) { return (React.createElement("div", { className: 'ticker-digit', key: num },
+        React.createElement("div", { ref: columnRef, className: columnClassName, style: ssrTransformStyle }, DIGIT_ARRAY.map(function (num) { return (React.createElement("div", { className: 'ticker-digit', key: num },
             React.createElement("span", { style: digitSpanStyle }, num))); })),
         React.createElement("span", { className: 'number-placeholder' }, "0")));
 }, function (prevProps, nextProps) {
@@ -60,7 +57,7 @@ var NumberColumn = memo(function (_a) {
         prevProps.color === nextProps.color &&
         prevProps.incrementColor === nextProps.incrementColor &&
         prevProps.decrementColor === nextProps.decrementColor &&
-        JSON.stringify(prevProps.digitStyles) === JSON.stringify(nextProps.digitStyles));
+        shallowStyleEqual(prevProps.digitStyles, nextProps.digitStyles));
 });
 // Main component
 var AnimatedCounter = function (_a) {

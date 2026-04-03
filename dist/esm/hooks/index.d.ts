@@ -1,2 +1,2 @@
 export { default as usePrevious } from './usePrevious';
-export { useSpringColumnTransform } from './useSpringColumnTransform';
+export { useSpringColumnTransform, type SpringColumnTransformResult, } from './useSpringColumnTransform';

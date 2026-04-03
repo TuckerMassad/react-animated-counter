@@ -1,4 +1,11 @@
-import { useEffect, useRef, type RefObject } from 'react';
+import {
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+  type CSSProperties,
+  type RefObject,
+} from 'react';
 
 const STIFFNESS = 420;
 const DAMPING = 11;
@@ -7,46 +14,92 @@ const REST_POS_EPS = 0.1;
 const REST_VEL_EPS = 0.1;
 const MAX_DT_SEC = 1 / 30;
 
+let reducedMotionMql: MediaQueryList | null = null;
+
+const getReducedMotion = (): boolean => {
+  if (typeof window === 'undefined') {
+    return false;
+  }
+  if (!reducedMotionMql) {
+    reducedMotionMql = window.matchMedia('(prefers-reduced-motion: reduce)');
+  }
+  return reducedMotionMql.matches;
+}
+
 export type SpringColumnOptions = {
   onSettled?: () => void;
 };
 
-const prefersReducedMotion = (): boolean => {
-  if (typeof window === 'undefined') return false;
-  return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-}
+export type SpringColumnTransformResult = {
+  ref: RefObject<HTMLDivElement>;
+  ssrTransformStyle: CSSProperties | undefined;
+};
 
+/**
+ * Imperatively animates translateY via rAF (damped spring). First client layout hands off from
+ * `ssrTransformStyle` so React does not strip the transform before the spring runs.
+ */
 export const useSpringColumnTransform = (
   targetY: number,
   options?: SpringColumnOptions
-): RefObject<HTMLDivElement> => {
+): SpringColumnTransformResult => {
   const ref = useRef<HTMLDivElement>(null);
   const posRef = useRef(targetY);
   const velRef = useRef(0);
   const rafRef = useRef(0);
   const lastTimeRef = useRef<number | null>(null);
-  const didInitRef = useRef(false);
+  const settleGenRef = useRef(0);
   const onSettledRef = useRef(options?.onSettled);
   onSettledRef.current = options?.onSettled;
 
+  const targetRef = useRef(targetY);
+  targetRef.current = targetY;
+
   const safeTarget = Number.isFinite(targetY) ? targetY : 0;
 
-  useEffect(() => {
+  const [jsOwnsTransform, setJsOwnsTransform] = useState(false);
+
+  // SSR + hydration: React supplies transform. After this layout effect, JS drives transform only.
+  useLayoutEffect(() => {
+    if (jsOwnsTransform) return;
     const el = ref.current;
     if (!el) return;
+    const t = Number.isFinite(targetRef.current) ? targetRef.current : 0;
+    posRef.current = t;
+    velRef.current = 0;
+    el.style.transform = `translate3d(0, ${t}px, 0)`;
+    setJsOwnsTransform(true);
+  }, [jsOwnsTransform]);
 
-    if (!didInitRef.current) {
-      didInitRef.current = true;
-      posRef.current = safeTarget;
-      velRef.current = 0;
-      el.style.transform = `translate3d(0, ${safeTarget}px, 0)`;
-      return;
+  // After handoff, React may drop `style` on re-renders (e.g. className updates). Re-apply transform
+  // from the spring ref before every paint so we never flash or lose position.
+  useLayoutEffect(() => {
+    if (!jsOwnsTransform) return;
+    const el = ref.current;
+    if (el) {
+      el.style.transform = `translate3d(0, ${posRef.current}px, 0)`;
     }
+  });
+
+  useEffect(() => {
+    if (!jsOwnsTransform) return;
+
+    const el = ref.current;
+    if (!el) return;
 
     cancelAnimationFrame(rafRef.current);
     lastTimeRef.current = null;
 
-    if (prefersReducedMotion()) {
+    settleGenRef.current += 1;
+    const settleGeneration = settleGenRef.current;
+
+    const notifySettled = () => {
+      if (settleGeneration === settleGenRef.current) {
+        onSettledRef.current?.();
+      }
+    };
+
+    if (getReducedMotion()) {
       const start = posRef.current;
       const t0 = performance.now();
       const durationMs = 200;
@@ -61,7 +114,7 @@ export const useSpringColumnTransform = (
           posRef.current = safeTarget;
           velRef.current = 0;
           el.style.transform = `translate3d(0, ${safeTarget}px, 0)`;
-          onSettledRef.current?.();
+          notifySettled();
           return;
         }
         rafRef.current = requestAnimationFrame(tick);
@@ -100,7 +153,7 @@ export const useSpringColumnTransform = (
         posRef.current = target;
         velRef.current = 0;
         el.style.transform = `translate3d(0, ${target}px, 0)`;
-        onSettledRef.current?.();
+        notifySettled();
         return;
       }
 
@@ -109,7 +162,11 @@ export const useSpringColumnTransform = (
 
     rafRef.current = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(rafRef.current);
-  }, [safeTarget]);
+  }, [safeTarget, jsOwnsTransform]);
 
-  return ref;
+  const ssrTransformStyle: CSSProperties | undefined = jsOwnsTransform
+    ? undefined
+    : { transform: `translate3d(0, ${safeTarget}px, 0)` };
+
+  return { ref, ssrTransformStyle };
 }

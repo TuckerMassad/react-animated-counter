@@ -11,7 +11,9 @@ var __createBinding = (this && this.__createBinding) || (Object.create ? (functi
     o[k2] = m[k];
 }));
 exports.__esModule = true;
-exports.formatForDisplay = void 0;
+exports.shallowStyleEqual = exports.formatForDisplay = void 0;
 var formatForDisplay_1 = require("./formatForDisplay");
 __createBinding(exports, formatForDisplay_1, "default", "formatForDisplay");
+var shallowStyleEqual_1 = require("./shallowStyleEqual");
+__createBinding(exports, shallowStyleEqual_1, "shallowStyleEqual");
 //# sourceMappingURL=index.js.map
