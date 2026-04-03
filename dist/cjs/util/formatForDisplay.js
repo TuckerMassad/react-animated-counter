@@ -1,6 +1,6 @@
 "use strict";
 exports.__esModule = true;
-// Creates array of digits to vertically scroll through
+// Array of digits to vertically scroll through
 var formatForDisplay = function (number, includeDecimals, decimalPrecision, includeCommas) {
     var decimalCount = includeDecimals ? decimalPrecision : 0;
     var parsedNumber = parseFloat("".concat(Math.max(number, 0))).toFixed(decimalCount);
