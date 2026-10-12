@@ -17,7 +17,7 @@ Powering today's most innovative web applications like [https://kalshi.com](http
 |     Name         |     Type        |             Description                                                                                                     |     Default    |
 |------------------|-----------------|-----------------------------------------------------------------------------------------------------------------------------|----------------|
 |   `value`        | `integer`       | The state integer value                                                                                                     | `0`            |
-|   `fontSize`     | `string`        | Applied css `font-size`                                                                                                     | `18px`         |
+|   `fontSize`     | `string`        | Applied css `font-size`. Any CSS length works (`px`, `rem`, `em`, and so on). A bare number is treated as pixels.          | `18px`         |
 |   `color`        | `string`        | Applied css `color`                                                                                                         | `black`        |
 | `incrementColor` | `string`        | Animation color when `value` increases                                                                                      | `#32cd32`      |
 | `decrementColor` | `string`        | Animation color when `value` decreases                                                                                      | `#fe6862`      |
@@ -26,6 +26,8 @@ Powering today's most innovative web applications like [https://kalshi.com](http
 |`includeCommas`   | `boolean`       | Adds comma separators to every third digit to the left of the decimal point used in numbers with four or more digits        | `false`        |
 |`containerStyles` | `CSSProperties` | Styles to apply to the parent element of the main component. Used in same fashion as react `styles`                         | `{}`           |
 |`digitStyles`     | `CSSProperties` | Styles to apply to individual digit elements. Used in same fashion as react `styles`                                        | `{}`           |
+
+The rendered number can be highlighted and copied like normal text. Digits stay aligned with neighboring characters at any browser zoom, and the selection uses the browser's default highlight.
 
 **Basic Demo:**
 

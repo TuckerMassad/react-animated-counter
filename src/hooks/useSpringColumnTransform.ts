@@ -10,8 +10,10 @@ import {
 const STIFFNESS = 328;
 const DAMPING = 22;
 const MASS = 0.84;
-const REST_POS_EPS = 0.08;
-const REST_VEL_EPS = 0.08;
+// Slot index, not pixels. 100% of the column is one digit, so a 0.004 slot
+// miss is a few hundredths of a pixel at the sizes this counter uses.
+const REST_POS_EPS = 0.004;
+const REST_VEL_EPS = 0.004;
 const MAX_DT_SEC = 1 / 30;
 const MAX_SUBSTEPS_PER_FRAME = 6;
 const VELOCITY_BLEND_ON_RETARGET = 0.5;
@@ -38,12 +40,17 @@ export type SpringColumnTransformResult = {
   ssrTransformStyle: CSSProperties | undefined;
 };
 
+const columnTransform = (slots: number): string => {
+  const percent = Object.is(slots, -0) ? 0 : slots * 100;
+  return `translate3d(0, ${percent}%, 0)`;
+};
+
 export const useSpringColumnTransform = (
-  targetY: number,
+  targetSlot: number,
   options?: SpringColumnOptions
 ): SpringColumnTransformResult => {
   const ref = useRef<HTMLDivElement>(null);
-  const posRef = useRef(targetY);
+  const posRef = useRef(targetSlot);
   const velRef = useRef(0);
   const rafRef = useRef(0);
   const lastTimeRef = useRef<number | null>(null);
@@ -52,10 +59,10 @@ export const useSpringColumnTransform = (
   onSettledRef.current = options?.onSettled;
   const layoutClassName = options?.layoutClassName ?? '';
 
-  const targetRef = useRef(targetY);
-  targetRef.current = targetY;
+  const targetRef = useRef(targetSlot);
+  targetRef.current = targetSlot;
 
-  const safeTarget = Number.isFinite(targetY) ? targetY : 0;
+  const safeTarget = Number.isFinite(targetSlot) ? targetSlot : 0;
 
   const [jsOwnsTransform, setJsOwnsTransform] = useState(false);
 
@@ -70,7 +77,7 @@ export const useSpringColumnTransform = (
     const t = Number.isFinite(targetRef.current) ? targetRef.current : 0;
     posRef.current = t;
     velRef.current = 0;
-    el.style.transform = `translate3d(0, ${t}px, 0)`;
+    el.style.transform = columnTransform(t);
     setJsOwnsTransform(true);
   }, [jsOwnsTransform]);
 
@@ -80,7 +87,7 @@ export const useSpringColumnTransform = (
     }
     const el = ref.current;
     if (el) {
-      el.style.transform = `translate3d(0, ${posRef.current}px, 0)`;
+      el.style.transform = columnTransform(posRef.current);
     }
   }, [jsOwnsTransform, layoutClassName]);
 
@@ -117,11 +124,11 @@ export const useSpringColumnTransform = (
           t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
         const x = start + (safeTarget - start) * eased;
         posRef.current = x;
-        el.style.transform = `translate3d(0, ${x}px, 0)`;
+        el.style.transform = columnTransform(x);
         if (t >= 1) {
           posRef.current = safeTarget;
           velRef.current = 0;
-          el.style.transform = `translate3d(0, ${safeTarget}px, 0)`;
+          el.style.transform = columnTransform(safeTarget);
           notifySettled();
           return;
         }
@@ -157,7 +164,7 @@ export const useSpringColumnTransform = (
 
       posRef.current = x;
       velRef.current = v;
-      el.style.transform = `translate3d(0, ${x}px, 0)`;
+      el.style.transform = columnTransform(x);
 
       if (
         Math.abs(target - x) < REST_POS_EPS &&
@@ -165,7 +172,7 @@ export const useSpringColumnTransform = (
       ) {
         posRef.current = target;
         velRef.current = 0;
-        el.style.transform = `translate3d(0, ${target}px, 0)`;
+        el.style.transform = columnTransform(target);
         notifySettled();
         return;
       }
@@ -179,7 +186,7 @@ export const useSpringColumnTransform = (
 
   const ssrTransformStyle: CSSProperties | undefined = jsOwnsTransform
     ? undefined
-    : { transform: `translate3d(0, ${safeTarget}px, 0)` };
+    : { transform: columnTransform(safeTarget) };
 
   return { ref, ssrTransformStyle };
 }

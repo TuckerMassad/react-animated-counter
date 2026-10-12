@@ -1,43 +1,105 @@
-.ticker-view {
+.ticker-view.ticker-slot {
   height: auto;
   margin: auto;
   display: flex;
   flex-direction: row-reverse;
+  align-items: baseline;
   overflow: hidden;
   position: relative;
+  isolation: isolate;
+  font-variant-numeric: tabular-nums lining-nums;
+  font-feature-settings: 'tnum' 1, 'lnum' 1;
 }
 
-.number-placeholder {
-  visibility: hidden;
-}
-
-.ticker-column-container {
+/* The scrolling columns stay in DOM order (row-reverse) and contain every
+   hidden digit. Selection uses a left-to-right copy of the visible number
+   so a drag highlights and copies in reading order. */
+.ticker-slot > .ticker-column-container,
+.ticker-slot > span:not(.ticker-slot-select) {
   position: relative;
+  z-index: 1;
+  user-select: none;
+  -webkit-user-select: none;
+  pointer-events: none;
 }
 
-.ticker-column {
+/* Sits under the glyphs. The browser paints its own ::selection behind this
+   text, and the animated digits draw on top in their real color, matching
+   the character beside the counter. An author background-color here would
+   replace that wash with an opaque Highlight. */
+.ticker-slot-select {
   position: absolute;
-  height: 1000%;
+  top: 0;
+  right: 0;
+  z-index: 0;
+  height: 100%;
+  width: max-content;
+  margin: 0;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  user-select: text;
+  -webkit-user-select: text;
+  cursor: text;
+  caret-color: transparent;
+  white-space: nowrap;
+  line-height: 1;
+  font-variant-numeric: tabular-nums lining-nums;
+  font-feature-settings: 'tnum' 1, 'lnum' 1;
+}
+
+.ticker-slot .number-placeholder {
+  visibility: hidden;
+  display: block;
+  line-height: 1;
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+.ticker-slot .ticker-column-container {
+  position: relative;
+  height: 1em;
+  line-height: 1;
+  overflow: hidden;
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+/* One slot tall. Digit n sits at bottom: n * 100% of this column, and the
+   spring uses that same percentage, so the step stays locked to the row
+   for any font-size unit and at any browser zoom. */
+.ticker-slot .ticker-column {
+  position: absolute;
+  top: 0;
+  right: 0;
   bottom: 0;
-  font-feature-settings: 'tnum';
+  left: 0;
+  height: 100%;
+  font-variant-numeric: tabular-nums lining-nums;
+  font-feature-settings: 'tnum' 1, 'lnum' 1;
   will-change: transform;
-  backface-visibility: hidden;
+  backface-visibility: visible;
 }
 
-.ticker-digit {
-  width: auto;
-  height: 10%;
+.ticker-slot .ticker-digit {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  bottom: calc(var(--digit) * 100%);
+  line-height: 1;
+  font-variant-numeric: tabular-nums lining-nums;
 }
 
-.ticker-column .ticker-digit span {
+.ticker-slot .ticker-column .ticker-digit span {
+  display: block;
+  height: 100%;
+  line-height: 1;
   transition: color 160ms cubic-bezier(0.4, 0, 0.6, 1);
 }
 
-.ticker-column.increase .ticker-digit span {
+.ticker-slot .ticker-column.increase .ticker-digit span {
   animation: pulseIncrement 500ms cubic-bezier(0.4, 0, 0.6, 1) 1;
 }
 
-.ticker-column.decrease .ticker-digit span {
+.ticker-slot .ticker-column.decrease .ticker-digit span {
   animation: pulseDecrement 500ms cubic-bezier(0.4, 0, 0.6, 1) 1;
 }
 

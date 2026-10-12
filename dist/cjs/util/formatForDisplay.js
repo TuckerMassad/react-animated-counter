@@ -1,5 +1,5 @@
 "use strict";
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", { value: true });
 // Array of digits to vertically scroll through
 var formatForDisplay = function (number, includeDecimals, decimalPrecision, includeCommas) {
     var decimalCount = includeDecimals ? decimalPrecision : 0;
@@ -7,5 +7,5 @@ var formatForDisplay = function (number, includeDecimals, decimalPrecision, incl
     var numberToFormat = includeCommas ? parseFloat(parsedNumber).toLocaleString('en-US', { minimumFractionDigits: includeDecimals ? decimalPrecision : 0 }) : parsedNumber;
     return numberToFormat.split('').reverse();
 };
-exports["default"] = formatForDisplay;
+exports.default = formatForDisplay;
 //# sourceMappingURL=formatForDisplay.js.map

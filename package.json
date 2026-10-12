@@ -1,6 +1,6 @@
 {
   "name": "react-animated-counter",
-  "version": "1.9.0",
+  "version": "1.10.0",
   "description": "React Animated Counter Component",
   "main": "./dist/cjs/index.js",
   "module": "./dist/esm/index.js",
@@ -59,7 +59,8 @@
     "cpy-cli": "^5.0.0",
     "react": "^19.2.3",
     "react-dom": "^18.2.0",
-    "rimraf": "^6.0.0"
+    "rimraf": "^6.0.0",
+    "typescript": "5.9.3"
   },
   "files": [
     "dist",
